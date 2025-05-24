@@ -4,7 +4,7 @@
 <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  <title>Kaira - Bootstrap 5 Fashion Store HTML CSS Template</title>
+  <title>@yield('title')</title>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,6 +18,8 @@
   <link rel="stylesheet" type="text/css" href="css/vendor.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
   <link rel="stylesheet" type="text/css" href="style.css">
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -232,8 +234,8 @@
                     aria-haspopup="true" aria-expanded="false" style="color:black">Home</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="{{ url('produk') }}"
-                    aria-haspopup="true" aria-expanded="false" style="color: black">Produk</a>
+                  <a class="nav-link" href="{{ url('lokasi') }}"
+                    aria-haspopup="true" aria-expanded="false" style="color: black">Lokasi</a>
                 <li class="nav-item">
                   <a class="nav-link" href="{{ url('contact') }}" style="color: black">Contact</a>
                 </li>
@@ -257,23 +259,17 @@
                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zm-5.242 1.398a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11z"/>
                         </svg>
                     </a>
-                    </li>
+                </li>
             </ul>
-            
-                    </div>
-
-                </div>
-
-                </div>
-            </nav>
-
-  <section id="billboard" class="bg-light py-5">
-    <div class="container">
-      <div class="row justify-content-center">
-        @yield('content')
+          </div>
+        </div>
       </div>
+    </nav>
+  <div class="container">
+    <div class="row justify-content-center">
+      @yield('content')
     </div>
-        </section>
+  </div>
   <script src="js/jquery.min.js"></script>
   <script src="js/plugins.js"></script>
   <script src="js/SmoothScroll.js"></script>
