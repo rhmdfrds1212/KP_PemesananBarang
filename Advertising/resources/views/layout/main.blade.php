@@ -237,7 +237,7 @@
                   <a class="nav-link" href="{{ url('lokasi') }}"
                     aria-haspopup="true" aria-expanded="false" style="color: black">Lokasi</a>
                 <li class="nav-item">
-                  <a class="nav-link" href="{{ url('contact') }}" style="color: black">Contact</a>
+                  <a class="nav-link" href="{{ url('produk') }}" style="color: black">Produk</a>
                 </li>
               </ul>
             </div>

@@ -56,7 +56,7 @@ class LokasiController extends Controller
      */
     public function edit(Lokasi $lokasi)
     {
-        //
+        return view('lokasi.edit')->with('lokasi', $lokasi);
     }
 
     /**
@@ -64,7 +64,18 @@ class LokasiController extends Controller
      */
     public function update(Request $request, Lokasi $lokasi)
     {
-        //
+        $val = $request->validate([
+            'nama'          => 'required|string|max:45',
+            'alamat'        => 'required|string|max:100',
+            'latitude'      => 'required|numeric',
+            'longitude'    => 'required|numeric',
+            'jenis'         => 'required|string|max:25',
+            'ukuran'        => 'required|string|max:20',
+            'status'        => 'required|in:tersedia,tersewa'
+        ]);
+
+        $lokasi->update($val);
+        return redirect()->route('lokasi.index')->with('success', 'Data lokasi berhasil diperbarui');
     }
 
     /**
