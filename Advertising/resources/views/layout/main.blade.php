@@ -234,10 +234,10 @@
                     aria-haspopup="true" aria-expanded="false" style="color:black">Home</a>
                 </li>
                 <li class="nav-item">
+                  <a class="nav-link" href="{{ url('produk') }}" style="color: black">Produk</a>
+                <li class="nav-item">
                   <a class="nav-link" href="{{ url('lokasi') }}"
                     aria-haspopup="true" aria-expanded="false" style="color: black">Lokasi</a>
-                <li class="nav-item">
-                  <a class="nav-link" href="{{ url('produk') }}" style="color: black">Produk</a>
                 </li>
               </ul>
             </div>
@@ -251,15 +251,7 @@
                 <a href="#" class="text-uppercase" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
                     <i class="bi bi-cart fs-4 text-dark"></i>
                 </a>
-                </li>
-
-                <li class="search-box mx-2">
-                    <a href="#" class="search-button">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-search text-dark" viewBox="0 0 16 16">
-                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zm-5.242 1.398a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11z"/>
-                        </svg>
-                    </a>
-                </li>
+              </li>
             </ul>
           </div>
         </div>

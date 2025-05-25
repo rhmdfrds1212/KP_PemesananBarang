@@ -21,7 +21,7 @@ class ProdukController extends Controller
      */
     public function create()
     {
-        //
+        return view('produk.create');
     }
 
     /**
@@ -29,7 +29,30 @@ class ProdukController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'deskripsi' => 'nullable|string',
+            'harga' => 'required|numeric|min:0',
+            'stok' => 'required|integer|min:0',
+            'foto' => 'nullable|image|max:2048',
+            'kategori' => 'nullable|string|max:255',
+        ]);
+
+        $data = $request->only('nama', 'deksirpsi', 'harga', 'stok', 'kategori');
+
+        if ($request->hasFile('foto')) {
+            $fotoName = time() . '.' . $request->foto->extension();
+            $request->foto->move(public_path('upload/produk'), $fotoName);
+            $data['foto'] = $fotoName;
+        }
+
+        Produk::create($data);
+
+        return redirect()->route('produk.index')->with('success', 'Produk berhasil ditambahkan.');
+    } catch (\Exception $e) {
+        return back()->withErrors(['error' => $e->getMessage()])->withInput();
+        }
     }
 
     /**
