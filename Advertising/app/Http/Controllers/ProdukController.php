@@ -14,6 +14,17 @@ class ProdukController extends Controller
     {
         $produk = Produk::all();
         return view('produk.index')->with('produk', $produk);
+
+         $query = Produk::query();
+
+         if ($request->has('cari') && $request->cari != '') {
+            $query->where('nama', 'like', '%' . $request->cari . '%')
+                ->orWhere('kategori', 'like', '%' . $request->cari . '%');
+        }
+
+        $produks = $query->get();
+
+        return view('produk.index', compact('produks'));
     }
 
     /**
@@ -54,6 +65,13 @@ class ProdukController extends Controller
         return back()->withErrors(['error' => $e->getMessage()])->withInput();
         }
     }
+
+    public function Pembayaran($id)
+    {
+    $produk = Produk::findOrFail($id);
+    return view('produk.pembayaran', compact('produk'));
+    }
+
 
     /**
      * Display the specified resource.

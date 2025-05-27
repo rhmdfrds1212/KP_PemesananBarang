@@ -10,17 +10,18 @@
 
     <a href="{{ route('produk.create') }}" class="btn btn-primary mb-4">+ Tambah Produk</a>
 
-    <form action="{{ route('produk.index') }}" method="GET" class="row mb-4">
-    <div class="col-md-6">
-        <input type="text" name="cari" class="form-control" placeholder="Cari nama produk atau kategori..." value="{{ request('cari') }}">
+    <form action="{{ route('produk.index') }}" method="GET" class="row mb-4 g-2 align-items-center">
+    <div class="col-md-8">
+        <input type="text" name="cari" class="form-control" placeholder="Cari produk berdasarkan nama atau kategori..." value="{{ request('cari') }}">
     </div>
-    <div class="col-md-2">
+    <div class="col-md-2 d-grid">
         <button type="submit" class="btn btn-secondary">Cari</button>
     </div>
-    <div class="col-md-2">
+    <div class="col-md-2 d-grid">
         <a href="{{ route('produk.index') }}" class="btn btn-outline-secondary">Reset</a>
     </div>
 </form>
+
 
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
         @forelse ($produk as $item)
@@ -43,6 +44,7 @@
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-sm btn-danger w-100">Hapus</button>
                             </form>
+                            <a href="{{ route('produk.beli', $item->id) }}" class="btn btn-success w-100 mb-2">Beli</a>
                         </div>
                     </div>
                 </div>

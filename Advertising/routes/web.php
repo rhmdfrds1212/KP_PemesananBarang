@@ -10,3 +10,5 @@ Route::get('/', function () {
 
 Route::resource('lokasi', LokasiController::class);
 Route::resource('produk', ProdukController::class);
+Route::get('/produk/{id}/pembayaran', [ProdukController::class, 'pembayaran'])->name('produk.beli');
+Route::post('/pembayaran/{id}', [PembayaranController::class, 'proses'])->name('pembayaran.proses');
