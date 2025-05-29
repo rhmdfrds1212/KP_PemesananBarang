@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\LokasiController;
+use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\ProdukController;
 use Illuminate\Support\Facades\Route;
 
@@ -10,4 +11,4 @@ Route::get('/', function () {
 
 Route::resource('lokasi', LokasiController::class);
 Route::resource('produk', ProdukController::class);
-Route::get('/produk/{id}/pembayaran', [ProdukController::class, 'pembayaran'])->name('produk.beli');
+Route::resource('pembayaran', PembayaranController::class);
