@@ -24,7 +24,7 @@
 
 
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
-        @forelse ($produk as $item)
+        @forelse ($produks as $item)
             <div class="col">
                 <div class="card h-100 shadow-sm">
                     @if ($item->foto)
@@ -38,13 +38,13 @@
                         <p class="card-text fw-bold mb-1">Rp{{ number_format($item->harga, 0, ',', '.') }}</p>
                         <p class="card-text text-secondary">Stok: {{ $item->stok }}</p>
                         <div class="mt-auto">
+                            <a href="{{ route('pemesanan.create', $item->id) }}" class="btn btn-sm btn-success w-100 mb-2">Beli</a>
                             <a href="{{ route('produk.edit', $item->id) }}" class="btn btn-sm btn-warning w-100 mb-2">Edit</a>
                             <form action="{{ route('produk.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus produk ini?')">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-sm btn-danger w-100">Hapus</button>
                             </form>
-                            <a href="{{ route('produk.beli', $item->id) }}" class="btn btn-success w-100 mb-2">Beli</a>
                         </div>
                     </div>
                 </div>

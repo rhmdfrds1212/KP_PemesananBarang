@@ -10,11 +10,9 @@ class ProdukController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $produk = Produk::all();
-        return view('produk.index')->with('produk', $produk);
-
          $query = Produk::query();
 
          if ($request->has('cari') && $request->cari != '') {
@@ -66,12 +64,18 @@ class ProdukController extends Controller
         }
     }
 
-    public function Pembayaran($id)
+    public function beli($id)
     {
-    $produk = Produk::findOrFail($id);
-    return view('produk.pembayaran', compact('produk'));
+        $produk = Produk::findOrFail($id);
+
+        return redirect()->route('produk.index')->with('success', 'Anda telah membeli produk: ' . $produk->nama);
     }
 
+    public function Pembayaran($id)
+    {
+        $produk = Produk::findOrFail($id);
+        return view('produk.pembayaran', compact('produk'));
+    }
 
     /**
      * Display the specified resource.
@@ -86,7 +90,7 @@ class ProdukController extends Controller
      */
     public function edit(Produk $produk)
     {
-        //
+        return view('produk.edit')->with('produk', $produk);
     }
 
     /**
@@ -94,7 +98,34 @@ class ProdukController extends Controller
      */
     public function update(Request $request, Produk $produk)
     {
-        //
+        try {
+            $request->validate([
+                'nama' => 'required|string|max:255',
+                'deskripsi' => 'nullable|string',
+                'harga' => 'required|numeric|min:0',
+                'stok' => 'required|integer|min:0',
+                'foto' => 'nullable|image|max:2048',
+                'kategori' => 'nullable|string|max:255',
+            ]);
+
+            $data = $request->only('nama', 'deskripsi', 'harga', 'stok', 'kategori');
+
+            if ($request->hasFile('foto')) {
+                if ($produk->foto && file_exists(public_path('upload/produk/' . $produk->foto))) {
+                    unlink(public_path('upload/produk/' . $produk->foto));
+                }
+
+                $fotoName = time() . '.' . $request->foto->extension();
+                $request->foto->move(public_path('upload/produk'), $fotoName);
+                $data['foto'] = $fotoName;
+            }
+
+            $produk->update($data);
+
+            return redirect()->route('produk.index')->with('success', 'Produk berhasil diperbarui.');
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => $e->getMessage()])->withInput();
+        }
     }
 
     /**
