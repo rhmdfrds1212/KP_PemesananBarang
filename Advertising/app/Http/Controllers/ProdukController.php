@@ -48,7 +48,7 @@ class ProdukController extends Controller
             'kategori' => 'nullable|string|max:255',
         ]);
 
-        $data = $request->only('nama', 'deksirpsi', 'harga', 'stok', 'kategori');
+        $data = $request->only('nama', 'deskripsi', 'harga', 'stok', 'kategori');
 
         if ($request->hasFile('foto')) {
             $fotoName = time() . '.' . $request->foto->extension();

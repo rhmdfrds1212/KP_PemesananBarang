@@ -38,7 +38,7 @@
 
                 <div class="d-flex justify-content-between">
                     <a href="{{ route('lokasi.index') }}" class="btn btn-secondary">Cancel</a>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <button type="submit" class="btn btn-success">Simpan</button>
                 </div>
             </form>
         </div>

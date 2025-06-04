@@ -24,4 +24,9 @@ class Produk extends Model
             $model->id = (string) Str::uuid();
         });
     }
+    
+    public function detail()
+    {
+        return $this->hasOne(DetailProduk::class);
+    }
 }

@@ -172,7 +172,7 @@
 
         <div class="col-auto">
           <a class="navbar-brand text-white" href="index.html">
-            <img src="{{ url('images/logo.png') }}" width="65px" alt="">
+            <img src="{{ url('images/logo.jpg') }}" width="65px" alt="">
           </a>
         </div>
 
@@ -202,19 +202,18 @@
                   <a class="nav-link" href="{{ url('lokasi') }}"
                     aria-haspopup="true" aria-expanded="false" style="color: black">Lokasi</a>
                 </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ route('tentangkami') }}"
+                    aria-haspopup="true" aria-expanded="false" style="color: black">Tentang Kami</a>
+                </li>
               </ul>
             </div>
           </div>
         </div>
-
         <div class="col-3 col-lg-auto">
-          <!-- Wrapper semua icon -->
             <ul class="d-flex align-items-center justify-content-center list-unstyled m-0 p-0">
-                <li class="d-none d-lg-block mx-4">
-                <a href="#" class="text-uppercase" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
-                    <i class="bi bi-cart fs-4 text-dark"></i>
-                </a>
               </li>
+                <button class="btn btn-secondary btn-lg" style="width: 100px">Login</button>
             </ul>
           </div>
         </div>

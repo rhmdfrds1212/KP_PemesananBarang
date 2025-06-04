@@ -20,7 +20,7 @@
 </head>
 <body>
     <h1>Daftar Lokasi</h1>
-    <a href="{{ route('lokasi.create') }}"class="btn btn-primary col-lg-12 mb-3" >Tambah Lokasi</a>
+    <a href="{{ route('lokasi.create') }}"class="btn btn-success col-lg-12 mb-3" >Tambah Lokasi</a>
     <table>
         <thead>
             <tr>

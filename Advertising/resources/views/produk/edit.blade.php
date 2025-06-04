@@ -51,7 +51,7 @@
             <input type="file" class="form-control" id="foto" name="foto" accept="image/*">
         </div>
 
-        <button type="submit" class="btn btn-primary">Update Produk</button>
+        <button type="submit" class="btn btn-success">Update Produk</button>
     </form>
 </div>
 @endsection

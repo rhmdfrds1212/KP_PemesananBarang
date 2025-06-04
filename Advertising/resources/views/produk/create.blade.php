@@ -47,7 +47,7 @@
             <input type="text" class="form-control" id="kategori" name="kategori" value="{{ old('kategori') }}">
         </div>
 
-        <button type="submit" class="btn btn-primary">Simpan Produk</button>
+        <button type="submit" class="btn btn-success">Simpan Produk</button>
     </form>
 </div>
 @endsection
