@@ -32,7 +32,7 @@
             <select name="lokasi_id" class="form-select" required>
                 <option value="">-- Pilih Lokasi --</option>
                 @foreach ($lokasis as $lokasi)
-                    <option value="{{ $lokasi->id }}">{{ $lokasi->nama }}</option>
+                    <option value="{{ $lokasi->id }}">{{ $lokasi->alamat }}</option>
                 @endforeach
             </select>
         </div>

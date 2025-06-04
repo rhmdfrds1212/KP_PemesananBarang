@@ -25,12 +25,9 @@
         <thead>
             <tr>
                 <th class="text-center">No</th>
-                <th class="text-center">Nama</th>
                 <th class="text-center">Alamat</th>
                 <th class="text-center">Latitude</th>
                 <th class="text-center">Longitude</th>
-                <th class="text-center">Jenis</th>
-                <th class="text-center">Ukuran</th>
                 <th class="text-center">Status</th>
                 <th class="text-center">Aksi</th>
             </tr>
@@ -39,12 +36,9 @@
             @foreach($lokasi as $index => $item)
                 <tr>
                     <td class="text-center">{{ $index + 1 }}.</td>
-                    <td class="text-center">{{ $item['nama'] }}</td>
                     <td class="text-center">{{ $item['alamat'] }}</td>
                     <td class="text-center">{{ $item['latitude'] }}</td>
                     <td class="text-center">{{ $item['longitude'] }}</td>
-                    <td class="text-center">{{ $item['jenis'] }}</td>
-                    <td class="text-center">{{ $item['ukuran'] }}</td>
                     <td class="text-center">{{ $item['status'] }}</td>
                     <td class="text-center">
                         <a href="{{  route('lokasi.edit', $item['id'])  }}" class="fa fa-pen"></a>

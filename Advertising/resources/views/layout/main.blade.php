@@ -166,13 +166,13 @@
     </div>
   </div>
 
-  <nav class="navbar navbar-expand-lg text-uppercase fs-6 p-3 border-bottom align-items-center" style="background-color: #8B0000;">
+  <nav class="navbar navbar-expand-lg text-uppercase fs-6 p-3 border-bottom align-items-center" style="background-color: #ffffff;">
     <div class="container-fluid">
       <div class="row justify-content-between align-items-center w-100">
 
         <div class="col-auto">
           <a class="navbar-brand text-white" href="index.html">
-            <img src="{{ url('images/logo.png') }}" width="150" alt="">
+            <img src="{{ url('images/logo.png') }}" width="65px" alt="">
           </a>
         </div>
 

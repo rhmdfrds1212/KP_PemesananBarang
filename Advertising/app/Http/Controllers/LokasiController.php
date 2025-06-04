@@ -30,12 +30,9 @@ class LokasiController extends Controller
     public function store(Request $request)
     {
         $val = $request->validate([
-            'nama'          => 'required|string|max:45',
             'alamat'        => 'required|string|max:100',
             'latitude'      => 'required|numeric',
             'longitude'    => 'required|numeric',
-            'jenis'         => 'required|string|max:25',
-            'ukuran'        => 'required|string|max:20',
             'status'        => 'required|in:tersedia,tersewa'
         ]);
 
@@ -65,12 +62,9 @@ class LokasiController extends Controller
     public function update(Request $request, Lokasi $lokasi)
     {
         $val = $request->validate([
-            'nama'          => 'required|string|max:45',
             'alamat'        => 'required|string|max:100',
             'latitude'      => 'required|numeric',
             'longitude'    => 'required|numeric',
-            'jenis'         => 'required|string|max:25',
-            'ukuran'        => 'required|string|max:20',
             'status'        => 'required|in:tersedia,tersewa'
         ]);
 

@@ -13,12 +13,9 @@ return new class extends Migration
     {
         Schema::create('lokasis', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('nama');
             $table->string('alamat');
             $table->double('latitude');
             $table->double('longitude');
-            $table->string('jenis');
-            $table->string('ukuran');
             $table->enum('status', ['tersedia', 'tersewa']);
             $table->timestamps();
         });

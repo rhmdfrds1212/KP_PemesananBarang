@@ -12,10 +12,6 @@
             <form action="{{ route('lokasi.update', $lokasi['id']) }}" method="POST">
                 @method('PUT')
                 @csrf
-                <div class="mb-3">
-                    <label for="nama" class="form-label">Nama</label>
-                    <input type="text" name="nama" class="form-control" value="{{ old('nama',$lokasi['nama']) }}" required>
-                </div>
 
                 <div class="mb-3">
                     <label for="alamat" class="form-label">Alamat</label>
@@ -30,16 +26,6 @@
                 <div class="mb-3">
                     <label for="longitude" class="form-label">Longitude</label>
                     <input type="text" name="longitude" class="form-control" value="{{ old('longitude',$lokasi['longitude']) }}" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="jenis" class="form-label">Jenis</label>
-                    <input type="text" name="jenis" class="form-control" value="{{ old('jenis',$lokasi['jenis']) }}" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="ukuran" class="form-label">Ukuran</label>
-                    <input type="text" name="ukuran" class="form-control" value="{{ old('ukuran',$lokasi['ukuran']) }}" required>
                 </div>
 
                 <div class="mb-3">
