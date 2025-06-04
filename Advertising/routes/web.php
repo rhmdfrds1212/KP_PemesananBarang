@@ -14,3 +14,4 @@ Route::resource('lokasi', LokasiController::class);
 Route::resource('produk', ProdukController::class);
 Route::resource('pembayaran', PembayaranController::class);
 Route::resource('pemesanan', PemesananController::class);
+Route::resource('home', HomeController::class);

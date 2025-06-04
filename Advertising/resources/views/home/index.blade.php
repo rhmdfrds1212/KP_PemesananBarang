@@ -4,6 +4,6 @@
     
 @section('content')
 
-<h1>ini halaman Tentang Kami</h1>
+<h1>ini halaman Home</h1>
     
 @endsection
