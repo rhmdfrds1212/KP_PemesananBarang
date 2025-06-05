@@ -11,7 +11,7 @@ class PemesananController extends Controller
 {
     public function index()
     {
-        $pemesanans = Pemesanan::with(['produks', 'lokasis'])->latest()->get();
+        $pemesanans = Pemesanan::with(['produk', 'lokasi'])->latest()->get();
         return view('pemesanan.index', compact('pemesanans'));
     }
 
@@ -19,12 +19,9 @@ class PemesananController extends Controller
     {
         $produks = Produk::all();
         $lokasis = Lokasi::all();
-        $produkTerpilih = null;
-
-        if ($request->has('produk_id')) {
-        $produkTerpilih = Produk::find($request->produk_id);
-    }
-        return view('pemesanan.create', compact('produks', 'lokasis', 'produkTerpilih'));
+        $produk_id = $request->produk_id ?? null;
+        $produkTerpilih = $request->has('produk_id') ? Produk::find($request->produk_id) : null;
+        return view('pemesanan.create', compact('produks', 'lokasis', 'produk_id', 'produkTerpilih'));
     }
 
     public function store(Request $request)
@@ -37,10 +34,12 @@ class PemesananController extends Controller
             'telepon' => 'nullable|string|max:20',
             'ukuran' => 'required|string',
             'jumlah' => 'required|integer|min:1',
+            'lama_sewa' => 'required|integer|min:1',
         ]);
 
         $produk = Produk::findOrFail($request->produk_id);
-        $totalHarga = $produk->harga * $request->jumlah;
+        $hargaSewa = $produk->harga;
+        $totalHarga = $hargaSewa * $request->jumlah * $request->lama_sewa;
 
         Pemesanan::create([
             'produk_id' => $request->produk_id,
@@ -50,6 +49,8 @@ class PemesananController extends Controller
             'telepon' => $request->telepon,
             'ukuran' => $request->ukuran,
             'jumlah' => $request->jumlah,
+            'lama_sewa' => $request->lama_sewa,
+            'harga_sewa' => $hargaSewa,
             'total_harga' => $totalHarga,
             'status' => 'menunggu',
         ]);

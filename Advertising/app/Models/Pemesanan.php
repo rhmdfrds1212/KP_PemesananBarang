@@ -14,7 +14,7 @@ class Pemesanan extends Model
     protected $keyType = 'string';
 
     protected $fillable = [
-        'produk_id', 'lokasi_id', 'nama', 'email', 'telepon', 'ukuran', 'jumlah', 'total_harga', 'status'
+        'produk_id', 'lokasi_id', 'nama', 'email', 'telepon', 'ukuran', 'jumlah', 'lama_sewa', 'harga_sewa', 'total_harga', 'status',
     ];
 
     protected static function boot()
@@ -23,5 +23,15 @@ class Pemesanan extends Model
         static::creating(function ($model){
             $model->id = (string) Str::uuid();
         });
+    }
+    
+    public function produk()
+    {
+        return $this->belongsTo(Produk::class);
+    }
+
+    public function lokasi()
+    {
+        return $this->belongsTo(Lokasi::class);
     }
 }

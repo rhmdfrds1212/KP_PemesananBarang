@@ -24,38 +24,48 @@
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
         @forelse ($produks as $item)
             <div class="col">
-                <div class="card h-100 shadow-sm">
-                    @if ($item->foto)
-                        <a href="{{ route('detail_produks.show', $item->id) }}">
-                            <img src="{{ asset('upload/produk/' . $item->foto) }}" class="card-img-top" alt="{{ $item->nama }}" style="height: 250px; object-fit: cover;">
-                        </a>
-                    @else
-                        <img src="https://via.placeholder.com/250x250?text=No+Image" class="card-img-top" alt="No image">
-                    @endif
-                    <div class="card-body d-flex flex-column fs-5">
-                        <a href="{{ route('detail_produks.show', $item->id) }}" class="text-decoration-none text-dark">
-                            <h5 class="card-title fs-4">{{ $item->nama }}</h5>
-                        </a>
-                        <p class="card-text mb-2">{{ $item->deskripsi }}</p>
-                        <p class="card-text text-muted mb-1">{{ $item->kategori }}</p>
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <p class="card-text fw-bold mb-0">Rp{{ number_format($item->harga, 0, ',', '.') }}</p>
-                            <p class="card-text text-secondary mb-0">Stok: {{ $item->stok }}</p>
+                <div class="card h-100 shadow-sm border-0 hover-shadow">
+                    <a href="{{ route('detail_produks.show', $item->id) }}">
+                        @if ($item->foto)
+                            <img src="{{ asset('upload/produk/' . $item->foto) }}" class="card-img-top rounded-top" alt="{{ $item->nama }}" style="height: 250px; object-fit: cover;">
+                        @else
+                            <img src="https://via.placeholder.com/250x250?text=No+Image" class="card-img-top" alt="No image">
+                        @endif
+                    </a>
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title mb-1">
+                            <a href="{{ route('detail_produks.show', $item->id) }}" class="text-decoration-none text-dark">
+                                {{ $item->nama }}
+                            </a>
+                        </h5>
+                        <span class="badge bg-primary mb-2">{{ $item->kategori }}</span>
+                        <p class="text-muted small mb-2">{{ $item->deskripsi }}</p>
+                        <p class="fw-bold text-success mb-1">Rp{{ number_format($item->harga, 0, ',', '.') }}</p>
+                        <p class="text-secondary small mb-3">Stok: <strong>{{ $item->stok }}</strong></p>
+                        
+                        <div class="mt-auto d-flex gap-2">
+                            <a href="{{ route('produk.edit', $item->id) }}" class="btn btn-sm btn-warning w-50">Edit</a>
+                            <form action="{{ route('produk.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus produk ini?')" class="w-50">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-danger w-100">Hapus</button>
+                            </form>
                         </div>
-                        <a href="{{ route('produk.edit', $item->id) }}" class="btn btn-sm btn-warning w-100 mb-2">Edit</a>
-                        <form action="{{ route('produk.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus produk ini?')">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-danger w-100">Hapus</button>
-                        </form>
                     </div>
                 </div>
             </div>
         @empty
             <div class="col">
-                <p class="text-center fs-4">Belum ada produk tersedia.</p>
+                <p class="text-center fs-5">Belum ada produk tersedia.</p>
             </div>
         @endforelse
     </div>
 </div>
+
+<style>
+    .hover-shadow:hover {
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+        transition: 0.3s ease;
+    }
+</style>
 @endsection
