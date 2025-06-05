@@ -26,14 +26,14 @@
             <div class="col">
                 <div class="card h-100 shadow-sm">
                     @if ($item->foto)
-                        <a href="{{ route('detailProduk.show', $item->id) }}">
+                        <a href="{{ route('detail_produks.show', $item->id) }}">
                             <img src="{{ asset('upload/produk/' . $item->foto) }}" class="card-img-top" alt="{{ $item->nama }}" style="height: 250px; object-fit: cover;">
                         </a>
                     @else
                         <img src="https://via.placeholder.com/250x250?text=No+Image" class="card-img-top" alt="No image">
                     @endif
                     <div class="card-body d-flex flex-column fs-5">
-                        <a href="{{ route('detailProduk.show', $item->id) }}" class="text-decoration-none text-dark">
+                        <a href="{{ route('detail_produks.show', $item->id) }}" class="text-decoration-none text-dark">
                             <h5 class="card-title fs-4">{{ $item->nama }}</h5>
                         </a>
                         <p class="card-text mb-2">{{ $item->deskripsi }}</p>

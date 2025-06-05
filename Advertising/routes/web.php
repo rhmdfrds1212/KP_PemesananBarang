@@ -9,7 +9,7 @@ use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('layout.main');
+    return view('home.index');
 });
 Route::get('/tentang-kami', function () {
     return view('about');
@@ -19,5 +19,5 @@ Route::resource('lokasi', LokasiController::class);
 Route::resource('produk', ProdukController::class);
 Route::resource('pembayaran', PembayaranController::class);
 Route::resource('pemesanan', PemesananController::class);
-Route::resource('detailProduk', DetailProdukController::class); 
+Route::resource('detail_produks', DetailProdukController::class); 
 Route::resource('home', HomeController::class);

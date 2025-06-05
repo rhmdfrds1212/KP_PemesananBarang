@@ -38,7 +38,7 @@ class DetailProdukController extends Controller
     public function show($produk_id)
     {
         $produk = Produk::with('detail')->findOrFail($produk_id);
-        return view('detailProduk.show', compact('produk'));
+        return view('detail_produks.show', compact('produk'));
     }
 
     /**
