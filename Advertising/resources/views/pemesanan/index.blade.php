@@ -18,6 +18,7 @@
                     <th>Produk</th>
                     <th>Lokasi</th>
                     <th>Nama Pemesan</th>
+                    <th>Ukuran</th>
                     <th>Jumlah</th>
                     <th>Total Harga</th>
                     <th>Status</th>
@@ -31,6 +32,7 @@
                         <td>{{ $pemesanan->produk->nama ?? '-' }}</td>
                         <td>{{ $pemesanan->lokasi->nama ?? '-' }}</td>
                         <td>{{ $pemesanan->nama }}</td>
+                        <td>{{ $pemesanan->ukuran ?? '-' }}</td>
                         <td>{{ $pemesanan->jumlah }}</td>
                         <td>Rp{{ number_format($pemesanan->total_harga, 0, ',', '.') }}</td>
                         <td>

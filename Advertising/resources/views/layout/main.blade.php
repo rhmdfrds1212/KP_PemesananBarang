@@ -210,12 +210,31 @@
             </div>
           </div>
         </div>
+        @php
+          $keranjang = session('keranjang', []);
+          $jumlahItem = array_sum(array_column($keranjang, 'total_harga'));
+        @endphp
+
         <div class="col-3 col-lg-auto">
-            <ul class="d-flex align-items-center justify-content-center list-unstyled m-0 p-0">
-              </li>
-                <button class="btn btn-secondary btn-lg" style="width: 100px">Login</button>
-            </ul>
-          </div>
+          <ul class="d-flex align-items-center justify-content-center list-unstyled m-0 p-0 gap-3">
+            <li>
+              <a href={{ route('keranjang.index') }} class="position-relative text-decoration-none text-dark" style="font-size: 1.5rem;">
+                <i class="bi bi-cart3"></i>
+                @if($jumlahItem > 0)
+                  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    {{ $jumlahItem }}
+                  <span class="visually-hidden">jumlah item dalam keranjang</span>
+                </span>
+              @endif
+             </a>
+            </li>
+            <li>
+              <a href="#" class="text-dark" style="font-size: 1.5rem;">
+               <i class="bi bi-person-circle"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
         </div>
       </div>
     </nav>

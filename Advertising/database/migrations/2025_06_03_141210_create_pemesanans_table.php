@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('nama');
             $table->string('email')->nullable();
             $table->string('telepon')->nullable();
+            $table->string('ukuran')->nullable()->after('jumlah');
             $table->integer('jumlah');
             $table->integer('total_harga');
             $table->enum('status', ['menunggu', 'diproses', 'selesai', 'dibatalkan'])->default('menunggu');

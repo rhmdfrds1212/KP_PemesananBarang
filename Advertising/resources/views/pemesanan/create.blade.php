@@ -53,6 +53,18 @@
         </div>
 
         <div class="mb-3">
+            <label for="ukuran" class="form-label">Ukuran</label>
+            <select name="ukuran" class="form-select" required>
+                <option value="">-- Pilih Ukuran --</option>
+                <option value="4 x 6 M Vertical">4 x 6 M Vertical</option>
+                <option value="8 x 4 M Horizontal">8 x 4 M Horizontal</option>
+                <option value="5 x 10 M Vertical">5 x 10 M Vertical</option>
+                <option value="6 x 12 M Vertical">6 x 12 M Vertical</option>
+                <option value="2 x 4 M Horizontal">2 x 4 M Horizontal</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
             <label for="jumlah" class="form-label">Jumlah</label>
             <input type="number" class="form-control" name="jumlah" id="jumlah" min="1" required>
         </div>

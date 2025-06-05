@@ -35,6 +35,7 @@ class PemesananController extends Controller
             'nama' => 'required|string|max:255',
             'email' => 'nullable|email',
             'telepon' => 'nullable|string|max:20',
+            'ukuran' => 'required|string',
             'jumlah' => 'required|integer|min:1',
         ]);
 
@@ -47,6 +48,7 @@ class PemesananController extends Controller
             'nama' => $request->nama,
             'email' => $request->email,
             'telepon' => $request->telepon,
+            'ukuran' => $request->ukuran,
             'jumlah' => $request->jumlah,
             'total_harga' => $totalHarga,
             'status' => 'menunggu',

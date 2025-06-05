@@ -14,7 +14,7 @@ class Pemesanan extends Model
     protected $keyType = 'string';
 
     protected $fillable = [
-        'produk_id', 'lokasi_id', 'nama', 'email', 'telepon', 'jumlah', 'total_harga', 'status'
+        'produk_id', 'lokasi_id', 'nama', 'email', 'telepon', 'ukuran', 'jumlah', 'total_harga', 'status'
     ];
 
     protected static function boot()

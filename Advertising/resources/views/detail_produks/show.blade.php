@@ -15,6 +15,14 @@
 
 
             <a href="{{ route('pemesanan.create', $produk->id) }}" class="btn btn-success mt-3">Beli Sekarang</a>
+
+            <form action="{{ route('keranjang.add') }}" method="POST" class="d-inline">
+                @csrf
+                <input type="hidden" name="id" value="{{ $produk->id }}">
+                <input type="hidden" name="nama" value="{{ $produk->nama }}">
+                <button type="submit" class="btn btn-primary mt-3">Tambah Keranjang</button>
+                <input type="hidden" name="harga" value="{{ $produk->harga }}">
+            </form>
         </div>
     </div>
 </div>
