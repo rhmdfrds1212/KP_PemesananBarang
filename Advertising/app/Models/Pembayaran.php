@@ -14,7 +14,7 @@ class Pembayaran extends Model
     protected $keyType = 'string';
 
     protected $fillable = [
-        'produk_id', 'lokasi_id', 'jumlah_stok', 'total_harga', 'metode_pembayaran', 'ukuran'
+        'pemesanan_id', 'metode', 'status', 'catatan',
     ];
 
     protected static function boot()
@@ -23,5 +23,10 @@ class Pembayaran extends Model
         static::creating(function ($model){
             $model->id = (string) Str::uuid();
         });
+    }
+    
+    public function pemesanan()
+    {
+        return $this->belongsTo(Pemesanan::class);
     }
 }

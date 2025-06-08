@@ -229,7 +229,7 @@
              </a>
             </li>
             <li>
-              <a href="#" class="text-dark" style="font-size: 1.5rem;">
+              <a href={{ route('profile.index') }} class="text-dark" style="font-size: 1.5rem;">
                <i class="bi bi-person-circle"></i>
               </a>
             </li>

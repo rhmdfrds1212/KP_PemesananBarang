@@ -55,7 +55,10 @@ class PemesananController extends Controller
             'status' => 'menunggu',
         ]);
 
-        return redirect()->route('pemesanan.index')->with('success', 'Pemesanan berhasil dibuat.');
+        $pemesanan = Pemesanan::create($request->all());
+
+        return redirect()->route('pembayaran.show', $pemesanan->id)
+                     ->with('success', 'Pemesanan berhasil, silakan lanjut ke pembayaran.');
     }
 
     public function show($id)

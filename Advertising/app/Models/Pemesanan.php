@@ -34,4 +34,8 @@ class Pemesanan extends Model
     {
         return $this->belongsTo(Lokasi::class);
     }
+    public function pembayaran()
+    {
+    return $this->hasOne(Pembayaran::class);
+    }
 }

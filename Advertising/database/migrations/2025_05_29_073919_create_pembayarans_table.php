@@ -12,13 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('pembayarans', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->foreignUuid('produk_id')->constrained('produks')->onDelete('cascade');
-            $table->foreignUuid('lokasi_id')->constrained('lokasis')->onDelete('cascade');
-            $table->integer('jumlah_stok');
-            $table->integer('total_harga');
-            $table->string('metode_pembayaran');
-            $table->string('ukuran');
+            $table->uuid();
+            $table->foreignUuId('pemesanan_id')->constrained()->onDelete('cascade');
+            $table->enum('metode', ['transfer_bank', 'qris', 'cod']);
+            $table->string('status')->default('menunggu pembayaran');
+            $table->text('catatan')->nullable();
             $table->timestamps();
         });
     }

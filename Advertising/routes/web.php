@@ -19,6 +19,8 @@ Route::get('/tentang-kami', function () {
 Route::post('/keranjang/add', [KeranjangController::class, 'add'])->name('keranjang.add');
 Route::get('/keranjang', [KeranjangController::class, 'index'])->name('keranjang.index');
 Route::delete('/keranjang/delete/{id}', [KeranjangController::class, 'delete'])->name('keranjang.delete');
+Route::get('/pembayaran/{id}', [PembayaranController::class, 'show'])->name('pembayaran.show');
+Route::post('/pembayaran/{id}', [PembayaranController::class, 'store'])->name('pembayaran.store');
 
 Route::resource('lokasi', LokasiController::class);
 Route::resource('produk', ProdukController::class);
@@ -26,3 +28,4 @@ Route::resource('pembayaran', PembayaranController::class);
 Route::resource('pemesanan', PemesananController::class);
 Route::resource('detail_produks', DetailProdukController::class); 
 Route::resource('home', HomeController::class);
+Route::resource('pembayaran', PembayaranController::class)->except(['store']);
