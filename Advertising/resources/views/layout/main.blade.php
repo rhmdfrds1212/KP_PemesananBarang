@@ -15,6 +15,7 @@
   <meta name="description" content="Bootstrap 5 Fashion Store HTML CSS Template">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="css/vendor.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
   <link rel="stylesheet" type="text/css" href="style.css">
@@ -166,13 +167,13 @@
     </div>
   </div>
 
-  <nav class="navbar navbar-expand-lg text-uppercase fs-6 p-3 border-bottom align-items-center" style="background-color: #ffffff;">
+  <nav class="navbar navbar-expand-lg text-uppercase fs-6 py-1 px-2 border-bottom align-items-center" style="background-color: #ffffff;">
     <div class="container-fluid">
       <div class="row justify-content-between align-items-center w-100">
 
         <div class="col-auto">
-          <a class="navbar-brand text-white" href="index.html">
-            <img src="{{ url('images/logo.jpg') }}" width="65px" alt="">
+          <a class="navbar-brand" href="index.html" style="padding: 0;">
+            <img src="{{ url('images/logo.jpg') }}" alt="Logo" style="height: 100px; object-fit: contain;">
           </a>
         </div>
 
@@ -228,10 +229,37 @@
               @endif
              </a>
             </li>
-            <li>
-              <a href="#" class="text-dark" style="font-size: 1.5rem;">
-               <i class="bi bi-person-circle"></i>
+            <li class="nav-item dropdown">
+              <a class="nav-link text-dark d-flex align-items-center" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-person-circle" style="font-size: 1.5rem;"></i>
+                <i class="bi bi-caret-down-fill ms-1"></i>
               </a>
+              <ul class="dropdown-menu dropdown-menu-end shadow mt-2" aria-labelledby="profileDropdown" style="min-width: 250px;">
+              @auth
+                <li class="px-3 py-2">
+                  <strong>Halo, {{ Auth::user()->name }}</strong>
+                  <p class="mb-0 text-muted" style="font-size: 0.9rem;">{{ Auth::user()->email }}</p>
+                </li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a href="{{ url('profile') }}" class="dropdown-item">Lihat Profil</a></li>
+                <li>
+                  <form method="POST" action="{{ route('logout') }}">
+                      @csrf
+                      <button class="dropdown-item text-danger" type="submit">Logout</button>
+                  </form>
+                </li>
+              @else
+                <li class="px-3 py-2">
+                  <strong>Halo, Pengunjung!</strong>
+                  <p class="mb-0 text-muted" style="font-size: 0.9rem;">Silakan login untuk mengakses akun Anda</p>
+                </li>
+                <li><hr class="dropdown-divider"></li>
+                <li class="text-center">
+                  <a href="{{ route('login') }}" class="btn btn-primary w-75">Login</a>
+                  <a href="{{ route('register') }}" class="btn btn-outline-secondary w-75">Register</a>
+                </li>
+              @endauth
+              </ul>
             </li>
           </ul>
         </div>
@@ -251,6 +279,7 @@
     crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
   <script src="js/script.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 
