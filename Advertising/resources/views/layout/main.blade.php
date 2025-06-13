@@ -207,6 +207,10 @@
                   <a class="nav-link" href="{{ route('tentangkami') }}"
                     aria-haspopup="true" aria-expanded="false" style="color: black">Tentang Kami</a>
                 </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ route('laporan') }}"
+                    aria-haspopup="true" aria-expanded="false" style="color: black">Laporan</a>
+                </li>
               </ul>
             </div>
           </div>

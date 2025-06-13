@@ -35,14 +35,11 @@
 
                 <div class="mb-3">
                     <label for="catatan" class="form-label">Catatan Tambahan (Opsional)</label>
-                    <textarea name="catatan" class="form-control" rows="3" placeholder="Tulis catatan jika ada..."></textarea>
+                        <textarea name="catatan" class="form-control" rows="3" placeholder="Tulis catatan jika ada..."></textarea>
                 </div>
 
-                <form action="{{ route('pembayaran.store', $pemesanan->id) }}" method="POST">
-                    @csrf
-                    <button type="submit">Konfirmasi & Bayar</button>
-                </form>
-                <a href="{{ route('produk.index') }}" class="btn btn-secondary ms-2">Kembali</a>
+                    <button type="submit" class="btn btn-primary">Konfirmasi & Bayar</button>
+                    <a href="{{ route('produk.index') }}" class="btn btn-secondary ms-2">Kembali</a>
             </form>
         </div>
     </div>
