@@ -39,8 +39,8 @@
                             </a>
                         </h5>
                         <span class="badge bg-primary mb-2">{{ $item->kategori }}</span>
-                        <p class="text-muted small mb-2">{{ $item->deskripsi }}</p>
-                        <p class="fw-bold text-success mb-1">Rp{{ number_format($item->harga, 0, ',', '.') }}</p>
+                        <p class="text-muted small mb-2">{{ \Illuminate\Support\Str::limit($item->deskripsi, 100, '...') }}</p>
+                        <p class="fw-bold text-success mb-1">Rp{{ number_format($item->harga, 0, ',', '.') }} <small class="text-muted"> / Tahun </small></p>
                         <p class="text-secondary small mb-3">Stok: <strong>{{ $item->stok }}</strong></p>
                         
                         <div class="mt-auto d-flex gap-2">

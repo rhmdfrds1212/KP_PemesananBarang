@@ -44,8 +44,8 @@ Route::get('/pembayaran/{id}', [PembayaranController::class, 'show'])->name('pem
 
 Route::resource('lokasi', LokasiController::class);
 Route::resource('produk', ProdukController::class);
-Route::resource('pemesanan', PemesananController::class);
-Route::resource('detail_produks', DetailProdukController::class); 
+Route::resource('produk/detail_produks/pemesanan', PemesananController::class);
+Route::resource('produk/detail_produks', DetailProdukController::class); 
 Route::resource('home', HomeController::class);
 Route::resource('pembayaran', PembayaranController::class)->except(['store']);
 

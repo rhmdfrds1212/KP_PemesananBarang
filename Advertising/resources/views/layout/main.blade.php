@@ -235,34 +235,49 @@
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link text-dark d-flex align-items-center" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="bi bi-person-circle" style="font-size: 1.5rem;"></i>
+                <i class="bi bi-person-circle fs-4"></i>
                 <i class="bi bi-caret-down-fill ms-1"></i>
               </a>
-              <ul class="dropdown-menu dropdown-menu-end shadow mt-2" aria-labelledby="profileDropdown" style="min-width: 250px;">
-              @auth
-                <li class="px-3 py-2">
-                  <strong>Halo, {{ Auth::user()->name }}</strong>
-                  <p class="mb-0 text-muted" style="font-size: 0.9rem;">{{ Auth::user()->email }}</p>
-                </li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a href="{{ url('profile') }}" class="dropdown-item">Lihat Profil</a></li>
-                <li>
-                  <form method="POST" action="{{ route('logout') }}">
+              <ul class="dropdown-menu dropdown-menu-end shadow mt-2" aria-labelledby="profileDropdown" style="min-width: 260px; border-radius: 10px;">
+                @auth
+                  <li class="px-3 py-2">
+                    <div class="d-flex align-items-center">
+                      <div class="me-2">
+                        <i class="bi bi-person-circle fs-2 text-secondary"></i>
+                      </div>
+                      <div>
+                        <div class="fw-semibold">{{ Auth::user()->name }}</div>
+                        <div class="text-muted small">{{ Auth::user()->email }}</div>
+                      </div>
+                    </div>
+                  </li>
+                  <li><hr class="dropdown-divider my-1"></li>
+                  <li>
+                    <a href="{{ url('profile') }}" class="dropdown-item d-flex align-items-center">
+                      <i class="bi bi-person me-2"></i> Lihat Profil
+                    </a>
+                  </li>
+                  <li>
+                    <form method="POST" action="{{ route('logout') }}">
                       @csrf
-                      <button class="dropdown-item text-danger" type="submit">Logout</button>
-                  </form>
-                </li>
-              @else
-                <li class="px-3 py-2">
-                  <strong>Halo, Pengunjung!</strong>
-                  <p class="mb-0 text-muted" style="font-size: 0.9rem;">Silakan login untuk mengakses akun Anda</p>
-                </li>
-                <li><hr class="dropdown-divider"></li>
-                <li class="text-center">
-                  <a href="{{ route('login') }}" class="btn btn-primary w-75">Login</a>
-                  <a href="{{ route('register') }}" class="btn btn-outline-secondary w-75">Register</a>
-                </li>
-              @endauth
+                      <button class="dropdown-item d-flex align-items-center text-danger" type="submit">
+                        <i class="bi bi-box-arrow-right me-2"></i> Logout
+                      </button>
+                    </form>
+                  </li> 
+                @else
+                  <li class="px-3 py-2">
+                    <div class="text-center">
+                      <i class="bi bi-person-circle fs-2 text-muted"></i>
+                      <p class="mb-0 mt-2 text-muted small">Silakan login untuk mengakses akun Anda</p>
+                    </div>
+                  </li>
+                  <li><hr class="dropdown-divider my-1"></li>
+                  <li class="px-3 pb-2 text-center">
+                    <a href="{{ route('login') }}" class="btn btn-sm btn-success w-100 mb-1">Login</a>
+                    <a href="{{ route('register') }}" class="btn btn-sm btn-outline-secondary w-100">Register</a>
+                  </li>
+                @endauth
               </ul>
             </li>
           </ul>
