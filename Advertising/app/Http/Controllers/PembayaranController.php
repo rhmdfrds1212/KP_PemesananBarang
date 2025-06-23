@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pembayaran;
 use App\Models\Pemesanan;
+use App\Models\Laporan;
 use Illuminate\Http\Request;
 
 class PembayaranController extends Controller
@@ -30,11 +31,18 @@ class PembayaranController extends Controller
     public function store(Request $request, $id)
     {
         $request->validate([
-            'metode_pembayaran' => 'required|in:transfer_bank,qris,cod',
+            'metode_pembayaran' => 'required|in:transfer_bank,bca,bri',
             'catatan' => 'nullable|string',
         ]);
 
-        $pemesanan = Pemesanan::findOrFail($id);
+        $pemesanan = Pemesanan::with('produk')->findOrFail($id);
+
+        $produk = $pemesanan->produk;
+        if ($produk->stok < $pemesanan->jumlah) {
+            return back()->withErrors(['stok' => 'Stok produk tidak mencukupi untuk pemesanan ini.']);
+        }
+        $produk->stok -= $pemesanan->jumlah;
+        $produk->save();
 
         $pembayaran = Pembayaran::create([
             'pemesanan_id' => $pemesanan->id,
@@ -42,6 +50,11 @@ class PembayaranController extends Controller
             'status' => 'menunggu pembayaran',
             'catatan' => $request->catatan,
         ]);
+
+        Laporan::create([
+            'pembayaran_id' => $pembayaran->id,
+        ]);
+
 
         return redirect()->route('pemesanan.index')
                  ->with('success', 'Pembayaran berhasil dikonfirmasi.');

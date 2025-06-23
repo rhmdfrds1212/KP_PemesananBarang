@@ -40,7 +40,8 @@
                                 {{ ucfirst($pemesanan->status) }}
                             </span>
                         </td>
-                        <td>
+                        <td class="d-flex gap-1">
+                            <a href="{{ route('pemesanan.edit', $pemesanan->id) }}" class="btn btn-sm btn-warning">Edit</a>
                             <form action="{{ route('pemesanan.destroy', $pemesanan->id) }}" method="POST" onsubmit="return confirm('Hapus pemesanan ini?')">
                                 @csrf
                                 @method('DELETE')

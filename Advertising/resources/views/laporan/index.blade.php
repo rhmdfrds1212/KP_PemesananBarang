@@ -41,15 +41,15 @@
         </tr>
         </thead>
         <tbody>
-        @foreach($laporan as $index => $item)
-            <tr>
-                <td>{{ $index + 1 }}</td>
-                <td>{{ $item->nama_produk }}</td>
-                <td>{{ $item->jumlah }}</td>
-                <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
-                <td>Rp {{ number_format($item->total_harga, 0, ',', '.') }}</td>
-            </tr>
-        @endforeach
+            @foreach ($laporan as $item)
+                <tr>
+                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $item->pembayaran?->pemesanan?->produk?->nama ?? '-' }}</td>
+                    <td>{{ $item->pembayaran?->pemesanan?->jumlah ?? '-' }}</td>
+                    <td>{{ $item->pembayaran?->pemesanan?->created_at?->format('d-m-Y') ?? '-' }}</td>
+                    <td>Rp{{ number_format($item->pembayaran?->pemesanan?->total_harga ?? 0, 0, ',', '.') }}</td>
+                </tr>
+            @endforeach
         </tbody>
     </table>
 </div>

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('detail_produks', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->unsignedBigInteger('produk_id');
+            $table->uuid('produk_id');
             $table->text('deskripsi')->nullable();
             $table->string('ukuran')->nullable();
             $table->timestamps();

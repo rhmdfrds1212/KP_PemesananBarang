@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('pembayarans', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuId('pemesanan_id')->constrained()->onDelete('cascade');
-            $table->enum('metode', ['transfer_bank', 'qris', 'cod']);
+            $table->enum('metode', ['transfer_bank', 'bca', 'bri']);
             $table->string('status')->default('menunggu pembayaran');
             $table->text('catatan')->nullable();
             $table->timestamps();

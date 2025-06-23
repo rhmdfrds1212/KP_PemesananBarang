@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pembayaran;
+use App\Models\Laporan;
 use Illuminate\Http\Request;
 
 class LaporanController extends Controller
@@ -12,9 +13,10 @@ class LaporanController extends Controller
      */
     public function index()
     {
-        $laporan = Pembayaran::all();
+        $laporan = Laporan::with('pembayaran.pemesanan.produk')->get();
         return view('laporan.index', compact('laporan'));
     }
+
 
     /**
      * Show the form for creating a new resource.

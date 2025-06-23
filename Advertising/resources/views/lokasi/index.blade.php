@@ -1,28 +1,20 @@
 @extends('layout.main')
 
-@section('title','Lokasi')
-    
+@section('title', 'Lokasi')
+
 @section('content')
-    <!DOCTYPE html>
-<html>
-<head>
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-        th, td {
-            border: 1px solid #999;
-            padding: 8px;
-            text-align: left;
-        }
-    </style>
-</head>
-<body>
-    <h1>Daftar Lokasi</h1>
-    <a href="{{ route('lokasi.create') }}"class="btn btn-success col-lg-12 mb-3" >Tambah Lokasi</a>
-    <table>
-        <thead>
+<div class="container mt-4">
+    <h1 class="mb-4">Daftar Lokasi</h1>
+
+    {{-- Tombol Tambah Lokasi, hanya untuk Admin --}}
+    @if (Auth::check() && Auth::user()->role === 'a')
+        <a href="{{ route('lokasi.create') }}" class="btn btn-success col-lg-12 mb-3">
+            + Tambah Lokasi
+        </a>
+    @endif
+
+    <table class="table table-bordered table-striped">
+        <thead class="table-primary">
             <tr>
                 <th class="text-center">No</th>
                 <th class="text-center">Alamat</th>
@@ -35,30 +27,37 @@
         <tbody>
             @foreach($lokasi as $index => $item)
                 <tr>
-                    <td class="text-center">{{ $index + 1 }}.</td>
+                    <td class="text-center">{{ $index + 1 }}</td>
                     <td class="text-center">{{ $item['alamat'] }}</td>
                     <td class="text-center">{{ $item['latitude'] }}</td>
                     <td class="text-center">{{ $item['longitude'] }}</td>
                     <td class="text-center">{{ $item['status'] }}</td>
                     <td class="text-center">
-                        <a href="{{  route('lokasi.edit', $item['id'])  }}" class="fa fa-pen"></a>
+                        {{-- Tombol Edit hanya untuk Admin --}}
+                        @if (Auth::check() && Auth::user()->role === 'a')
+                            <a href="{{ route('lokasi.edit', $item['id']) }}" class="btn btn-sm btn-warning">
+                                <i class="fa fa-pen"></i> Edit
+                            </a>
+                        @else
+                            <span class="text-muted">-</span>
+                        @endif
                     </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
-</body>
-</html>
-<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+</div>
+
+{{-- SweetAlert untuk notifikasi --}}
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @if (session('success'))
   <script>
     Swal.fire({
-    title: "Good job!",
-    text: "{{session('success')}}",
-    icon: "success"
+        title: "Sukses!",
+        text: "{{ session('success') }}",
+        icon: "success"
     });
   </script>
 @endif
-
 @endsection

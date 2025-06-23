@@ -26,10 +26,9 @@
                 <div class="mb-3">
                     <label for="metode_pembayaran" class="form-label">Pilih Metode Pembayaran</label>
                     <select name="metode_pembayaran" id="metode_pembayaran" class="form-select" required>
-                        <option value="">-- Pilih Metode --</option>
-                        <option value="transfer_bank">Transfer Bank</option>
-                        <option value="qris">QRIS</option>
-                        <option value="cod">Bayar di Tempat (COD)</option>
+                        <option value="transfer_bank">-- Pilih Metode --</option>
+                        <option value="bca">BCA</option>
+                        <option value="bri">BRI</option>
                     </select>
                 </div>
 

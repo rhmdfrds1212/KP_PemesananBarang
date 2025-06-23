@@ -19,7 +19,10 @@
         </div>
     </form>
 
-    <a href="{{ route('produk.create') }}" class="btn btn btn-success mb-4">+ Tambah Produk</a>
+    {{-- Tombol Tambah Produk hanya untuk Admin --}}
+    @if (Auth::check() && Auth::user()->role === 'a')
+        <a href="{{ route('produk.create') }}" class="btn btn-success mb-4">+ Tambah Produk</a>
+    @endif
 
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
         @forelse ($produks as $item)
@@ -42,15 +45,24 @@
                         <p class="text-muted small mb-2">{{ \Illuminate\Support\Str::limit($item->deskripsi, 100, '...') }}</p>
                         <p class="fw-bold text-success mb-1">Rp{{ number_format($item->harga, 0, ',', '.') }} <small class="text-muted"> / Tahun </small></p>
                         <p class="text-secondary small mb-3">Stok: <strong>{{ $item->stok }}</strong></p>
-                        
-                        <div class="mt-auto d-flex gap-2">
-                            <a href="{{ route('produk.edit', $item->id) }}" class="btn btn-sm btn-warning w-50">Edit</a>
-                            <form action="{{ route('produk.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus produk ini?')" class="w-50">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger w-100">Hapus</button>
-                            </form>
-                        </div>
+
+                        @if ($item->stok > 0)
+                            <a href="{{ route('pemesanan.create', $item->id) }}" class="btn btn-sm btn-success mt-2 w-100">Beli Sekarang</a>
+                        @else
+                            <button class="btn btn-sm btn-secondary mt-2 w-100" disabled>Stok Habis</button>
+                        @endif
+
+                        {{-- Tombol Edit dan Hapus hanya untuk Admin --}}
+                        @if (Auth::check() && Auth::user()->role === 'a')
+                            <div class="mt-auto d-flex gap-2">
+                                <a href="{{ route('produk.edit', $item->id) }}" class="btn btn-sm btn-warning w-50">Edit</a>
+                                <form action="{{ route('produk.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus produk ini?')" class="w-50">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-danger w-100">Hapus</button>
+                                </form>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
