@@ -4,10 +4,20 @@
 
 <style>
     .hero {
-        background: url('{{ url('images/iklan.jpg') }}') center center/cover no-repeat;
-        color: white;
-        padding: 150px 0;
+        background: url('{{ url('images/iklan.png') }}') center center/cover no-repeat;
+        color: black;
+        width: 100vw;
+        height: 90vh;
         text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .hero .container {
+        text-align: center;
+        padding: 80px;
+        color: #0000004f
     }
 
     .service-icon {
@@ -40,7 +50,6 @@
     
 </style>
 
-{{-- Hero Section --}}
 <section class="hero">
     <div class="container">
         <h1 class="display-4 fw-bold">Solusi Periklanan Advertising Terbaik</h1>
@@ -49,7 +58,6 @@
     </div>
 </section>
 
-{{-- Alur Pemesanan --}}
 <section class="py-5 bg-light">
     <div class="container text-center">
         <h2 class="mb-4 fw-bold">Cara Memesan Layanan Kami</h2>
@@ -86,7 +94,6 @@
     </div>
 </section>
 
-{{-- Galeri Gambar --}}
 <section class="py-5 bg-light">
     <div class="container text-center">
         <h2 class="mb-4">Galeri Baliho & Billboard</h2>
@@ -110,7 +117,6 @@
     </div>
 </section>
 
-{{-- Layanan --}}
 <section id="layanan" class="py-5 bg-light">
     <div class="container text-center">
         <h2 class="mb-4 fw-bold">Layanan Iklan Fisik Profesional</h2>
@@ -147,7 +153,6 @@
     </div>
 </section>
 
-{{-- Alasan Memilih Kami --}}
 <section class="py-5 bg-white border-top">
     <div class="container text-center">
         <h2 class="mb-4 fw-bold">Kenapa Memilih Kami?</h2>
@@ -177,7 +182,6 @@
     </div>
 </section>
 
-{{-- Portofolio Kami --}}
 <section class="py-5 bg-light">
     <div class="container text-center">
         <h2 class="mb-4 fw-bold">Contoh Proyek Kami</h2>
@@ -199,7 +203,6 @@
     </div>
 </section>
 
-{{-- CTA --}}
 <section class="cta py-5 bg-success text-white">
     <div class="container text-center">
         <h2 class="mb-3 fw-bold">Ingin Usaha Anda Lebih Terlihat?</h2>
@@ -209,7 +212,6 @@
 </section>
 
 
-{{-- Footer --}}
 <footer>
     <div class="container">
         <p>&copy; {{ date('Y') }} CV. Ramanisa White Media Promosindo. All rights reserved.</p>

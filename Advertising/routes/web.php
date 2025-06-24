@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LokasiController;
@@ -37,6 +38,7 @@ Route::post('/pembayaran/store/{id}', [PembayaranController::class, 'store'])->n
 Route::get('/pembayaran/{id}', [PembayaranController::class, 'show'])->name('pembayaran.show');
 Route::get('/register', [RegisteredUserController::class, 'show'])->name('register');
 Route::post('/register', [RegisteredUserController::class, 'store'])->name('register.store');
+Route::post('/login', [AuthenticatedSessionController::class, 'store'])->name('login.store');
 
 Route::resource('lokasi', LokasiController::class);
 Route::resource('produk', ProdukController::class);
