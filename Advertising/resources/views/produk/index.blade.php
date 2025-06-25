@@ -47,7 +47,7 @@
                         <p class="text-secondary small mb-3">Stok: <strong>{{ $item->stok }}</strong></p>
 
                         @if ($item->stok > 0)
-                            <span class="badge bg-success w-100">Tersedia</span>
+                            <span class="badge bg-secondary w-100">Tersedia</span>
                         @else
                             <span class="badge bg-secondary w-100">Stok Habis</span>
                         @endif

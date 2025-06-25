@@ -199,22 +199,26 @@
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="{{ url('produk') }}" style="color: black">Produk</a>
-                <li class="nav-item">
-                  <a class="nav-link" href="{{ url('lokasi') }}"
-                    aria-haspopup="true" aria-expanded="false" style="color: black">Lokasi</a>
-                </li>
+                @auth
+                  @if (Auth::user()->role !== 'p')
+                    <li class="nav-item">
+                      <a class="nav-link" href="{{ url('lokasi') }}"
+                        aria-haspopup="true" aria-expanded="false" style="color: black">Lokasi</a>
+                    </li>
+                  @endif
+                @endauth
                 <li class="nav-item">
                   <a class="nav-link" href="{{ route('tentangkami') }}"
                     aria-haspopup="true" aria-expanded="false" style="color: black">Tentang Kami</a>
                 </li>
                 @auth
-    @if (Auth::user()->role === 'a')
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('laporan.index') }}"
-                aria-haspopup="true" aria-expanded="false" style="color: black">Laporan</a>
-        </li>
-    @endif
-@endauth
+                  @if (Auth::user()->role === 'a' || Auth::user()->role === 'p')
+                    <li class="nav-item">
+                      <a class="nav-link" href="{{ route('laporan.index') }}"
+                      aria-haspopup="true" aria-expanded="false" style="color: black">Laporan</a>
+                    </li>
+                  @endif
+                @endauth
               </ul>
             </div>
           </div>

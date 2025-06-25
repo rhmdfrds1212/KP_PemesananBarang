@@ -32,7 +32,7 @@ Route::middleware('auth')->group(function () {
 });
 
 // pemesanan
-Route::get('/pemesanan/create', [PemesananController::class, 'create'])->name('pemesanan.create');
+Route::get('/pemesanan/create{id}', [PemesananController::class, 'create'])->name('pemesanan.create');
 Route::get('/pemesanan/{id}edit', [PemesananController::class, 'edit'])->name('pemesanan.edit');
 Route::put('/pemesanan/{id}', [PemesananController::class, 'update'])->name('pemesanan.update');
 Route::get('/pemesanan', [PemesananController::class, 'index'])->name('pemesanan.index');
