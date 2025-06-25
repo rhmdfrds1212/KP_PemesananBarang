@@ -56,7 +56,7 @@ class PembayaranController extends Controller
         ]);
 
 
-        return redirect()->route('pemesanan.index')
+        return redirect()->route('produk.index')
                  ->with('success', 'Pembayaran berhasil dikonfirmasi.');
     }
 

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('lokasis', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->string('produk_nama');
             $table->string('alamat');
             $table->double('latitude');
             $table->double('longitude');

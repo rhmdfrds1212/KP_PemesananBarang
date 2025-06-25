@@ -47,9 +47,9 @@
                         <p class="text-secondary small mb-3">Stok: <strong>{{ $item->stok }}</strong></p>
 
                         @if ($item->stok > 0)
-                            <a href="{{ route('pemesanan.create', $item->id) }}" class="btn btn-sm btn-success mt-2 w-100">Beli Sekarang</a>
+                            <span class="badge bg-success w-100">Tersedia</span>
                         @else
-                            <button class="btn btn-sm btn-secondary mt-2 w-100" disabled>Stok Habis</button>
+                            <span class="badge bg-secondary w-100">Stok Habis</span>
                         @endif
 
                         {{-- Tombol Edit dan Hapus hanya untuk Admin --}}

@@ -15,14 +15,60 @@ class PemesananController extends Controller
         return view('pemesanan.index', compact('pemesanans'));
     }
 
-    public function create(Request $request)
+    public function create(Request $request, $id = null)
     {
-        $produks = Produk::all();
-        $lokasis = Lokasi::all();
-        $produk_id = $request->produk_id ?? null;
-        $produkTerpilih = $request->has('produk_id') ? Produk::find($request->produk_id) : null;
-        return view('pemesanan.create', compact('produks', 'lokasis', 'produk_id', 'produkTerpilih'));
+        $produkTerpilih = Produk::findOrFail($id);
+
+        $lokasis = Lokasi::where('produk_nama', $produkTerpilih->nama)->where('status', 'tersedia')->get();
+
+        return view('pemesanan.create', [
+            'produkTerpilih' => $produkTerpilih,
+            'lokasis' => $lokasis,
+            'produks' => [$produkTerpilih]
+        ]);
     }
+
+    public function edit($id)
+    {
+        $pemesanan = Pemesanan::with('produk')->findOrFail($id);
+        $produkTerpilih = $pemesanan->produk;
+        $produk = Produk::all();
+        $lokasis = \App\Models\Lokasi::where('produk_nama', $produkTerpilih->nama)
+                    ->where('status', 'tersedia')->get();
+
+        return view('pemesanan.edit', [
+            'pemesanan' => $pemesanan,
+            'produkTerpilih' => $produkTerpilih,
+            'lokasis' => $lokasis
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'lokasi_id' => 'required|exists:lokasis,id',
+            'ukuran' => 'required|string',
+            'jumlah' => 'required|integer|min:1',
+            'lama_sewa' => 'required|integer|min:1',
+            'status' => 'required|in:menunggu,diproses,selesai'
+        ]);
+
+        $pemesanan = Pemesanan::findOrFail($id);
+        $produk = $pemesanan->produk;
+        $totalHarga = $produk->harga * $request->jumlah * $request->lama_sewa;
+
+        $pemesanan->update([
+            'lokasi_id' => $request->lokasi_id,
+            'ukuran' => $request->ukuran,
+            'jumlah' => $request->jumlah,
+            'lama_sewa' => $request->lama_sewa,
+            'total_harga' => $totalHarga,
+            'status' => $request->status
+        ]);
+
+        return redirect()->route('pemesanan.index')->with('success', 'Pemesanan berhasil diperbarui.');
+    }
+
 
     public function store(Request $request)
     {

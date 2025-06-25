@@ -36,6 +36,11 @@
                     </select>
                 </div>
 
+                <div class="mb-3">
+                    <label for="produk_nama" class="form-label">Jenis Produk</label>
+                    <input type="text" name="produk_nama" class="form-control" placeholder="Contoh: baliho / neonbox / billboard" value="{{ old('produk_nama') }}" required>
+                </div>
+
                 <div class="d-flex justify-content-between">
                     <a href="{{ route('lokasi.index') }}" class="btn btn-secondary">Cancel</a>
                     <button type="submit" class="btn btn-success">Simpan</button>

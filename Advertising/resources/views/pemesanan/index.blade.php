@@ -8,8 +8,6 @@
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
-    <a href="{{ route('pemesanan.create') }}" class="btn btn-primary mb-3">+ Buat Pemesanan Baru</a>
-
     <div class="table-responsive">
         <table class="table table-bordered align-middle">
             <thead class="table-light">
@@ -30,15 +28,22 @@
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $pemesanan->produk->nama ?? '-' }}</td>
-                        <td>{{ $pemesanan->lokasi->nama ?? '-' }}</td>
+                        <td>{{ $pemesanan->lokasi->alamat ?? '-' }}</td>
                         <td>{{ $pemesanan->nama }}</td>
                         <td>{{ $pemesanan->ukuran ?? '-' }}</td>
                         <td>{{ $pemesanan->jumlah }}</td>
                         <td>Rp{{ number_format($pemesanan->total_harga, 0, ',', '.') }}</td>
                         <td>
-                            <span class="badge bg-{{ $pemesanan->status == 'selesai' ? 'success' : ($pemesanan->status == 'diproses' ? 'warning' : 'secondary') }}">
-                                {{ ucfirst($pemesanan->status) }}
-                            </span>
+                            @php
+                                $status = $pemesanan->status;
+                                $badgeClass = match ($status) {
+                                    'menunggu' => 'secondary',
+                                    'diproses' => 'warning',
+                                    'selesai' => 'success',
+                                    default => 'dark',
+                                };
+                            @endphp
+                            <span class="badge bg-{{ $badgeClass }}">{{ ucfirst($status) }}</span>
                         </td>
                         <td class="d-flex gap-1">
                             <a href="{{ route('pemesanan.edit', $pemesanan->id) }}" class="btn btn-sm btn-warning">Edit</a>
@@ -51,7 +56,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="8" class="text-center">Belum ada pemesanan.</td>
+                        <td colspan="9" class="text-center">Belum ada pemesanan.</td>
                     </tr>
                 @endforelse
             </tbody>

@@ -33,7 +33,8 @@ class LokasiController extends Controller
             'alamat'        => 'required|string|max:100',
             'latitude'      => 'required|numeric',
             'longitude'    => 'required|numeric',
-            'status'        => 'required|in:tersedia,tersewa'
+            'status'        => 'required|in:tersedia,tersewa',
+            'produk_nama'   => 'required|string|max:50'
         ]);
 
         lokasi::create($val);
@@ -65,7 +66,8 @@ class LokasiController extends Controller
             'alamat'        => 'required|string|max:100',
             'latitude'      => 'required|numeric',
             'longitude'    => 'required|numeric',
-            'status'        => 'required|in:tersedia,tersewa'
+            'status'        => 'required|in:tersedia,tersewa',
+            'produk_nama'   => 'required|string|max:50'
         ]);
 
         $lokasi->update($val);
