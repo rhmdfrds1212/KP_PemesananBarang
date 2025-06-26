@@ -27,6 +27,31 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Marcellus&display=swap"
     rel="stylesheet">
+
+    <style>
+        .nav-item.dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+        .dropdown-menu {
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(8px);
+            border-radius: 10px;
+            border: none;
+            padding: 10px 0;
+            min-width: 180px;
+        }
+
+        .dropdown-item:hover {
+            background-color: rgba(252, 185, 0, 0.3);
+            color: black;
+            border-radius: 5px;
+        }
+
+        .nav-item .nav-link::after {
+            display: none !important;
+        }
+    </style>
 </head>
 
 <body class="homepage">
@@ -171,7 +196,7 @@
     <div class="container-fluid">
       <div class="row justify-content-between align-items-center w-100">
 
-        <div class="col-auto">
+        <div class="col-auto" style="margin-left: 50px;">
           <a class="navbar-brand" href="index.html" style="padding: 0;">
             <img src="{{ url('images/logo.jpg') }}" alt="Logo" style="height: 100px; object-fit: contain;">
           </a>
@@ -185,40 +210,40 @@
 
           <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
             aria-labelledby="offcanvasNavbarLabel">
-            <div class="offcanvas-header">
-              <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
-              <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                aria-label="Close"></button>
-            </div>
-
             <div class="offcanvas-body">
               <ul class="navbar-nav justify-content-end flex-grow-1 gap-1 gap-md-5 pe-3">
+                <li class="nav-item dropdown position-relative">
+                  <a class="nav-link fw-bold" href="{{ url('home') }}" style="color: black;">
+                      Beranda
+                  </a>
+                  <ul class="dropdown-menu shadow">
+                      <li><a class="dropdown-item" href="#cerita">Cerita Kami</a></li>
+                      <li><a class="dropdown-item" href="#klien">Klien Kami</a></li>
+                      <li><a class="dropdown-item" href="#lokasi">Lokasi Kami</a></li>
+                  </ul>
+              </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="{{ url('home') }}"
-                    aria-haspopup="true" aria-expanded="false" style="color:black">Beranda</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{{ url('produk') }}" style="color: black">Produk</a>
+                  <a class="nav-link" href="{{ url('produk') }}" style="font-weight:bold; color: black">Produk</a>
                     <li class="nav-item">
                       <a class="nav-link" href="{{ url('lokasi') }}"
-                        aria-haspopup="true" aria-expanded="false" style="color: black">Lokasi</a>
+                        aria-haspopup="true" aria-expanded="false" style="font-weight:bold; color: black">Lokasi</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="{{ route('tentangkami') }}"
-                    aria-haspopup="true" aria-expanded="false" style="color: black">Tentang Kami</a>
+                    aria-haspopup="true" aria-expanded="false" style="font-weight:bold; color: black">Tentang Kami</a>
                 </li>
                 @auth
                   @if (Auth::user()->role === 'a' || Auth::user()->role === 'p')
                     <li class="nav-item">
                       <a class="nav-link" href="{{ route('laporan.index') }}"
-                      aria-haspopup="true" aria-expanded="false" style="color: black">Laporan</a>
+                      aria-haspopup="true" aria-expanded="false" style="font-weight:bold; color: black">Laporan</a>
                     </li>
                   @endif
                 @endauth
                 @auth
                 @if (Auth::user()->role === 'a')
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('riwayat.index') }}" style="color: black">
+                    <a class="nav-link" href="{{ route('riwayat.index') }}" style="font-weight:bold; color: black">
                         <i class="bi"></i> Riwayat Pembelian
                     </a>
                 </li>
@@ -227,7 +252,7 @@
                 @auth
                   @if (Auth::user()->role === 'a')
                     <li class="nav-item">
-                      <a class="nav-link" href="{{ route('pelanggan.index') }}" style="color: black">
+                      <a class="nav-link" href="{{ route('pelanggan.index') }}" style="font-weight:bold; color: black">
                         Kelola Pelanggan
                       </a>
                     </li>
@@ -244,17 +269,6 @@
 
         <div class="col-3 col-lg-auto">
           <ul class="d-flex align-items-center justify-content-center list-unstyled m-0 p-0 gap-3">
-            <li>
-              <a href={{ route('keranjang.index') }} class="position-relative text-decoration-none text-dark" style="font-size: 1.5rem;">
-                <i class="bi bi-cart3"></i>
-                @if($jumlahItem > 0)
-                  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                    {{ $jumlahItem }}
-                  <span class="visually-hidden">jumlah item dalam keranjang</span>
-                </span>
-              @endif
-             </a>
-            </li>
             <li class="nav-item dropdown">
               <a class="nav-link text-dark d-flex align-items-center" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="bi bi-person-circle fs-4"></i>
@@ -307,10 +321,9 @@
         </div>
       </div>
     </nav>
-  <div class="container">
-    <div class="row justify-content-center">
-      @yield('content')
-    </div>
+  <main>
+  @yield('content')
+</main>
   </div>
   <script src="js/jquery.min.js"></script>
   <script src="js/plugins.js"></script>

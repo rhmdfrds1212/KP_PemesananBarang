@@ -3,20 +3,23 @@
 @section('content')
 
 <style>
-    html {
-        scroll-behavior: smooth;
+    html, body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        overflow-x: hidden;
     }
 
     .hero {
-        background: url('{{ url('images/iklan.png') }}') center center/cover no-repeat;
-        width: 100%;
+        width: 100vw;
         height: 100vh;
+        background: url('{{ url('images/iklan.png') }}') center center/cover no-repeat;
+        position: relative;
         display: flex;
         align-items: center;
         justify-content: center;
         text-align: center;
         color: white;
-        position: relative;
     }
 
     .hero::before {
@@ -32,13 +35,12 @@
     }
 
     .hero h1 {
-        font-size: 4rem;
+        font-size: clamp(2rem, 8vw, 5rem);
         font-weight: 900;
-        line-height: 1.2;
     }
 
     .hero p {
-        font-size: 1.5rem;
+        font-size: clamp(1rem, 2vw, 1.5rem);
         margin-top: 1rem;
     }
 
@@ -48,54 +50,35 @@
         border-radius: 50px;
     }
 
-    .section {
-        padding: 100px 0;
-    }
-
-    .dark-section {
-        background-color: #111;
-        color: white;
-    }
-
-    footer {
-        background-color: #111;
-        color: #aaa;
-        padding: 30px 0;
-        text-align: center;
-    }
-
-    nav .nav-link.active, nav .nav-link:hover {
-        color: #fcb900 !important;
-    }
 </style>
 
-<!-- Hero -->
-<section id="home" class="hero">
+<section class="hero">
     <div class="content">
-        <h1 class="mb-3">RAMANISA WHITE<br> MEDIA PROMOSINDO</h1>
-        <p class="fst-italic">WE Design, WE Create, WE Build, WE Maintain, WE Communicate</p>
+        <h1>RAMANISA WHITE <br> MEDIA PROMOSINDO</h1>
+        <p>WE Design, WE Create, WE Build, WE Maintain, WE Communicate</p>
         <a href="#cerita" class="btn btn-success">Lihat Selengkapnya</a>
     </div>
 </section>
 
-<!-- Cerita Kami -->
-<section id="cerita" class="section bg-success text-dark">
+<section id="cerita" class="py-5" style="background-color: #22763d;">
     <div class="container">
         <div class="row align-items-center">
-            <!-- Judul di Kiri -->
-            <div class="col-md-6 mb-4 mb-md-0 ps-5">
-                <h2 class="fw-bold display-4">CERITA <br>KAMI</h2>
+            <div class="col-md-6 mb-4 mb-md-0">
+                <img src="{{ url('images/iklan.png') }}" alt="Tentang Kami" 
+                     class="img-fluid rounded shadow-sm">
             </div>
-
-            <!-- Deskripsi di Kanan -->
-            <div class="col-md-6">
-                <p>
+            <div class="col-md-6 text-white">
+                <h2 class="fw-bold mb-3" style="text-transform: uppercase;">
+                    Cerita Kami
+                </h2>
+                <hr style="border: 2px solid white; width: 80px; margin-left: 0;">
+                <p class="mt-4">
                     Berdiri di kota Palembang, Sumatera Selatan, pada tahun 1985 oleh Alm. Bapak Heru Arttans. 
                     Selama lebih dari 35 tahun, <strong>CV. Ramanisa White Media Promosindo</strong> terus berkomitmen memberikan layanan terbaik untuk klien-klien kami.
                 </p>
                 <p>
-                    Kami adalah pelopor perusahaan advertising di Palembang yang memperkenalkan media <strong>Neon Sign</strong>.
-                    Dengan semangat tinggi dan dedikasi, kami telah memproduksi media iklan indoor dan outdoor untuk lebih dari <strong>50 merek</strong> berbeda.
+                    Kami adalah pelopor perusahaan advertising di Palembang yang memperkenalkan media 
+                    <strong>Neon Sign</strong>. Dengan semangat tinggi dan dedikasi, kami telah memproduksi media iklan indoor dan outdoor untuk lebih dari <strong>50 merek</strong> berbeda.
                 </p>
                 <p>
                     Kami juga dipercaya menjadi mitra dalam event berskala nasional dan internasional seperti 
@@ -106,27 +89,18 @@
     </div>
 </section>
 
-
-
-<section class="py-5 bg-light">
-    <div class="container text-center">
-        <h2 class="mb-4">Galeri Baliho & Billboard</h2>
-        <div class="position-relative">
-            <div id="galleryWrapper" class="overflow-hidden">
-                <div id="gallery" class="d-flex transition-all" style="gap: 10px;">
-                    @for ($i = 1; $i <= 18; $i++)
-                        <div class="gallery-item" style="flex: 0 0 calc(33.333% - 10px); max-width: calc(33.333% - 10px);">
-                            <img src="{{ url('images/gambar/gambar' . $i . '.jpg') }}" class="img-fluid rounded shadow" alt="gambar{{ $i }}">
-                        </div>
-                    @endfor
+<section class="py-5" style="background-color: #f8f9fa; width: 100vw;">
+    <div class="container-fluid text-center px-5">
+        <h2 class="mb-4 fw-bold text-uppercase">Galeri Baliho & Billboard</h2>
+        
+        <div class="d-flex flex-wrap overflow-auto justify-content-center gap-4">
+            @for ($i = 1; $i <= 6; $i++)
+                <div class="gallery-item" style="flex: 0 0 calc(33.333% - 20px); max-width: calc(33.333% - 20px);">
+                    <img src="{{ url('images/gambar/gambar' . $i . '.jpg') }}" 
+                         class="img-fluid rounded shadow w-100" 
+                         alt="gambar{{ $i }}">
                 </div>
-            </div>
-            <button id="prevBtn" class="btn btn-primary position-absolute top-50 start-0 translate-middle-y z-3">
-                <i class="bi bi-arrow-left-circle-fill"></i>
-            </button>
-            <button id="nextBtn" class="btn btn-primary position-absolute top-50 end-0 translate-middle-y z-3">
-                <i class="bi bi-arrow-right-circle-fill"></i>
-            </button>
+            @endfor
         </div>
     </div>
 </section>
@@ -156,10 +130,6 @@
 <!-- Lokasi Kami -->
 <section id="lokasi" class="section bg-light">
     <div class="container text-center">
-        <h2 class="fw-bold mb-4">LOKASI KAMI</h2>
-        <p class="mb-4">
-            Komplek TOP 100, Jl. Cengho 1 Blok A7 No.27, 15 Ulu, Kecamatan Seberang Ulu I, Kota Palembang, Sumatera Selatan 30134
-        </p>
         <div class="mb-4">
             <iframe 
     src="https://www.google.com/maps?q=-3.023636,104.780753&output=embed" 
