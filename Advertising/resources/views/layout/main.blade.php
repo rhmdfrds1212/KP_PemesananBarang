@@ -199,14 +199,10 @@
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="{{ url('produk') }}" style="color: black">Produk</a>
-                @auth
-                  @if (Auth::user()->role !== 'p')
                     <li class="nav-item">
                       <a class="nav-link" href="{{ url('lokasi') }}"
                         aria-haspopup="true" aria-expanded="false" style="color: black">Lokasi</a>
-                    </li>
-                  @endif
-                @endauth
+                </li>
                 <li class="nav-item">
                   <a class="nav-link" href="{{ route('tentangkami') }}"
                     aria-haspopup="true" aria-expanded="false" style="color: black">Tentang Kami</a>

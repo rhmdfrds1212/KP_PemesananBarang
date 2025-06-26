@@ -6,7 +6,6 @@
         <div class="bg-white p-4 rounded shadow-sm">
             <h3 class="mb-4">Pembayaran Pemesanan</h3>
 
-            <!-- Ringkasan Pemesanan -->
             <div class="mb-4">
                 <h5 class="mb-3">Detail Pemesanan</h5>
                 <ul class="list-group">
@@ -15,7 +14,7 @@
                     <li class="list-group-item"><strong>Jumlah:</strong> {{ $pemesanan->jumlah }}</li>
                     <li class="list-group-item"><strong>Lama Sewa:</strong> {{ $pemesanan->lama_sewa }} Tahun</li>
                     <li class="list-group-item"><strong>Lokasi:</strong> {{ $pemesanan->lokasi->alamat }}</li>
-                    <li class="list-group-item"><strong>Total Harga:</strong> <span class="text-danger fw-semibold">Rp{{ number_format($pemesanan->total_harga, 0, ',', '.') }}</span></li>
+                    <li class="list-group-item"><strong>Total Harga:</strong> <span class="text-success fw-semibold">Rp{{ number_format($pemesanan->total_harga, 0, ',', '.') }}</span></li>
                 </ul>
             </div>
 
@@ -31,7 +30,6 @@
 @endif
 
 
-            <!-- Form Pembayaran -->
             <form action="{{ route('pembayaran.store', $pemesanan->id) }}" method="POST">
                 @csrf
 
@@ -49,7 +47,7 @@
                         <textarea name="catatan" class="form-control" rows="3" placeholder="Tulis catatan jika ada..."></textarea>
                 </div>
 
-                    <button type="submit" class="btn btn-primary">Konfirmasi & Bayar</button>
+                    <button type="submit" class="btn btn-success">Konfirmasi & Bayar</button>
                     <a href="{{ route('produk.index') }}" class="btn btn-secondary ms-2">Kembali</a>
             </form>
         </div>
