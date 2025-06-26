@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use App\Models\User;
 
 class Pemesanan extends Model
 {
@@ -24,15 +25,19 @@ class Pemesanan extends Model
             $model->id = (string) Str::uuid();
         });
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
     
     public function produk()
     {
-        return $this->belongsTo(Produk::class);
+        return $this->belongsTo(Produk::class, 'produk_id');
     }
 
     public function lokasi()
     {
-        return $this->belongsTo(Lokasi::class);
+        return $this->belongsTo(Lokasi::class, 'lokasi_id');
     }
     public function pembayaran()
     {

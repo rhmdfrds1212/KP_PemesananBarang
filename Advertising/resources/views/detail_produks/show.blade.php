@@ -34,7 +34,7 @@
 
                     <p class="text-secondary mb-4">
                         <i class="bi bi-box-seam me-2 text-success"></i>
-                        <strong>Stok Tersedia:</strong> {{ $produk->stok }}
+                        <strong>Produk Tersedia:</strong> {{ $produk->stok }}
                     </p>
 
                     <div class="d-flex flex-wrap gap-3 mt-4">

@@ -30,7 +30,9 @@
         @forelse ($produks as $item)
             <div class="col">
                 <div class="card h-100 border-0 shadow-sm hover-shadow">
-                    <a href="{{ route('detail_produks.show', $item->id) }}">
+                    @unless (Auth::check() && Auth::user()->role === 'a')
+                        <a href="{{ route('detail_produks.show', $item->id) }}">
+                    @endunless
                         @if ($item->foto)
                             <img src="{{ asset('upload/produk/' . $item->foto) }}" class="card-img-top rounded-top" alt="{{ $item->nama }}" style="height: 220px; object-fit: cover;">
                         @else

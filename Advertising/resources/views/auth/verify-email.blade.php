@@ -1,31 +1,52 @@
-<x-guest-layout>
-    <div class="mb-4 text-sm text-gray-600">
-        {{ __('Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }}
-    </div>
+@extends('layout.main')
 
-    @if (session('status') == 'verification-link-sent')
-        <div class="mb-4 font-medium text-sm text-green-600">
-            {{ __('A new verification link has been sent to the email address you provided during registration.') }}
-        </div>
-    @endif
+@section('title', 'Verifikasi Email')
 
-    <div class="mt-4 flex items-center justify-between">
-        <form method="POST" action="{{ route('verification.send') }}">
-            @csrf
+@section('content')
+<div class="container d-flex align-items-center justify-content-center" style="min-height: 100vh;">
+    <div class="card shadow-lg border-0 rounded-4" style="max-width: 500px; width: 100%;">
+        <div class="card-body p-5">
 
-            <div>
-                <x-primary-button>
-                    {{ __('Resend Verification Email') }}
-                </x-primary-button>
+            <div class="text-center mb-4">
+                <img src="{{ asset('images/logo.png') }}" alt="Logo" width="100">
+                <h3 class="mt-3">Verifikasi Email Anda</h3>
             </div>
-        </form>
 
-        <form method="POST" action="{{ route('logout') }}">
-            @csrf
+            <div class="mb-3 text-muted text-center">
+                <p>
+                    Terima kasih telah mendaftar! Sebelum mulai, silakan verifikasi alamat email Anda dengan klik link yang telah kami kirim ke email Anda.
+                </p>
+                <p>
+                    Jika Anda belum menerima email verifikasi, klik tombol di bawah untuk mengirim ulang.
+                </p>
+            </div>
 
-            <button type="submit" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                {{ __('Log Out') }}
-            </button>
-        </form>
+            {{-- Notifikasi jika sudah mengirim ulang --}}
+            @if (session('status') == 'verification-link-sent')
+                <div class="alert alert-success text-center">
+                    Link verifikasi baru telah dikirim ke email Anda!
+                </div>
+            @endif
+
+            <div class="d-grid gap-2">
+                {{-- Form Resend --}}
+                <form method="POST" action="{{ route('verification.send') }}">
+                    @csrf
+                    <button type="submit" class="btn btn-success w-100">
+                        <i class="bi bi-envelope"></i> Kirim Ulang Email Verifikasi
+                    </button>
+                </form>
+
+                {{-- Form Logout --}}
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="btn btn-outline-secondary w-100">
+                        <i class="bi bi-box-arrow-left"></i> Keluar
+                    </button>
+                </form>
+            </div>
+
+        </div>
     </div>
-</x-guest-layout>
+</div>
+@endsection

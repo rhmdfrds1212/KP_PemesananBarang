@@ -3,96 +3,110 @@
 @section('content')
 
 <style>
+    html {
+        scroll-behavior: smooth;
+    }
+
     .hero {
         background: url('{{ url('images/iklan.png') }}') center center/cover no-repeat;
-        color: black;
-        width: 100vw;
-        height: 90vh;
-        text-align: center;
+        width: 100%;
+        height: 100vh;
         display: flex;
         align-items: center;
         justify-content: center;
-    }
-
-    .hero .container {
         text-align: center;
-        padding: 80px;
-        color: #0000004f
-    }
-
-    .service-icon {
-        font-size: 48px;
-        color: #0d6efd;
-    }
-
-    .testimonial {
-        background-color: #f8f9fa;
-        padding: 60px 0;
-    }
-
-    .cta {
-        background-color: #0d6efd;
         color: white;
-        padding: 80px 0;
-        text-align: center;
+        position: relative;
+    }
+
+    .hero::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-color: rgba(0, 0, 0, 0.6);
+    }
+
+    .hero .content {
+        position: relative;
+        z-index: 2;
+    }
+
+    .hero h1 {
+        font-size: 4rem;
+        font-weight: 900;
+        line-height: 1.2;
+    }
+
+    .hero p {
+        font-size: 1.5rem;
+        margin-top: 1rem;
+    }
+
+    .hero .btn {
+        margin-top: 2rem;
+        padding: 0.75rem 2rem;
+        border-radius: 50px;
+    }
+
+    .section {
+        padding: 100px 0;
+    }
+
+    .dark-section {
+        background-color: #111;
+        color: white;
     }
 
     footer {
-        background-color: #222;
-        color: #ccc;
+        background-color: #111;
+        color: #aaa;
         padding: 30px 0;
         text-align: center;
     }
 
-    .transition-all {
-        transition: transform 0.5s ease;
+    nav .nav-link.active, nav .nav-link:hover {
+        color: #fcb900 !important;
     }
-    
 </style>
 
-<section class="hero">
-    <div class="container">
-        <h1 class="display-4 fw-bold">Solusi Periklanan Advertising Terbaik</h1>
-        <p class="lead">Tingkatkan visibilitas brand Anda dengan strategi pemasaran modern dan efektif.</p>
-        <a href="#layanan" class="btn btn-success btn-lg mt-4">Lihat Layanan Kami</a>
+<!-- Hero -->
+<section id="home" class="hero">
+    <div class="content">
+        <h1 class="mb-3">RAMANISA WHITE<br> MEDIA PROMOSINDO</h1>
+        <p class="fst-italic">WE Design, WE Create, WE Build, WE Maintain, WE Communicate</p>
+        <a href="#cerita" class="btn btn-success">Lihat Selengkapnya</a>
     </div>
 </section>
 
-<section class="py-5 bg-light">
-    <div class="container text-center">
-        <h2 class="mb-4 fw-bold">Cara Memesan Layanan Kami</h2>
-        <div class="row g-4">
-            <div class="col-md-3">
-                <div class="p-4 shadow-sm bg-white rounded">
-                    <span class="badge bg-success fs-5 mb-2">1</span>
-                    <h6 class="fw-bold">Hubungi Kami</h6>
-                    <p class="text-muted">Konsultasikan kebutuhan Anda lewat WhatsApp atau Telepon.</p>
-                </div>
+<!-- Cerita Kami -->
+<section id="cerita" class="section bg-success text-dark">
+    <div class="container">
+        <div class="row align-items-center">
+            <!-- Judul di Kiri -->
+            <div class="col-md-6 mb-4 mb-md-0 ps-5">
+                <h2 class="fw-bold display-4">CERITA <br>KAMI</h2>
             </div>
-            <div class="col-md-3">
-                <div class="p-4 shadow-sm bg-white rounded">
-                    <span class="badge bg-success fs-5 mb-2">2</span>
-                    <h6 class="fw-bold">Pilih Lokasi</h6>
-                    <p class="text-muted">Tentukan titik strategis yang ingin Anda pasangi iklan.</p>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="p-4 shadow-sm bg-white rounded">
-                    <span class="badge bg-success fs-5 mb-2">3</span>
-                    <h6 class="fw-bold">Desain & Cetak</h6>
-                    <p class="text-muted">Kami bantu proses desain dan percetakan profesional.</p>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="p-4 shadow-sm bg-white rounded">
-                    <span class="badge bg-success fs-5 mb-2">4</span>
-                    <h6 class="fw-bold">Pemasangan</h6>
-                    <p class="text-muted">Iklan Anda langsung dipasang sesuai jadwal yang disepakati.</p>
-                </div>
+
+            <!-- Deskripsi di Kanan -->
+            <div class="col-md-6">
+                <p>
+                    Berdiri di kota Palembang, Sumatera Selatan, pada tahun 1985 oleh Alm. Bapak Heru Arttans. 
+                    Selama lebih dari 35 tahun, <strong>CV. Ramanisa White Media Promosindo</strong> terus berkomitmen memberikan layanan terbaik untuk klien-klien kami.
+                </p>
+                <p>
+                    Kami adalah pelopor perusahaan advertising di Palembang yang memperkenalkan media <strong>Neon Sign</strong>.
+                    Dengan semangat tinggi dan dedikasi, kami telah memproduksi media iklan indoor dan outdoor untuk lebih dari <strong>50 merek</strong> berbeda.
+                </p>
+                <p>
+                    Kami juga dipercaya menjadi mitra dalam event berskala nasional dan internasional seperti 
+                    <strong>PON (2004)</strong>, <strong>SEA Games (2011)</strong>, dan <strong>International Surya Dragon Boat (Padang)</strong>.
+                </p>
             </div>
         </div>
     </div>
 </section>
+
+
 
 <section class="py-5 bg-light">
     <div class="container text-center">
@@ -117,130 +131,76 @@
     </div>
 </section>
 
-<section id="layanan" class="py-5 bg-light">
-    <div class="container text-center">
-        <h2 class="mb-4 fw-bold">Layanan Iklan Fisik Profesional</h2>
-        <p class="mb-5 text-muted">Kami membantu bisnis Anda tampil mencolok di dunia nyata melalui media iklan luar ruang yang menarik perhatian</p>
-        <div class="row g-4">
-            <div class="col-md-4">
-                <div class="card h-100 border-0 shadow-lg p-4">
-                    <div class="service-icon mb-3 text-primary">
-                        <i class="bi bi-easel-fill display-5"></i>
-                    </div>
-                    <h5 class="card-title fw-semibold">Pemasangan Baliho & Billboard</h5>
-                    <p class="card-text">Jangkau ribuan orang setiap hari dengan baliho dan billboard di lokasi strategis kota Anda.</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card h-100 border-0 shadow-lg p-4">
-                    <div class="service-icon mb-3 text-success">
-                        <i class="bi bi-lightbulb-fill display-5"></i>
-                    </div>
-                    <h5 class="card-title fw-semibold">Pembuatan Neon Box</h5>
-                    <p class="card-text">Desain neon box eksklusif dengan pencahayaan maksimal untuk bisnis Anda tetap terlihat siang dan malam.</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card h-100 border-0 shadow-lg p-4">
-                    <div class="service-icon mb-3 text-danger">
-                        <i class="bi bi-tools display-5"></i>
-                    </div>
-                    <h5 class="card-title fw-semibold">Desain & Percetakan</h5>
-                    <p class="card-text">Layanan desain kreatif dan cetak berkualitas tinggi untuk banner, spanduk, dan media promosi lainnya.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="py-5 bg-white border-top">
-    <div class="container text-center">
-        <h2 class="mb-4 fw-bold">Kenapa Memilih Kami?</h2>
-        <div class="row g-4">
-            <div class="col-md-4">
-                <div class="p-4 h-100 shadow-sm rounded bg-light">
-                    <i class="bi bi-geo-alt-fill display-5 text-primary mb-3"></i>
-                    <h5 class="fw-semibold">Lokasi Strategis</h5>
-                    <p class="text-muted">Kami menyediakan titik pemasangan di area dengan lalu lintas tinggi dan visibilitas maksimal.</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="p-4 h-100 shadow-sm rounded bg-light">
-                    <i class="bi bi-star-fill display-5 text-warning mb-3"></i>
-                    <h5 class="fw-semibold">Kualitas Terjamin</h5>
-                    <p class="text-muted">Material tahan cuaca dan proses pemasangan profesional menjamin ketahanan jangka panjang.</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="p-4 h-100 shadow-sm rounded bg-light">
-                    <i class="bi bi-clock-fill display-5 text-success mb-3"></i>
-                    <h5 class="fw-semibold">Tepat Waktu</h5>
-                    <p class="text-muted">Kami berkomitmen menyelesaikan pekerjaan sesuai jadwal yang disepakati tanpa mengurangi kualitas.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="py-5 bg-light">
-    <div class="container text-center">
-        <h2 class="mb-4 fw-bold">Contoh Proyek Kami</h2>
-        <p class="mb-5 text-muted">Berikut adalah beberapa proyek pemasangan media luar ruang yang telah kami kerjakan</p>
-        <div class="row g-4">
-            <div class="col-md-4">
-                <img src="/images/portofolio1.jpg" class="img-fluid rounded shadow-sm" alt="Baliho Djarum Istimewa">
-                <p class="mt-2 fw-medium">Baliho - Djarum Istimewa</p>
-            </div>
-            <div class="col-md-4">
-                <img src="/images/portofolio2.png" class="img-fluid rounded shadow-sm" alt="Neonbox">
-                <p class="mt-2 fw-medium">Neonbox - Restoran</p>
-            </div>
-            <div class="col-md-4">
-                <img src="/images/portofolio3.jpg" class="img-fluid rounded shadow-sm" alt="Billboard Walikota">
-                <p class="mt-2 fw-medium">Billboard - Walikota</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="cta py-5 bg-success text-white">
-    <div class="container text-center">
-        <h2 class="mb-3 fw-bold">Ingin Usaha Anda Lebih Terlihat?</h2>
-        <p class="lead mb-4">Hubungi kami untuk konsultasi gratis pemasangan baliho, billboard, atau neon box di lokasi strategis!</p>
-        <a href="{{ route('tentangkami') }}" class="btn btn-light btn-lg rounded-pill">Pelajari Tentang Kami</a>
-    </div>
-</section>
-
-
-<footer>
+<!-- Klien Kami -->
+<section id="klien" class="section primary-section">
     <div class="container">
-        <p>&copy; {{ date('Y') }} CV. Ramanisa White Media Promosindo. All rights reserved.</p>
+        <h2 class="fw-bold mb-4 text-center">KLIEN KAMI</h2>
+        <p class="text-center mb-5">Kami dipercaya oleh berbagai perusahaan ternama dari berbagai industri.</p>
+        <div class="row text-center">
+            <div class="col-md-3">
+                <img src="{{ url('images/logo1.png') }}" alt="Klien 1" class="img-fluid grayscale">
+            </div>
+            <div class="col-md-3">
+                <img src="{{ url('images/logo2.png') }}" alt="Klien 2" class="img-fluid grayscale">
+            </div>
+            <div class="col-md-3">
+                <img src="{{ url('images/logo3.png') }}" alt="Klien 3" class="img-fluid grayscale">
+            </div>
+            <div class="col-md-3">
+                <img src="{{ url('images/logo4.png') }}" alt="Klien 4" class="img-fluid grayscale">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Lokasi Kami -->
+<section id="lokasi" class="section bg-light">
+    <div class="container text-center">
+        <h2 class="fw-bold mb-4">LOKASI KAMI</h2>
+        <p class="mb-4">
+            Komplek TOP 100, Jl. Cengho 1 Blok A7 No.27, 15 Ulu, Kecamatan Seberang Ulu I, Kota Palembang, Sumatera Selatan 30134
+        </p>
+        <div class="mb-4">
+            <iframe 
+    src="https://www.google.com/maps?q=-3.023636,104.780753&output=embed" 
+    width="100%" 
+    height="450" 
+    style="border:0;" 
+    allowfullscreen="" 
+    loading="lazy">
+</iframe>
+
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-success text-white pt-5 pb-3">
+    <div class="container">
+        <div class="row text-start">
+            <div class="col-md-4 mb-4">
+                <img src="{{ url('images/logo.png') }}" alt="Logo" width="180">
+                <p class="mt-3">&copy; 2025 by CV. Ramanisa White Media Promosindo</p>
+            </div>
+
+            <!-- Jam Operasi -->
+            <div class="col-md-4 mb-4">
+                <h5 class="fw-bold mb-3">JAM OPERASI</h5>
+                <p class="m-0">Senin – Sabtu:</p>
+                <p class="m-0">08:00 AM sampai 17:00 PM</p>
+                <p class="m-0">Minggu: Tutup</p>
+            </div>
+
+            <!-- Kontak -->
+            <div class="col-md-4 mb-4">
+                <h5 class="fw-bold mb-3">HUBUNGI KAMI</h5>
+                <p class="mb-1">Jl.Pangeran ratu, Komplek TOP100 blok, A7-27 jakabaring - palembang.  Sumatra Selatan. 30134</p>
+                <p class="mb-1">Mail: <a href="mailto:rawhite.adv@gmail.com" class="text-warning">rawhite.adv@gmail.com</a></p>
+                <p class="mb-1"><strong>Telp :</strong> <a href="tel:+628127878578" class="text-warning">+62 812-7878-578</a></p>
+                <p class="mb-1"><strong>Whatsapp:</strong> <a href="https://wa.me/628127878578" class="text-warning">+62 812-7878-578</a></p>
+            </div>
+        </div>
     </div>
 </footer>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const gallery = document.getElementById('gallery');
-        const items = gallery.querySelectorAll('.gallery-item');
-        const itemsPerScroll = 3;
-        const itemWidth = items[0].offsetWidth + 10;
-
-        let currentIndex = 0;
-        const maxIndex = Math.ceil(items.length / itemsPerScroll) - 1;
-
-        document.getElementById('nextBtn').addEventListener('click', () => {
-            if (currentIndex < maxIndex) {
-                currentIndex++;
-                gallery.style.transform = `translateX(-${currentIndex * itemsPerScroll * itemWidth}px)`;
-            }
-        });
-
-        document.getElementById('prevBtn').addEventListener('click', () => {
-            if (currentIndex > 0) {
-                currentIndex--;
-                gallery.style.transform = `translateX(-${currentIndex * itemsPerScroll * itemWidth}px)`;
-            }
-        });
-    });
-</script>
 @endsection

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\detailProduk;
 use App\Models\Produk;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DetailProdukController extends Controller
 {
@@ -37,6 +38,9 @@ class DetailProdukController extends Controller
      */
     public function show($produk_id)
     {
+        if (Auth::check() && Auth::user()->role === 'a') {
+        abort(403, 'Admin tidak diizinkan mengakses halaman ini.');
+        }
         $produk = Produk::with('detail')->findOrFail($produk_id);
         return view('detail_produks.show', compact('produk'));
     }

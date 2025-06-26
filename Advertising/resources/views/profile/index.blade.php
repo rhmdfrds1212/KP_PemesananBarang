@@ -21,14 +21,21 @@
                         <p class="mb-0"><i class="bi bi-calendar-check me-2"></i><strong>Bergabung sejak:</strong> {{ $user->created_at->format('d M Y') }}</p>
                     </div>
 
-                    <div class="mt-4">
-                        <a href="{{ route('home.index') }}" class="btn btn-outline-secondary me-2">
+                    <div class="mt-4 d-flex flex-wrap justify-content-center gap-2">
+                        <a href="{{ route('home.index') }}" class="btn btn-outline-secondary">
                             <i class="bi bi-arrow-left-circle"></i> Kembali
                         </a>
                         <a href="{{ route('profile.edit') }}" class="btn btn-warning">
                             <i class="bi bi-pencil-square"></i> Edit Profil
                         </a>
+                        <a href="{{ route('profile.histori') }}" class="btn btn-outline-success">
+                            <i class="bi bi-clock-history"></i> Histori Transaksi
+                        </a>
+                        <a href="{{ route('pemesanan.index') }}" class="btn btn-outline-primary">
+                            <i class="bi bi-cart4"></i> Pemesanan
+                        </a>
                     </div>
+
                 </div>
             </div>
         </div>

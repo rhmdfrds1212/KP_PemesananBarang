@@ -5,12 +5,22 @@ namespace App\Http\Controllers;
 use App\Models\Pemesanan;
 use App\Models\Produk;
 use App\Models\Lokasi;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PemesananController extends Controller
 {
     public function index()
     {
+        $user = Auth::user();
+
+        if ($user->role === 'a') {
+            $pemesanans = User::where('role', 'u')->get();
+        } else {
+            $pemesanans = Pemesanan::where('id', $user->id)->get();
+        }
+
         $pemesanans = Pemesanan::with(['produk', 'lokasi'])->latest()->get();
         return view('pemesanan.index', compact('pemesanans'));
     }

@@ -16,40 +16,44 @@
             </div>
           </div>
           <form method="POST" action="{{ route('register') }}">
+            @if ($errors->any())
+              <div class="alert alert-danger">
+                  <strong>Terjadi kesalahan saat mendaftar:</strong>
+                  <ul class="mb-0 mt-2">
+                      @foreach ($errors->all() as $error)
+                          <li>{{ $error }}</li>
+                      @endforeach
+                  </ul>
+              </div>
+          @endif
             @csrf
             <div class="row gy-3 gy-md-4 overflow-hidden">
 
-              {{-- First Name --}}
               <div class="col-12 col-md-6">
                 <label for="firstName" class="form-label">First Name <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" name="firstName" id="firstName" required>
+                <input type="text" class="form-control" name="firstName" id="firstName" value="{{ old('firstName') }}" required>
               </div>
 
-              {{-- Last Name --}}
               <div class="col-12 col-md-6">
                 <label for="lastName" class="form-label">Last Name <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" name="lastName" id="lastName" required>
+                <input type="text" class="form-control" name="lastName" id="lastName" value="{{ old('lastName') }}" required>
               </div>
 
-              {{-- Email --}}
               <div class="col-12">
                 <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
-                <input type="email" class="form-control" name="email" id="email" required>
+                <input type="email" class="form-control" name="email" id="email" value="{{ old('email') }}" required>
               </div>
 
-              {{-- Password --}}
               <div class="col-12">
                 <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
                 <input type="password" class="form-control" name="password" id="password" required>
               </div>
 
-              {{-- Password Confirmation --}}
               <div class="col-12">
                 <label for="password_confirmation" class="form-label">Confirm Password <span class="text-danger">*</span></label>
                 <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" required>
               </div>
 
-              {{-- Agree Terms --}}
               <div class="col-12">
                 <div class="form-check">
                   <input class="form-check-input" type="checkbox" value="" name="iAgree" id="iAgree" required>
@@ -59,7 +63,6 @@
                 </div>
               </div>
 
-              {{-- Submit Button --}}
               <div class="col-12">
                 <div class="d-grid">
                   <button class="btn btn-success btn-lg" type="submit">Sign Up</button>

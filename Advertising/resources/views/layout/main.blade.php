@@ -195,7 +195,7 @@
               <ul class="navbar-nav justify-content-end flex-grow-1 gap-1 gap-md-5 pe-3">
                 <li class="nav-item">
                   <a class="nav-link" href="{{ url('home') }}"
-                    aria-haspopup="true" aria-expanded="false" style="color:black">Home</a>
+                    aria-haspopup="true" aria-expanded="false" style="color:black">Beranda</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="{{ url('produk') }}" style="color: black">Produk</a>
@@ -212,6 +212,24 @@
                     <li class="nav-item">
                       <a class="nav-link" href="{{ route('laporan.index') }}"
                       aria-haspopup="true" aria-expanded="false" style="color: black">Laporan</a>
+                    </li>
+                  @endif
+                @endauth
+                @auth
+                @if (Auth::user()->role === 'a')
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('riwayat.index') }}" style="color: black">
+                        <i class="bi"></i> Riwayat Pembelian
+                    </a>
+                </li>
+                @endif
+                @endauth
+                @auth
+                  @if (Auth::user()->role === 'a')
+                    <li class="nav-item">
+                      <a class="nav-link" href="{{ route('pelanggan.index') }}" style="color: black">
+                        Kelola Pelanggan
+                      </a>
                     </li>
                   @endif
                 @endauth

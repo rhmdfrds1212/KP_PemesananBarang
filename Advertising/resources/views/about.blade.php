@@ -80,5 +80,4 @@
     transition: 0.3s ease;
   }
 </style>
-
 @endsection
