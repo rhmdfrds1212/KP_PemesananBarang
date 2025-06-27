@@ -15,8 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('produk_nama');
             $table->string('alamat');
-            $table->double('latitude');
-            $table->double('longitude');
+            $table->string('foto');
             $table->enum('status', ['tersedia', 'tersewa']);
             $table->timestamps();
         });

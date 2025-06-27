@@ -82,7 +82,7 @@ class PemesananController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'produk_id' => 'required|exists:produks,id',
             'lokasi_id' => 'required|exists:lokasis,id',
             'nama' => 'required|string|max:255',
@@ -93,34 +93,34 @@ class PemesananController extends Controller
             'lama_sewa' => 'required|integer|min:1',
         ]);
 
-        $produk = Produk::findOrFail($request->produk_id);
+        $produk = Produk::findOrFail($validated['produk_id']);
         $hargaSewa = $produk->harga;
-        $totalHarga = $hargaSewa * $request->jumlah * $request->lama_sewa;
+        $totalHarga = $hargaSewa * $validated['jumlah'] * $validated['lama_sewa'];
 
-        Pemesanan::create([
-            'produk_id' => $request->produk_id,
-            'lokasi_id' => $request->lokasi_id,
-            'nama' => $request->nama,
-            'email' => $request->email,
-            'telepon' => $request->telepon,
-            'ukuran' => $request->ukuran,
-            'jumlah' => $request->jumlah,
-            'lama_sewa' => $request->lama_sewa,
-            'harga_sewa' => $hargaSewa,
-            'total_harga' => $totalHarga,
-            'status' => 'menunggu',
-        ]);
+        $validated['user_id'] = Auth::id();
+        $validated['harga_sewa'] = $hargaSewa;
+        $validated['total_harga'] = $totalHarga;
+        $validated['status'] = 'menunggu';
 
-        $pemesanan = Pemesanan::create($request->all());
+        $pemesanan = Pemesanan::create($validated);
 
         return redirect()->route('pembayaran.show', $pemesanan->id)
-                     ->with('success', 'Pemesanan berhasil, silakan lanjut ke pembayaran.');
+                        ->with('success', 'Pemesanan berhasil dibuat. Silakan lanjut ke pembayaran.');
     }
+
 
     public function show($id)
     {
         $pemesanan = Pemesanan::with(['produk', 'lokasi'])->findOrFail($id);
         return view('pemesanan.show', compact('pemesanan'));
+    }
+
+        public function histori()
+    {
+        $userId = Auth::id();
+        $histori = \App\Models\Pemesanan::where('user_id', $userId)->orderBy('created_at', 'desc')->get();
+
+        return view('profile.histori', compact('histori'));
     }
 
     public function destroy($id)

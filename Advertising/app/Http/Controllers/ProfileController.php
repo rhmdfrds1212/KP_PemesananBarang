@@ -18,13 +18,35 @@ class ProfileController extends Controller
     public function index()
     {
         $user = Auth::user();
-        return view('profile.index', compact('user'));
+        $histori = Pemesanan::where('user_id', Auth::id())->latest()->get();
+        return view('profile.index', compact('user', 'histori'));
     }
 
     public function edit(Request $request): View
     {
         return view('profile.edit', [
             'user' => $request->user(),
+        ]);
+    }
+
+    public function show()
+    {
+        $user = Auth::user();
+
+        // Ambil histori transaksi berdasarkan user yang login
+        $histori = \App\Models\Pemesanan::where('user_id', $user->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        // Ringkasan data
+        $total_pemesanan = $histori->count();
+        $total_transaksi = $histori->sum('total_harga');
+
+        return view('profile.show', [
+            'user' => $user,
+            'histori' => $histori,
+            'total_pemesanan' => $total_pemesanan,
+            'total_transaksi' => $total_transaksi
         ]);
     }
 

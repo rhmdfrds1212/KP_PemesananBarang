@@ -3,26 +3,28 @@
 @section('title', 'Histori Transaksi')
 
 @section('content')
-<div class="container py-5">
-    <h2 class="fw-bold mb-4">Histori Transaksi</h2>
+<div class="container mt-5">
+    <h3 class="mb-4">Histori Transaksi</h3>
 
-    @if ($histori->count() > 0)
-        @foreach ($histori as $item)
-            <div class="card mb-4 shadow-sm">
+    @if($histori->count() > 0)
+        @foreach($histori as $item)
+            <div class="card mb-3">
                 <div class="card-body">
-                    <h5 class="card-title">{{ $item->produk->nama ?? 'Produk tidak tersedia' }}</h5>
-                    <p class="mb-1"><strong>Lokasi:</strong> {{ $item->lokasi->alamat ?? '-' }}</p>
-                    <p class="mb-1"><strong>Jumlah:</strong> {{ $item->jumlah }}</p>
-                    <p class="mb-1"><strong>Tanggal Pesan:</strong> {{ $item->created_at->format('d-m-Y') }}</p>
-                    <p class="mb-1"><strong>Total Harga:</strong> Rp{{ number_format($item->total_harga, 0, ',', '.') }}</p>
-                    <p class="mb-1"><strong>Status:</strong> 
-                        @if($item->status == 'selesai')
-                            <span class="badge bg-success">Selesai</span>
-                        @elseif($item->status == 'proses')
-                            <span class="badge bg-warning text-dark">Proses</span>
-                        @else
-                            <span class="badge bg-secondary">{{ ucfirst($item->status) }}</span>
-                        @endif
+                    <h5 class="card-title">{{ $item->produk->nama ?? 'Produk Tidak Ditemukan' }}</h5>
+                    <p>
+                        <strong>Lokasi:</strong> {{ $item->lokasi->alamat ?? '-' }}<br>
+                        <strong>Ukuran:</strong> {{ $item->ukuran }}<br>
+                        <strong>Jumlah:</strong> {{ $item->jumlah }}<br>
+                        <strong>Lama Sewa:</strong> {{ $item->lama_sewa }} hari<br>
+                        <strong>Total Harga:</strong> Rp{{ number_format($item->total_harga) }}<br>
+                        <strong>Status:</strong> 
+                        <span class="badge 
+                            {{ $item->status == 'selesai' ? 'bg-success' : 
+                                ($item->status == 'diproses' ? 'bg-warning' : 
+                                ($item->status == 'menunggu' ? 'bg-secondary' : 'bg-danger')) }}">
+                            {{ ucfirst($item->status) }}
+                        </span><br>
+                        <small class="text-muted">Dipesan pada {{ $item->created_at->format('d M Y') }}</small>
                     </p>
                 </div>
             </div>

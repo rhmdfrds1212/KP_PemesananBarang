@@ -196,9 +196,9 @@
     <div class="container-fluid">
       <div class="row justify-content-between align-items-center w-100">
 
-        <div class="col-auto" style="margin-left: 50px;">
+        <div class="col-auto" style="margin-left: 170px;">
           <a class="navbar-brand" href="index.html" style="padding: 0;">
-            <img src="{{ url('images/logo.jpg') }}" alt="Logo" style="height: 100px; object-fit: contain;">
+            <img src="{{ url('images/logo.png') }}" alt="Logo" style="height: 80px; object-fit: contain;">
           </a>
         </div>
 
@@ -249,24 +249,10 @@
                 </li>
                 @endif
                 @endauth
-                @auth
-                  @if (Auth::user()->role === 'a')
-                    <li class="nav-item">
-                      <a class="nav-link" href="{{ route('pelanggan.index') }}" style="font-weight:bold; color: black">
-                        Kelola Pelanggan
-                      </a>
-                    </li>
-                  @endif
-                @endauth
               </ul>
             </div>
           </div>
         </div>
-        @php
-          $keranjang = session('keranjang', []);
-          $jumlahItem = array_sum(array_column($keranjang, 'total_harga'));
-        @endphp
-
         <div class="col-3 col-lg-auto">
           <ul class="d-flex align-items-center justify-content-center list-unstyled m-0 p-0 gap-3">
             <li class="nav-item dropdown">

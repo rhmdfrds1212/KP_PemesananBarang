@@ -17,9 +17,10 @@
         position: relative;
         display: flex;
         align-items: center;
-        justify-content: center;
-        text-align: center;
+        justify-content: flex-start;
+        text-align: left;
         color: white;
+        padding-left: 80px;
     }
 
     .hero::before {
@@ -55,8 +56,9 @@
 <section class="hero">
     <div class="content">
         <h1>RAMANISA WHITE <br> MEDIA PROMOSINDO</h1>
-        <p>WE Design, WE Create, WE Build, WE Maintain, WE Communicate</p>
-        <a href="#cerita" class="btn btn-success">Lihat Selengkapnya</a>
+        <p style="color: #0edd18;">
+            WE Design, WE Create, WE Build, WE Maintain, WE Communicate
+        </p>
     </div>
 </section>
 
@@ -132,20 +134,19 @@
     <div class="container text-center">
         <div class="mb-4">
             <iframe 
-    src="https://www.google.com/maps?q=-3.023636,104.780753&output=embed" 
-    width="100%" 
-    height="450" 
-    style="border:0;" 
-    allowfullscreen="" 
-    loading="lazy">
-</iframe>
-
+                src="https://www.google.com/maps?q=-3.023636,104.780753&output=embed" 
+                width="100%" 
+                height="450" 
+                style="border:0;" 
+                allowfullscreen="" 
+                loading="lazy">
+            </iframe>
         </div>
     </div>
 </section>
 
 <!-- Footer -->
-<footer class="bg-success text-white pt-5 pb-3">
+<footer class="bg text-black pt-5 pb-3">
     <div class="container">
         <div class="row text-start">
             <div class="col-md-4 mb-4">
@@ -165,9 +166,9 @@
             <div class="col-md-4 mb-4">
                 <h5 class="fw-bold mb-3">HUBUNGI KAMI</h5>
                 <p class="mb-1">Jl.Pangeran ratu, Komplek TOP100 blok, A7-27 jakabaring - palembang.  Sumatra Selatan. 30134</p>
-                <p class="mb-1">Mail: <a href="mailto:rawhite.adv@gmail.com" class="text-warning">rawhite.adv@gmail.com</a></p>
-                <p class="mb-1"><strong>Telp :</strong> <a href="tel:+628127878578" class="text-warning">+62 812-7878-578</a></p>
-                <p class="mb-1"><strong>Whatsapp:</strong> <a href="https://wa.me/628127878578" class="text-warning">+62 812-7878-578</a></p>
+                <p class="mb-1"><strong>Email:</strong> <a href="mailto:rawhite.adv@gmail.com" class="text-success">rawhite.adv@gmail.com</a></p>
+                <p class="mb-1"><strong>Telp :</strong> <a href="tel:+628127878578" class="text-success">+62 812-7878-578</a></p>
+                <p class="mb-1"><strong>Whatsapp:</strong> <a href="https://wa.me/628127878578" class="text-success">+62 812-7878-578</a></p>
             </div>
         </div>
     </div>

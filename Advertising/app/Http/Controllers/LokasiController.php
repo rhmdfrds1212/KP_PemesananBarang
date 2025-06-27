@@ -31,11 +31,14 @@ class LokasiController extends Controller
     {
         $val = $request->validate([
             'alamat'        => 'required|string|max:100',
-            'latitude'      => 'required|numeric',
-            'longitude'    => 'required|numeric',
             'status'        => 'required|in:tersedia,tersewa',
-            'produk_nama'   => 'required|string|max:50'
+            'produk_nama'   => 'required|string|max:50',
+            'foto'          => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
+
+        if ($request->hasFile('foto')) {
+            $val['foto'] = $request->file('foto')->store('lokasi', 'public');
+        }
 
         lokasi::create($val);
         return redirect()->route('lokasi.index')->with('success', 'Data lokasi berhasil ditambahkan');
@@ -64,11 +67,14 @@ class LokasiController extends Controller
     {
         $val = $request->validate([
             'alamat'        => 'required|string|max:100',
-            'latitude'      => 'required|numeric',
-            'longitude'    => 'required|numeric',
             'status'        => 'required|in:tersedia,tersewa',
-            'produk_nama'   => 'required|string|max:50'
+            'produk_nama'   => 'required|string|max:50',
+            'foto'          => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
+        if ($request->hasFile('foto')) {
+            $val['foto'] = $request->file('foto')->store('lokasi', 'public');
+        }
+
 
         $lokasi->update($val);
         return redirect()->route('lokasi.index')->with('success', 'Data lokasi berhasil diperbarui');

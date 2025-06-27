@@ -10,7 +10,6 @@ use App\Http\Controllers\PemesananController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\DetailProdukController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\KeranjangController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\RiwayatController;
 use Illuminate\Http\Request;
@@ -29,7 +28,7 @@ Route::get('/home', function () {
     return view('home.index');
 })->middleware(['auth', 'verified'])->name('home');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
@@ -57,11 +56,6 @@ Route::get('/pemesanan', [PemesananController::class, 'index'])->name('pemesanan
 Route::post('/pemesanan', [PemesananController::class, 'store'])->name('pemesanan.store');
 Route::get('/pemesanan/{id}', [PemesananController::class, 'show'])->name('pemesanan.show');
 Route::delete('/pemesanan/{id}', [PemesananController::class, 'destroy'])->name('pemesanan.destroy');
-
-// keranjang
-Route::post('/keranjang/add', [KeranjangController::class, 'add'])->name('keranjang.add');
-Route::get('/keranjang', [KeranjangController::class, 'index'])->name('keranjang.index');
-Route::delete('/keranjang/delete/{id}', [KeranjangController::class, 'delete'])->name('keranjang.delete');
 
 // pembayaran
 Route::post('/pembayaran/store/{id}', [PembayaranController::class, 'store'])->name('pembayaran.store');
