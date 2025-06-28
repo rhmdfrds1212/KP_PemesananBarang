@@ -15,5 +15,18 @@ class RiwayatController extends Controller
 
         return view('riwayat.index', compact('riwayat'));
     }
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|in:menunggu,diproses,selesai,dibatalkan'
+        ]);
+
+        $pemesanan = Pemesanan::findOrFail($id);
+        $pemesanan->status = $request->status;
+        $pemesanan->save();
+
+        return redirect()->route('riwayat.index')
+                         ->with('success', 'Status pemesanan berhasil diperbarui.');
+    }
     
 }

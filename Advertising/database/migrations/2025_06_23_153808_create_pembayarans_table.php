@@ -15,8 +15,10 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->foreignUuId('pemesanan_id')->constrained()->onDelete('cascade');
             $table->enum('metode', ['transfer_bank', 'bca', 'bri']);
-            $table->string('status')->default('menunggu pembayaran');
+            $table->string('bukti_pembayaran');
+            $table->string('status_pembayaran')->default('menunggu pembayaran');
             $table->text('catatan')->nullable();
+            $table->enum('status_verifikasi', ['pending', 'diterima', 'ditolak'])->default('pending');
             $table->timestamps();
         });
     }

@@ -6,90 +6,74 @@ use App\Models\Pembayaran;
 use App\Models\Pemesanan;
 use App\Models\Laporan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PembayaranController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        // Menampilkan semua pembayaran untuk admin
+        $pembayarans = Pembayaran::with('pemesanan')->latest()->get();
+        return view('admin.pembayaran.index', compact('pembayarans'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request, $id)
     {
         $request->validate([
             'metode_pembayaran' => 'required|in:transfer_bank,bca,bri',
+            'bukti_pembayaran' => 'required|mimes:jpg,jpeg,png,pdf|max:5120',
             'catatan' => 'nullable|string',
         ]);
 
         $pemesanan = Pemesanan::with('produk')->findOrFail($id);
 
-        $produk = $pemesanan->produk;
-        if ($produk->stok < $pemesanan->jumlah) {
-            return back()->withErrors(['stok' => 'Stok produk tidak mencukupi untuk pemesanan ini.']);
-        }
-        $produk->stok -= $pemesanan->jumlah;
-        $produk->save();
+        $path = $request->file('bukti_pembayaran')->store('bukti_pembayaran', 'public');
 
+        // Buat pembayaran
         $pembayaran = Pembayaran::create([
             'pemesanan_id' => $pemesanan->id,
             'metode' => $request->metode_pembayaran,
-            'status' => 'menunggu pembayaran',
+            'bukti_pembayaran' => $path,
+            'status_pembayaran' => 'menunggu pembayaran',
+            'status_verifikasi' => 'pending',
             'catatan' => $request->catatan,
         ]);
 
+        // Buat laporan otomatis
         Laporan::create([
             'pembayaran_id' => $pembayaran->id,
         ]);
 
-
-        return redirect()->route('produk.index')
-                 ->with('success', 'Pembayaran berhasil dikonfirmasi.');
+        return redirect()->route('profile.pemesanan')
+                         ->with('success', 'Bukti pembayaran berhasil dikirim. Menunggu verifikasi admin.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show($id)
     {
-        $pemesanan = Pemesanan::with('produk', 'lokasi')->findOrFail($id);
+        $pemesanan = Pemesanan::with(['produk', 'lokasi'])->findOrFail($id);
         return view('pembayaran.show', compact('pemesanan'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Pembayaran $pembayaran)
+    public function updateStatus($id, $status)
     {
-        //
+        $pembayaran = Pembayaran::findOrFail($id);
+
+        if (!in_array($status, ['pending', 'diterima', 'ditolak'])) {
+            return back()->with('error', 'Status tidak valid.');
+        }
+
+        $pembayaran->update([
+            'status_verifikasi' => $status,
+        ]);
+
+        return back()->with('success', 'Status pembayaran berhasil diperbarui.');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Pembayaran $pembayaran)
+    public function destroy($id)
     {
-        //
-    }
+        $pembayaran = Pembayaran::findOrFail($id);
+        $pembayaran->delete();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Pembayaran $pembayaran)
-    {
-        //
+        return back()->with('success', 'Data pembayaran berhasil dihapus.');
     }
 }

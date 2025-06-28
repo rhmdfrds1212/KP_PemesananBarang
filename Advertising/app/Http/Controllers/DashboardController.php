@@ -1,0 +1,30 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Pembayaran;
+use App\Models\Pemesanan;
+use App\Models\Produk;
+use App\Models\Lokasi;
+use App\Models\User;
+use Illuminate\Http\Request;
+
+class DashboardController extends Controller
+{
+    public function index()
+    {
+        $pembayarans = Pembayaran::with('pemesanan')->get();
+
+        $totalPendapatan = $pembayarans->sum(function ($pembayaran) {
+            return $pembayaran->pemesanan->total_harga ?? 0;
+        });
+
+        return view('admin.dashboard', [
+            'totalPendapatan' => $totalPendapatan,
+            'totalPemesanan' => Pemesanan::count(),
+            'totalProduk' => Produk::count(),
+            'totalLokasi' => Lokasi::count(),
+            'totalPelanggan' => User::where('role', 'u')->count(),
+        ]);
+    }
+}

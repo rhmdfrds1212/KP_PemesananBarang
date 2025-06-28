@@ -196,7 +196,7 @@
     <div class="container-fluid">
       <div class="row justify-content-between align-items-center w-100">
 
-        <div class="col-auto" style="margin-left: 170px;">
+        <div class="col-auto" style="margin-left: 50px;">
           <a class="navbar-brand" href="index.html" style="padding: 0;">
             <img src="{{ url('images/logo.png') }}" alt="Logo" style="height: 80px; object-fit: contain;">
           </a>
@@ -212,6 +212,13 @@
             aria-labelledby="offcanvasNavbarLabel">
             <div class="offcanvas-body">
               <ul class="navbar-nav justify-content-end flex-grow-1 gap-1 gap-md-5 pe-3">
+                @if(Auth::check() && Auth::user()->role === 'a')
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('dashboard') }}" style="font-weight:bold; color:black">
+                            Dashboard
+                        </a>
+                    </li>
+                @endif
                 <li class="nav-item dropdown position-relative">
                   <a class="nav-link fw-bold" href="{{ url('home') }}" style="color: black;">
                       Beranda

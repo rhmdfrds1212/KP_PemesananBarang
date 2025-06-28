@@ -42,6 +42,9 @@
                         <a href="{{ route('pemesanan.index') }}" class="btn btn-outline-primary">
                             <i class="bi bi-cart4"></i> Pemesanan Saya
                         </a>
+                        <a href="{{ route('profile.invoice') }}" class="btn btn-outline-primary">
+                            <i class="bi bi-file-earmark-text"></i> Invoice Saya
+                        </a>          
                         @if(Auth::user()->role === 'a')
                             <a href="{{ route('pelanggan.index') }}" class="btn btn-outline-dark">
                                 <i class="bi bi-people-fill"></i> Kelola Pelanggan

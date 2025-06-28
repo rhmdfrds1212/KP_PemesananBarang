@@ -70,7 +70,17 @@ class ProfileController extends Controller
     public function pemesanan()
     {
         // Halaman pemesanan sudah Anda buat sebelumnya
-        return view('profile.pemesanan');
+        return view('pemesanan.index');
+    }
+    public function invoice()
+    {
+        $userId = Auth::id();
+        $invoice = \App\Models\Pemesanan::with(['produk', 'lokasi'])
+                    ->where('user_id', $userId)
+                    ->latest()
+                    ->get();
+
+        return view('profile.invoice', compact('invoice'));
     }
 
     /**

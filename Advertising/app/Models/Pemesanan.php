@@ -41,6 +41,6 @@ class Pemesanan extends Model
     }
     public function pembayaran()
     {
-    return $this->hasOne(Pembayaran::class);
+        return $this->hasOne(Pembayaran::class);
     }
 }

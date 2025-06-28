@@ -94,8 +94,18 @@ class PemesananController extends Controller
         ]);
 
         $produk = Produk::findOrFail($validated['produk_id']);
+
+        // Cek stok cukup atau tidak
+        if ($produk->stok < $validated['jumlah']) {
+            return back()->with('error', 'Stok tidak mencukupi untuk pemesanan ini.');
+        }
+
         $hargaSewa = $produk->harga;
         $totalHarga = $hargaSewa * $validated['jumlah'] * $validated['lama_sewa'];
+
+        // Kurangi stok
+        $produk->stok -= $validated['jumlah'];
+        $produk->save();
 
         $validated['user_id'] = Auth::id();
         $validated['harga_sewa'] = $hargaSewa;
@@ -107,7 +117,6 @@ class PemesananController extends Controller
         return redirect()->route('pembayaran.show', $pemesanan->id)
                         ->with('success', 'Pemesanan berhasil dibuat. Silakan lanjut ke pembayaran.');
     }
-
 
     public function show($id)
     {

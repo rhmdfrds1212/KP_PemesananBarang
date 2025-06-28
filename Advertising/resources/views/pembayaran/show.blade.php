@@ -14,41 +14,49 @@
                     <li class="list-group-item"><strong>Jumlah:</strong> {{ $pemesanan->jumlah }}</li>
                     <li class="list-group-item"><strong>Lama Sewa:</strong> {{ $pemesanan->lama_sewa }} Tahun</li>
                     <li class="list-group-item"><strong>Lokasi:</strong> {{ $pemesanan->lokasi->alamat }}</li>
-                    <li class="list-group-item"><strong>Total Harga:</strong> <span class="text-success fw-semibold">Rp{{ number_format($pemesanan->total_harga, 0, ',', '.') }}</span></li>
+                    <li class="list-group-item"><strong>Total Harga:</strong> 
+                        <span class="text-success fw-semibold">Rp{{ number_format($pemesanan->total_harga, 0, ',', '.') }}</span>
+                    </li>
                 </ul>
             </div>
 
+            {{-- Error Validation --}}
             @if ($errors->any())
-    <div class="alert alert-danger">
-        <strong>Terjadi kesalahan:</strong>
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+            <div class="alert alert-danger">
+                <strong>Terjadi kesalahan:</strong>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
 
-
-            <form action="{{ route('pembayaran.store', $pemesanan->id) }}" method="POST">
+            {{-- Form Pembayaran --}}
+            <form action="{{ route('pembayaran.store', $pemesanan->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <div class="mb-3">
                     <label for="metode_pembayaran" class="form-label">Pilih Metode Pembayaran</label>
                     <select name="metode_pembayaran" id="metode_pembayaran" class="form-select" required>
-                        <option value="transfer_bank">-- Pilih Metode --</option>
-                        <option value="bca">BCA</option>
-                        <option value="bri">BRI</option>
+                        <option value="">-- Pilih Metode --</option>
+                        <option value="bca">BCA - 123456789 a/n CV. Ramanisa</option>
+                        <option value="bri">BRI - 987654321 a/n CV. Ramanisa</option>
                     </select>
                 </div>
 
                 <div class="mb-3">
-                    <label for="catatan" class="form-label">Catatan Tambahan (Opsional)</label>
-                        <textarea name="catatan" class="form-control" rows="3" placeholder="Tulis catatan jika ada..."></textarea>
+                    <label for="bukti_pembayaran" class="form-label">Upload Bukti Pembayaran</label>
+                    <input type="file" name="bukti_pembayaran" class="form-control" required>
                 </div>
 
-                    <button type="submit" class="btn btn-success">Konfirmasi & Bayar</button>
-                    <a href="{{ route('produk.index') }}" class="btn btn-secondary ms-2">Kembali</a>
+                <div class="mb-3">
+                    <label for="catatan" class="form-label">Catatan Tambahan (Opsional)</label>
+                    <textarea name="catatan" class="form-control" rows="3" placeholder="Tulis catatan jika ada..."></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-success">Konfirmasi & Bayar</button>
+                <a href="{{ route('produk.index') }}" class="btn btn-secondary ms-2">Kembali</a>
             </form>
         </div>
     </div>

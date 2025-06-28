@@ -19,7 +19,7 @@ class VerifyEmailController extends Controller
     {
         // Jika sudah terverifikasi sebelumnya
         if ($request->user()->hasVerifiedEmail()) {
-            return redirect()->route('home')->with('status', 'Email Anda sudah diverifikasi.');
+            return redirect()->route('home.index')->with('status', 'Email Anda sudah diverifikasi.');
         }
 
         // Jika berhasil memverifikasi
@@ -27,6 +27,6 @@ class VerifyEmailController extends Controller
             event(new Verified($request->user()));
         }
 
-        return redirect()->route('home')->with('status', 'Email Anda berhasil diverifikasi.');
+        return redirect()->route('home.index')->with('status', 'Email Anda berhasil diverifikasi.');
     }
 }

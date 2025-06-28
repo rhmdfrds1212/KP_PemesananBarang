@@ -14,7 +14,7 @@ class Pembayaran extends Model
     protected $keyType = 'string';
 
     protected $fillable = [
-        'pemesanan_id', 'metode', 'status', 'catatan',
+        'pemesanan_id', 'metode', 'bukti_pembayaran', 'status_pembayaran', 'catatan', 'status_verifikasi'
     ];
 
     protected static function boot()

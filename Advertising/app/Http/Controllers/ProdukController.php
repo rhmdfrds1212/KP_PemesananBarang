@@ -12,15 +12,22 @@ class ProdukController extends Controller
      */
     public function index(Request $request)
     {
-        $produk = Produk::all();
-         $query = Produk::query();
+        $query = Produk::query();
 
-         if ($request->has('cari') && $request->cari != '') {
-            $query->where('nama', 'like', '%' . $request->cari . '%')
+        // Filter berdasarkan pencarian
+        if ($request->filled('cari')) {
+            $query->where(function($q) use ($request) {
+                $q->where('nama', 'like', '%' . $request->cari . '%')
                 ->orWhere('kategori', 'like', '%' . $request->cari . '%');
+            });
         }
 
-        $produks = $query->get();
+        // Filter berdasarkan kategori jika ada
+        if ($request->filled('kategori')) {
+            $query->where('kategori', $request->kategori);
+        }
+
+        $produks = $query->latest()->get();
 
         return view('produk.index', compact('produks'));
     }

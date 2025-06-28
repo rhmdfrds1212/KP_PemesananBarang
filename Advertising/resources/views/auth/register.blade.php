@@ -55,15 +55,6 @@
               </div>
 
               <div class="col-12">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" name="iAgree" id="iAgree" required>
-                  <label class="form-check-label text-secondary" for="iAgree">
-                    I agree to the <a href="#" class="link-success text-decoration-none">terms and conditions</a>
-                  </label>
-                </div>
-              </div>
-
-              <div class="col-12">
                 <div class="d-grid">
                   <button class="btn btn-success btn-lg" type="submit">Sign Up</button>
                 </div>
