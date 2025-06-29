@@ -196,7 +196,7 @@
     <div class="container-fluid">
       <div class="row justify-content-between align-items-center w-100">
 
-        <div class="col-auto" style="margin-left: 50px;">
+        <div class="col-auto" style="margin-left: 30px;">
           <a class="navbar-brand" href="index.html" style="padding: 0;">
             <img src="{{ url('images/logo.png') }}" alt="Logo" style="height: 80px; object-fit: contain;">
           </a>
@@ -232,9 +232,9 @@
                 <li class="nav-item">
                   <a class="nav-link" href="{{ url('produk') }}" style="font-weight:bold; color: black">Produk</a>
                     <li class="nav-item">
-                      <a class="nav-link" href="{{ url('lokasi') }}"
-                        aria-haspopup="true" aria-expanded="false" style="font-weight:bold; color: black">Lokasi</a>
-                </li>
+                          <a class="nav-link" href="{{ url('lokasi') }}"
+                            aria-haspopup="true" aria-expanded="false" style="font-weight:bold; color: black">Lokasi</a>
+                    </li>
                 <li class="nav-item">
                   <a class="nav-link" href="{{ route('tentangkami') }}"
                     aria-haspopup="true" aria-expanded="false" style="font-weight:bold; color: black">Tentang Kami</a>

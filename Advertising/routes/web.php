@@ -21,6 +21,9 @@ use Illuminate\Support\Facades\Auth;
 // ========================
 // 🔸 Public Pages
 // ========================
+Route::get('/', function () {
+    return redirect()->route('login');
+});
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
 
 Route::get('/tentang-kami', function () {

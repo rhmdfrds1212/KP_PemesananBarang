@@ -1,11 +1,9 @@
 @extends('layout.main')
 
-@section('title', 'Dashboard Admin')
+@section('title', 'Dashboard')
 
 @section('content')
 <div class="container mt-5">
-    <h2 class="fw-bold mb-4">Dashboard Admin</h2>
-
     <div class="row g-4">
 
         {{-- Total Pendapatan --}}
