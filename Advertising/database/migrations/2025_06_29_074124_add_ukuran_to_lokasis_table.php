@@ -11,13 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('detail_produks', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->foreignUuid('produk_id')->constrained('produks')->onDelete('cascade');
-            $table->text('deskripsi')->nullable();
+        Schema::table('lokasis', function (Blueprint $table) {
             $table->string('ukuran')->nullable();
-            $table->string('foto');
-            $table->timestamps();
         });
     }
 
@@ -26,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('detail_produks');
+        Schema::table('lokasis', function (Blueprint $table) {
+            $table->dropColumn('ukuran');
+        });
     }
 };

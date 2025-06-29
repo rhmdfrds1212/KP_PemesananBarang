@@ -44,6 +44,19 @@
                                 <option value="tersewa" {{ old('status') == 'tersewa' ? 'selected' : '' }}>Tersewa</option>
                             </select>
                         </div>
+                        <div class="mt-3">
+                            <label for="ukuran" class="form-label fw-semibold">
+                                <i class="bi bi-aspect-ratio me-1 text-primary"></i> Ukuran
+                            </label>
+                            <input type="text" name="ukuran" class="form-control" value="{{ old('ukuran') }}" placeholder="Contoh: 4 x 6 M Vertical" required>
+                        </div>
+                        <div class="mt-3">
+                            <label for="harga" class="form-label fw-semibold">
+                                <i class="bi bi-cash-stack me-1 text-success"></i> Harga Sewa (Per Bulan)
+                            </label>
+                            <input type="number" name="harga" class="form-control" value="{{ old('harga') }}" required placeholder="Contoh: 5000000">
+                            <small class="text-muted">Masukkan harga sewa lokasi per bulan (tanpa titik/koma).</small>
+                        </div>
 
                         {{-- Nama Produk --}}
                         <div class="mt-3">

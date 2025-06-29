@@ -5,6 +5,7 @@
 @section('content')
 <div class="container mt-4">
     <h1 class="text-center fw-bold mb-4">TITIK LOKASI</h1>
+
     @if (Auth::check() && Auth::user()->role === 'a')
         <div class="d-flex justify-content-end mb-3">
             <a href="{{ route('lokasi.create') }}" class="btn btn-success">
@@ -25,9 +26,17 @@
                 </a>
                 <div class="card-body text-center">
                     <h5 class="fw-bold">{{ ucfirst($item->produk_nama) }}</h5>
-                    <p class="mb-0">{{ $item->alamat }}</p>
+                    <p class="mb-1">{{ $item->alamat }}</p>
+                    
+                    {{-- Ukuran dan Harga --}}
+                    <div class="mb-2">
+                        <span class="badge bg-primary">
+                            Ukuran: {{ $item->ukuran }}
+                        </span>
+                    </div>
 
-                     @if($item->status == 'tersedia')
+                    {{-- Status --}}
+                    @if($item->status == 'tersedia')
                         <span class="badge bg-success">Tersedia</span>
                     @elseif($item->status == 'tersewa' || $item->status == 'tidak tersedia')
                         <span class="badge bg-danger">Tersewa</span>
@@ -35,6 +44,7 @@
                         <span class="badge bg-secondary">{{ ucfirst($item->status) }}</span>
                     @endif
 
+                    {{-- Tombol Aksi --}}
                     @if (Auth::check() && Auth::user()->role === 'a')
                     <div class="d-flex justify-content-center gap-2 mt-3">
                         <a href="{{ route('lokasi.edit', $item->id) }}" 

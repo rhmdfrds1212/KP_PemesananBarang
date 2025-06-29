@@ -2,11 +2,12 @@
 
 @section('content')
 <div class="container my-5">
-    <div class="card shadow-lg border-0">
+    <div class="card shadow border-0">
         <div class="card-header bg-success text-white">
             <h5 class="mb-0"><i class="bi bi-cart-plus-fill me-2"></i> Buat Pemesanan Baru</h5>
         </div>
         <div class="card-body">
+
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <strong>Terjadi kesalahan:</strong>
@@ -21,147 +22,125 @@
             <form action="{{ route('pemesanan.store') }}" method="POST">
                 @csrf
 
+                {{-- Produk --}}
                 <div class="mb-3">
-                    <label class="form-label fw-semibold"><i class="bi bi-box-seam me-1"></i> Produk</label>
-                    @if (isset($produkTerpilih))
-                        <input type="text" class="form-control" value="{{ $produkTerpilih->nama }}" readonly>
-                        <input type="hidden" name="produk_id" value="{{ $produkTerpilih->id }}">
-                    @else
-                        <select name="produk_id" class="form-select" required id="produk_id">
-                            <option value="">-- Pilih Produk --</option>
-                            @foreach ($produks as $produk)
-                                <option value="{{ $produk->id }}" {{ old('produk_id') == $produk->id ? 'selected' : '' }}>
-                                    {{ $produk->nama }} - Rp{{ number_format($produk->harga, 0, ',', '.') }}
-                                </option>
-                            @endforeach
-                        </select>
-                    @endif
+                    <label class="form-label fw-semibold">Produk</label>
+                    <input type="text" class="form-control" value="{{ $produkTerpilih->nama }}" readonly>
+                    <input type="hidden" name="produk_id" value="{{ $produkTerpilih->id }}">
                 </div>
 
+                {{-- Lokasi --}}
                 <div class="mb-3">
-                    <label class="form-label fw-semibold"><i class="bi bi-geo-alt me-1"></i> Lokasi</label>
-                    <select name="lokasi_id" class="form-select" required>
+                    <label class="form-label fw-semibold">Lokasi</label>
+                    <select name="lokasi_id" id="lokasi_id" class="form-select" required>
                         <option value="">-- Pilih Lokasi --</option>
                         @foreach ($lokasis as $lokasi)
-                            <option value="{{ $lokasi->id }}" {{ old('lokasi_id') == $lokasi->id ? 'selected' : '' }}>
-                                {{ $lokasi->alamat }}
+                            <option 
+                                value="{{ $lokasi->id }}" 
+                                data-harga="{{ $lokasi->harga }}" 
+                                data-ukuran="{{ $lokasi->ukuran }}">
+                                {{ $lokasi->alamat }} - Rp{{ number_format($lokasi->harga) }} / bulan
                             </option>
                         @endforeach
                     </select>
                 </div>
 
+                {{-- Data Pemesan --}}
                 <div class="mb-3">
-                    <label for="nama" class="form-label fw-semibold"><i class="bi bi-person-fill me-1"></i> Nama Pemesan</label>
-                    <input type="text" name="nama" class="form-control" value="{{ old('nama') }}" required>
+                    <label class="form-label fw-semibold">Nama Pemesan</label>
+                    <input type="text" name="nama" class="form-control"
+                        value="{{ old('nama', $lastOrder->nama ?? Auth::user()->name) }}" required>
                 </div>
 
                 <div class="row g-3 mb-3">
                     <div class="col-md-6">
-                        <label for="email" class="form-label fw-semibold"><i class="bi bi-envelope-fill me-1"></i> Email</label>
-                        <input type="email" name="email" class="form-control" value="{{ old('email') }}">
+                        <label class="form-label">Email</label>
+                        <input type="email" name="email" class="form-control"
+                            value="{{ old('email', $lastOrder->email ?? Auth::user()->email) }}">
                     </div>
                     <div class="col-md-6">
-                        <label for="telepon" class="form-label fw-semibold"><i class="bi bi-telephone-fill me-1"></i> Telepon</label>
-                        <input type="text" name="telepon" class="form-control" value="{{ old('telepon') }}">
+                        <label class="form-label">Telepon</label>
+                        <input type="text" name="telepon" class="form-control"
+                            value="{{ old('telepon', $lastOrder->telepon ?? '') }}">
                     </div>
                 </div>
 
+                {{-- Ukuran --}}
                 <div class="mb-3">
-                    <label for="ukuran" class="form-label fw-semibold"><i class="bi bi-arrows-fullscreen me-1"></i> Ukuran</label>
-                    <select name="ukuran" class="form-select" required>
-                        <option value="">-- Pilih Ukuran --</option>
-                        @foreach ([
-                            '4 x 6 M Vertical', '8 x 4 M Horizontal',
-                            '5 x 10 M Vertical', '6 x 12 M Vertical',
-                            '2 x 4 M Horizontal'
-                        ] as $ukuran)
-                            <option value="{{ $ukuran }}" {{ old('ukuran') == $ukuran ? 'selected' : '' }}>{{ $ukuran }}</option>
-                        @endforeach
-                    </select>
+                    <label class="form-label fw-semibold">Ukuran</label>
+                    <input type="text" name="ukuran" id="ukuran" class="form-control" readonly required>
                 </div>
 
+                {{-- Jumlah dan Lama Sewa --}}
                 <div class="row g-3 mb-3">
                     <div class="col-md-6">
-                        <label for="jumlah" class="form-label fw-semibold"><i class="bi bi-stack me-1"></i> Jumlah</label>
-                        <input type="number" name="jumlah" class="form-control" id="jumlah" min="1" value="{{ old('jumlah', 1) }}" required>
+                        <label class="form-label fw-semibold">Jumlah</label>
+                        <input type="number" name="jumlah" id="jumlah" class="form-control" min="1" value="1" required>
                     </div>
                     <div class="col-md-6">
-                        <label for="lama_sewa" class="form-label fw-semibold"><i class="bi bi-clock-history me-1"></i> Lama Sewa</label>
-                        <select name="lama_sewa" id="lama_sewa" class="form-select" required>
-                            <option value="">-- Pilih Lama Sewa --</option>
-                            <option value="1" {{ old('lama_sewa') == '1' ? 'selected' : '' }}>1 Tahun</option>
-                            <option value="2" {{ old('lama_sewa') == '2' ? 'selected' : '' }}>2 Tahun</option>
-                            <option value="3" {{ old('lama_sewa') == '3' ? 'selected' : '' }}>3 Tahun</option>
-                        </select>
+                        <label class="form-label fw-semibold">Lama Sewa (Bulan)</label>
+                        <input type="number" name="lama_sewa" id="lama_sewa" class="form-control" min="1" value="1" required>
                     </div>
                 </div>
 
+                {{-- Total Harga --}}
                 <div class="mb-4">
-                    <label class="form-label fw-semibold"><i class="bi bi-cash-coin me-1"></i> Total Harga</label>
+                    <label class="form-label fw-semibold">Total Harga</label>
                     <input type="text" id="total_harga_display" class="form-control" readonly>
-                    <input type="hidden" name="harga_sewa" id="harga_sewa">
                     <input type="hidden" name="total_harga" id="total_harga">
                 </div>
 
+                {{-- Tombol --}}
                 <div class="d-flex justify-content-end gap-2">
                     <a href="{{ route('produk.index') }}" class="btn btn-secondary">
                         <i class="bi bi-arrow-left"></i> Kembali
                     </a>
                     <button type="submit" class="btn btn-success">
-                        <i class="bi"></i> Pesan Sekarang
+                        <i class="bi bi-cart"></i> Pesan Sekarang
                     </button>
                 </div>
             </form>
         </div>
     </div>
 </div>
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const produkSelect = document.getElementById('produk_id');
-        const lamaSewaSelect = document.getElementById('lama_sewa');
+        const lokasiSelect = document.getElementById('lokasi_id');
+        const ukuranInput = document.getElementById('ukuran');
         const jumlahInput = document.getElementById('jumlah');
-        const hargaSewaInput = document.getElementById('harga_sewa');
-        const totalHargaHidden = document.getElementById('total_harga');
+        const lamaSewaInput = document.getElementById('lama_sewa');
         const totalHargaDisplay = document.getElementById('total_harga_display');
+        const totalHargaInput = document.getElementById('total_harga');
 
-        let produkMap = {};
-        @foreach ($produks as $p)
-            produkMap["{{ $p->id }}"] = { harga: {{ $p->harga }}, stok: {{ $p->stok }} };
-        @endforeach
-
-        function updateTotalHarga() {
-            const produkId = produkSelect ? produkSelect.value : '{{ $produkTerpilih->id ?? "" }}';
-            const lamaSewa = parseInt(lamaSewaSelect.value || 0);
-            const jumlah = parseInt(jumlahInput.value || 0);
-
-            if (!produkId || !produkMap[produkId]) {
-                totalHargaDisplay.value = '';
-                hargaSewaInput.value = '';
-                totalHargaHidden.value = '';
-                return;
-            }
-
-            const produk = produkMap[produkId];
-            if (jumlah > produk.stok) {
-                alert('Jumlah yang dipesan melebihi stok yang tersedia!');
-                jumlahInput.value = produk.stok;
-                return updateTotalHarga();
-            }
-
-            const total = produk.harga * jumlah * lamaSewa;
-
-            hargaSewaInput.value = produk.harga;
-            totalHargaHidden.value = total;
-            totalHargaDisplay.value = total > 0 ? 'Rp ' + total.toLocaleString('id-ID') : '';
+        function updateUkuran() {
+            const selected = lokasiSelect.options[lokasiSelect.selectedIndex];
+            const ukuran = selected ? selected.getAttribute('data-ukuran') : '';
+            ukuranInput.value = ukuran || '';
         }
 
-        if (produkSelect) produkSelect.addEventListener('change', updateTotalHarga);
-        lamaSewaSelect.addEventListener('change', updateTotalHarga);
-        jumlahInput.addEventListener('input', updateTotalHarga);
-        updateTotalHarga();
+        function hitungTotal() {
+            const selected = lokasiSelect.options[lokasiSelect.selectedIndex];
+            const harga = parseInt(selected ? selected.getAttribute('data-harga') : 0) || 0;
+            const lama = parseInt(lamaSewaInput.value || 1);
+            const jumlah = parseInt(jumlahInput.value || 1);
+
+            const total = harga * jumlah * lama;
+            totalHargaDisplay.value = 'Rp ' + total.toLocaleString('id-ID');
+            totalHargaInput.value = total;
+        }
+
+        lokasiSelect.addEventListener('change', function () {
+            const selectedOption = this.options[this.selectedIndex];
+            const ukuran = selectedOption.getAttribute('data-ukuran');
+            ukuranInput.value = ukuran;
+        });
+
+        jumlahInput.addEventListener('input', hitungTotal);
+        lamaSewaInput.addEventListener('input', hitungTotal);
+
+        // Jalankan saat halaman load
+        updateUkuran();
+        hitungTotal();
     });
 </script>
 @endsection

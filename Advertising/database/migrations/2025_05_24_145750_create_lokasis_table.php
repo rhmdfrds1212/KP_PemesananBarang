@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('alamat');
             $table->string('foto');
             $table->enum('status', ['tersedia', 'tersewa']);
+            $table->integer('harga');
             $table->timestamps();
         });
     }

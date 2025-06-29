@@ -62,7 +62,7 @@
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Lama Sewa (Tahun)</label>
+            <label class="form-label">Lama Sewa (Bulan)</label>
             <input type="number" name="lama_sewa" class="form-control" min="1" value="{{ $pemesanan->lama_sewa }}" required>
         </div>
 

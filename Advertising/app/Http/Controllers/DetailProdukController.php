@@ -36,13 +36,17 @@ class DetailProdukController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($produk_id)
+    public function show($id)
     {
+        $produk = Produk::findOrFail($id);
+        $detail_foto = \App\Models\DetailProduk::where('produk_id', $id)->get();
+
+        // Cek jika admin tidak boleh akses halaman detail produk
         if (Auth::check() && Auth::user()->role === 'a') {
-        abort(403, 'Admin tidak diizinkan mengakses halaman ini.');
+            abort(403, 'Admin tidak diizinkan mengakses halaman ini.');
         }
-        $produk = Produk::with('detail')->findOrFail($produk_id);
-        return view('detail_produks.show', compact('produk'));
+
+        return view('detail_produks.show', compact('produk', 'detail_foto'));
     }
 
     /**

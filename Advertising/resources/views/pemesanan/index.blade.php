@@ -1,6 +1,15 @@
 @extends('layout.main')
 
 @section('content')
+
+<style>
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        transition: all 0.3s ease-in-out;
+    }
+</style>
+
 <div class="container mt-4">
     <h2 class="mb-4">Daftar Pemesanan</h2>
 
@@ -8,59 +17,51 @@
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
-    <div class="table-responsive">
-        <table class="table table-bordered align-middle">
-            <thead class="table-light">
-                <tr>
-                    <th>No</th>
-                    <th>Produk</th>
-                    <th>Lokasi</th>
-                    <th>Nama Pemesan</th>
-                    <th>Ukuran</th>
-                    <th>Jumlah</th>
-                    <th>Total Harga</th>
-                    <th>Status</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($pemesanans as $pemesanan)
-                    <tr>
-                        <td>{{ $loop->iteration }}</td>
-                        <td>{{ $pemesanan->produk->nama ?? '-' }}</td>
-                        <td>{{ $pemesanan->lokasi->alamat ?? '-' }}</td>
-                        <td>{{ $pemesanan->nama }}</td>
-                        <td>{{ $pemesanan->ukuran ?? '-' }}</td>
-                        <td>{{ $pemesanan->jumlah }}</td>
-                        <td>Rp{{ number_format($pemesanan->total_harga, 0, ',', '.') }}</td>
-                        <td>
-                            @php
-                                $status = $pemesanan->status;
-                                $badgeClass = match ($status) {
-                                    'menunggu' => 'secondary',
-                                    'diproses' => 'warning',
-                                    'selesai' => 'success',
-                                    default => 'dark',
-                                };
-                            @endphp
-                            <span class="badge bg-{{ $badgeClass }}">{{ ucfirst($status) }}</span>
-                        </td>
-                        <td class="d-flex gap-1">
-                            <a href="{{ route('pemesanan.edit', $pemesanan->id) }}" class="btn btn-sm btn-warning">Edit</a>
-                            <form action="{{ route('pemesanan.destroy', $pemesanan->id) }}" method="POST" onsubmit="return confirm('Hapus pemesanan ini?')">
-                                @csrf
-                                @method('DELETE')
-                                <button class="btn btn-sm btn-danger">Hapus</button>
-                            </form>
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="9" class="text-center">Belum ada pemesanan.</td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
+    @if($pemesanans->isEmpty())
+        <div class="alert alert-info text-center">
+            Belum ada pemesanan.
+        </div>
+    @endif
+
+    <div class="row g-4">
+        @foreach($pemesanans as $pemesanan)
+        <div class="col-md-6 col-lg-4">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title fw-bold mb-2">
+                        {{ $pemesanan->produk->nama ?? '-' }}
+                    </h5>
+                    <p class="mb-1"><strong>Lokasi:</strong> {{ $pemesanan->lokasi->alamat ?? '-' }}</p>
+                    <p class="mb-1"><strong>Ukuran:</strong> {{ $pemesanan->ukuran }}</p>
+                    <p class="mb-1"><strong>Jumlah:</strong> {{ $pemesanan->jumlah }}</p>
+                    <p class="mb-1"><strong>Total:</strong> Rp{{ number_format($pemesanan->total_harga, 0, ',', '.') }}</p>
+
+                    <p class="mb-1">
+                        <strong>Status:</strong> 
+                        <span class="badge 
+                            @if($pemesanan->status == 'menunggu') bg-secondary 
+                            @elseif($pemesanan->status == 'diproses') bg-warning 
+                            @elseif($pemesanan->status == 'selesai') bg-success 
+                            @else bg-dark @endif">
+                            {{ ucfirst($pemesanan->status) }}
+                        </span>
+                    </p>
+
+                    <div class="mt-auto d-flex gap-2">
+                        <a href="{{ route('pemesanan.edit', $pemesanan->id) }}" class="btn btn-sm btn-warning w-50">
+                            Edit
+                        </a>
+                        <form action="{{ route('pemesanan.destroy', $pemesanan->id) }}" method="POST"
+                              onsubmit="return confirm('Yakin ingin menghapus pemesanan ini?')" class="w-50">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-sm btn-danger w-100">Batalkan</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endforeach
     </div>
 </div>
 @endsection

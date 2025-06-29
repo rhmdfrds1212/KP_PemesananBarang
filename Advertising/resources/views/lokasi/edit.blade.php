@@ -26,13 +26,19 @@
                         <option value="tersewa" {{ old('status', $lokasi['status']) == 'tersewa' ? 'selected' : '' }}>Tersewa</option>
                     </select>
                 </div>
+                
 
                 <div class="mt-3">
                     <label for="produk_nama" class="form-label fw-semibold">Jenis Produk</label>
                     <input type="text" name="produk_nama" class="form-control"
                         value="{{ old('produk_nama', $lokasi['produk_nama']) }}" required>
                 </div>
-
+                <div class="mt-3">
+                    <label for="harga" class="form-label fw-semibold">Harga Sewa (Per Bulan)</label>
+                    <input type="number" name="harga" class="form-control"
+                        value="{{ old('harga', $lokasi['harga']) }}" required>
+                    <small class="text-muted">Masukkan harga sewa lokasi per bulan (tanpa titik/koma).</small>
+                </div>
                 <div class="mt-3">
                     <label for="foto" class="form-label fw-semibold">Foto Lokasi</label>
                     <input type="file" name="foto" class="form-control">

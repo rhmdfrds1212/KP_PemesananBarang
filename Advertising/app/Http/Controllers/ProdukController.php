@@ -14,12 +14,13 @@ class ProdukController extends Controller
     {
         $query = Produk::query();
 
-        // Filter berdasarkan pencarian
-        if ($request->filled('cari')) {
-            $query->where(function($q) use ($request) {
-                $q->where('nama', 'like', '%' . $request->cari . '%')
+        if ($request->has('kategori') && $request->kategori != '') {
+            $query->where('kategori', $request->kategori);
+        }
+
+        if ($request->has('cari') && $request->cari != '') {
+            $query->where('nama', 'like', '%' . $request->cari . '%')
                 ->orWhere('kategori', 'like', '%' . $request->cari . '%');
-            });
         }
 
         // Filter berdasarkan kategori jika ada
@@ -46,28 +47,48 @@ class ProdukController extends Controller
     public function store(Request $request)
     {
         try {
-        $request->validate([
-            'nama' => 'required|string|max:255',
-            'deskripsi' => 'nullable|string',
-            'harga' => 'required|numeric|min:0',
-            'stok' => 'required|integer|min:0',
-            'foto' => 'nullable|image|max:2048',
-            'kategori' => 'nullable|string|max:255',
-        ]);
+            $request->validate([
+                'nama' => 'required|string|max:255',
+                'deskripsi' => 'nullable|string',
+                'stok' => 'required|integer|min:0',
+                'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+                'kategori' => 'nullable|string|max:255',
+                'foto_tambahan.*' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            ]);
 
-        $data = $request->only('nama', 'deskripsi', 'harga', 'stok', 'kategori');
+            // Simpan Foto Utama
+            $fotoUtama = null;
+            if ($request->hasFile('foto')) {
+                $fotoUtama = time() . '_' . $request->file('foto')->getClientOriginalName();
+                $request->file('foto')->move(public_path('upload/produk'), $fotoUtama);
+            }
 
-        if ($request->hasFile('foto')) {
-            $fotoName = time() . '.' . $request->foto->extension();
-            $request->foto->move(public_path('upload/produk'), $fotoName);
-            $data['foto'] = $fotoName;
-        }
+            // Simpan Data Produk
+            $produk = Produk::create([
+                'nama' => $request->nama,
+                'deskripsi' => $request->deskripsi,
+                'stok' => $request->stok,
+                'kategori' => $request->kategori,
+                'foto' => $fotoUtama,
+            ]);
 
-        Produk::create($data);
+            // Simpan Foto Tambahan
+            if ($request->hasFile('foto_tambahan')) {
+                foreach ($request->file('foto_tambahan') as $file) {
+                    $filename = time() . '_' . $file->getClientOriginalName();
+                    $file->move(public_path('upload/detail_produk'), $filename);
 
-        return redirect()->route('produk.index')->with('success', 'Produk berhasil ditambahkan.');
-    } catch (\Exception $e) {
-        return back()->withErrors(['error' => $e->getMessage()])->withInput();
+                    \App\Models\DetailProduk::create([
+                        'produk_id' => $produk->id,
+                        'foto' => $filename,
+                    ]);
+                }
+            }
+
+            return redirect()->route('produk.index')->with('success', 'Produk berhasil ditambahkan.');
+
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => $e->getMessage()])->withInput();
         }
     }
 
@@ -109,13 +130,12 @@ class ProdukController extends Controller
             $request->validate([
                 'nama' => 'required|string|max:255',
                 'deskripsi' => 'nullable|string',
-                'harga' => 'required|numeric|min:0',
                 'stok' => 'required|integer|min:0',
                 'foto' => 'nullable|image|max:2048',
                 'kategori' => 'nullable|string|max:255',
             ]);
 
-            $data = $request->only('nama', 'deskripsi', 'harga', 'stok', 'kategori');
+            $data = $request->only('nama', 'deskripsi', 'stok', 'kategori');
 
             if ($request->hasFile('foto')) {
                 if ($produk->foto && file_exists(public_path('upload/produk/' . $produk->foto))) {

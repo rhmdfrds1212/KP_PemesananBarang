@@ -3,13 +3,13 @@
 @section('content')
 
 <style>
-    html, body {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        overflow-x: hidden;
+    body {
+        background-color: #f8f9fa;
+        color: #333;
+        font-family: 'Poppins', sans-serif;
     }
 
+    /* Hero Section */
     .hero {
         width: 100vw;
         height: 100vh;
@@ -19,15 +19,15 @@
         align-items: center;
         justify-content: flex-start;
         text-align: left;
-        color: white;
         padding-left: 80px;
+        overflow: hidden;
     }
 
     .hero::before {
         content: '';
         position: absolute;
         inset: 0;
-        background-color: rgba(0, 0, 0, 0.6);
+        background: rgba(0, 0, 0, 0.7);
     }
 
     .hero .content {
@@ -38,27 +38,96 @@
     .hero h1 {
         font-size: clamp(2rem, 8vw, 5rem);
         font-weight: 900;
+        background: linear-gradient(to right, #e53935, #43a047);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-fill-color: transparent;
     }
 
     .hero p {
         font-size: clamp(1rem, 2vw, 1.5rem);
         margin-top: 1rem;
+        color: #00ff66;
+        max-width: 600px;
     }
 
-    .hero .btn {
-        margin-top: 2rem;
-        padding: 0.75rem 2rem;
-        border-radius: 50px;
+    /* Section */
+    section {
+        padding: 80px 0;
     }
 
+    section:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+
+    section:nth-child(odd) {
+        background-color: #ffffff;
+    }
+
+    .section-title {
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    .section-title span {
+        color: #e53935;
+    }
+
+    /* Footer */
+    footer {
+        background-color: #222;
+        color: #bbb;
+        padding: 60px 0 30px 0;
+    }
+
+    footer h5 {
+        color: #fff;
+        margin-bottom: 20px;
+    }
+
+    footer p, footer a {
+        color: #bbb;
+        font-size: 14px;
+    }
+
+    footer a:hover {
+        color: #00ff66;
+        text-decoration: underline;
+    }
+
+    footer .social-icons a {
+        margin-right: 10px;
+        color: #bbb;
+        transition: color 0.3s ease;
+    }
+
+    footer .social-icons a:hover {
+        color: #00ff66;
+    }
+
+    footer .logo-footer {
+        width: 180px;
+        margin-bottom: 20px;
+    }
+
+    .line-footer {
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+        margin-top: 30px;
+        padding-top: 20px;
+        text-align: center;
+        color: #777;
+        font-size: 13px;
+    }
 </style>
+
+
 
 <section class="hero">
     <div class="content">
         <h1>RAMANISA WHITE <br> MEDIA PROMOSINDO</h1>
-        <p style="color: #0edd18;">
-            WE Design, WE Create, WE Build, WE Maintain, WE Communicate
-        </p>
     </div>
 </section>
 
@@ -107,7 +176,6 @@
     </div>
 </section>
 
-<!-- Klien Kami -->
 <section id="klien" class="section primary-section">
     <div class="container">
         <h2 class="fw-bold mb-4 text-center">KLIEN KAMI</h2>
@@ -129,7 +197,6 @@
     </div>
 </section>
 
-<!-- Lokasi Kami -->
 <section id="lokasi" class="section bg-light">
     <div class="container text-center">
         <div class="mb-4">
@@ -145,33 +212,35 @@
     </div>
 </section>
 
-<!-- Footer -->
-<footer class="bg text-black pt-5 pb-3">
+<footer>
     <div class="container">
         <div class="row text-start">
             <div class="col-md-4 mb-4">
-                <img src="{{ url('images/logo.png') }}" alt="Logo" width="180">
-                <p class="mt-3">&copy; 2025 by CV. Ramanisa White Media Promosindo</p>
+                <img src="{{ url('images/logo.png') }}" alt="Logo" class="logo-footer">
+                <p class="mt-3">
+                    CV. Ramanisa White Media Promosindo adalah perusahaan periklanan terpercaya sejak 1985. 
+                    Kami berkomitmen membantu bisnis Anda tampil lebih menonjol.
+                </p>
             </div>
 
-            <!-- Jam Operasi -->
             <div class="col-md-4 mb-4">
-                <h5 class="fw-bold mb-3">JAM OPERASI</h5>
-                <p class="m-0">Senin – Sabtu:</p>
-                <p class="m-0">08:00 AM sampai 17:00 PM</p>
-                <p class="m-0">Minggu: Tutup</p>
+                <h5>Jam Operasional</h5>
+                <p>Senin – Sabtu : 08:00 - 17:00</p>
+                <p>Minggu : Tutup</p>
             </div>
 
-            <!-- Kontak -->
             <div class="col-md-4 mb-4">
-                <h5 class="fw-bold mb-3">HUBUNGI KAMI</h5>
-                <p class="mb-1">Jl.Pangeran ratu, Komplek TOP100 blok, A7-27 jakabaring - palembang.  Sumatra Selatan. 30134</p>
-                <p class="mb-1"><strong>Email:</strong> <a href="mailto:rawhite.adv@gmail.com" class="text-success">rawhite.adv@gmail.com</a></p>
-                <p class="mb-1"><strong>Telp :</strong> <a href="tel:+628127878578" class="text-success">+62 812-7878-578</a></p>
-                <p class="mb-1"><strong>Whatsapp:</strong> <a href="https://wa.me/628127878578" class="text-success">+62 812-7878-578</a></p>
+                <h5>Hubungi Kami</h5>
+                <p>Jl. Pangeran Ratu, Komplek TOP100 Blok A7-27 Jakabaring - Palembang, Sumatera Selatan, 30134</p>
+                <p><strong>Email:</strong> <a href="mailto:rawhite.adv@gmail.com">rawhite.adv@gmail.com</a></p>
+                <p><strong>Telp:</strong> <a href="tel:+628127878578">+62 812-7878-578</a></p>
+                <p><strong>Whatsapp:</strong> <a href="https://wa.me/628127878578">+62 812-7878-578</a></p>
             </div>
+        </div>
+
+        <div class="line-footer">
+            &copy; 2025 CV. Ramanisa White Media Promosindo. All rights reserved.
         </div>
     </div>
 </footer>
-
 @endsection

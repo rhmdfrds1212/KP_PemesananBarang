@@ -14,7 +14,7 @@ class Lokasi extends Model
     protected $keyType = 'string';
 
     protected $fillable = [
-        'alamat', 'foto', 'status', 'produk_nama'
+        'alamat', 'foto', 'status', 'produk_nama', 'harga', 'ukuran'
     ];
 
     protected static function boot()

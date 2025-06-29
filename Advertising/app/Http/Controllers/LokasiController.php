@@ -33,6 +33,8 @@ class LokasiController extends Controller
             'alamat'        => 'required|string|max:100',
             'status'        => 'required|in:tersedia,tersewa',
             'produk_nama'   => 'required|string|max:50',
+            'harga' => 'required|numeric|min:0',
+            'ukuran' => 'required|string',
             'foto'          => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
@@ -69,6 +71,8 @@ class LokasiController extends Controller
             'alamat'        => 'required|string|max:100',
             'status'        => 'required|in:tersedia,tersewa',
             'produk_nama'   => 'required|string|max:50',
+            'harga' => 'required|numeric|min:0',
+            'ukuran' => 'required|string',
             'foto'          => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
         if ($request->hasFile('foto')) {

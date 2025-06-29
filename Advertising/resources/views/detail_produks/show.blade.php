@@ -1,73 +1,86 @@
 @extends('layout.main')
 
 @section('content')
-<div class="py-5" style="background-color: #f5f5f5;">
-    <div class="container">
-        <div class="bg-white rounded shadow-sm p-4">
-            <div class="row g-4 align-items-start">
-                <div class="col-md-5">
-                    <div class="border rounded overflow-hidden shadow-sm">
-                        @if ($produk->foto)
-                            <img src="{{ asset('upload/produk/' . $produk->foto) }}" class="img-fluid w-100" alt="{{ $produk->nama }}">
-                        @else
-                            <img src="https://via.placeholder.com/400x400?text=No+Image" class="img-fluid w-100" alt="No Image">
-                        @endif
-                    </div>
-                </div>
 
-                <div class="col-md-7">
-                    <h2 class="fw-bold text-dark">{{ $produk->nama }}</h2>
-                    <span class="badge bg-primary fs-6 mb-3">{{ $produk->kategori }}</span>
+<style>
+    .produk-detail {
+        background-color: rgba(255, 219, 100, 0.97);
+        padding: 30px;
+        border-radius: 10px;
+    }
 
-                    <h4 class="text-success fw-semibold mb-3">
-                        Rp{{ number_format($produk->harga, 0, ',', '.') }}
-                        <small class="text-muted fs-6">/ Tahun</small>
-                    </h4>
+    .thumbnail {
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
 
-                    <p class="text-secondary mb-2" style="word-break: break-word;">
-                        <span class="d-inline-flex align-items-center">
-                            <i class="bi bi-info-circle-fill me-2 text-primary"></i>
-                            <strong>Deskripsi:</strong>
-                        </span><br>
-                        {{ $produk->deskripsi }}
-                    </p>
+    .thumbnail:hover {
+        transform: scale(1.05);
+        opacity: 0.8;
+    }
+</style>
 
-                    <p class="text-secondary mb-4">
-                        <i class="bi bi-box-seam me-2 text-success"></i>
-                        <strong>Produk Tersedia:</strong> {{ $produk->stok }}
-                    </p>
+<div class="container py-5">
+    <div class="row g-4 align-items-center">
+        <div class="col-md-6">
 
-                    <div class="d-flex flex-wrap gap-3 mt-4">
-                        <a href="{{ route('pemesanan.create', $produk->id) }}" class="btn btn-success btn-lg px-4 shadow-sm">
-                            <i class="bi bi-cart-plus me-2"></i>Beli Sekarang
-                        </a>
-                    </div>
-                </div>
+            <img id="mainImage" 
+                 src="{{ asset('upload/produk/' . $produk->foto) }}" 
+                 class="img-fluid rounded shadow mb-3" 
+                 alt="{{ $produk->nama }}">
+
+            <div class="d-flex gap-3 flex-wrap">
+                <img src="{{ asset('upload/produk/' . $produk->foto) }}" 
+                     class="rounded shadow-sm thumbnail" 
+                     alt="Foto Utama" 
+                     style="width: 100px; height: 80px; object-fit: cover;"
+                     onclick="changeImage('{{ asset('upload/produk/' . $produk->foto) }}')">
+
+                @forelse ($detail_foto as $foto)
+                    <img src="{{ asset('upload/detail_produk/' . $foto->foto) }}" 
+                         class="rounded shadow-sm thumbnail" 
+                         alt="Foto Tambahan" 
+                         style="width: 100px; height: 80px; object-fit: cover;"
+                         onclick="changeImage('{{ asset('upload/detail_produk/' . $foto->foto) }}')">
+                @empty
+                    <p class="text-muted">Belum ada foto tambahan.</p>
+                @endforelse
             </div>
+        </div>
+
+        <div class="col-md-6 produk-detail">
+            <h2 class="fw-bold">{{ strtoupper($produk->nama) }}</h2>
+            <p><strong>Kategori:</strong> {{ $produk->kategori }}</p>
+            <p><strong>Deskripsi:</strong> {{ $produk->deskripsi }}</p>
+            <p><strong>Harga:</strong> Lihat harga berdasarkan lokasi pada saat pemesanan</p>
+            <p><strong>Stok:</strong> {{ $produk->stok > 0 ? 'Tersedia' : 'Habis' }}</p>
+            <p><strong>Ukuran Tersedia:</strong></p>
+            <ul>
+                @if (strtolower($produk->kategori) == 'baliho')
+                    <li>4 x 6 M Vertical</li>
+                    <li>8 x 4 M Horizontal</li>
+                @elseif (strtolower($produk->kategori) == 'videotron')
+                    <li>2 x 4 M Horizontal</li>
+                    <li>4 x 6 M Vertical</li>
+                @elseif (strtolower($produk->kategori) == 'billboard')
+                    <li>5 x 10 M Vertical</li>
+                    <li>6 x 12 M Vertical</li>
+                @else
+                    <li>Custom sesuai kebutuhan</li>
+                @endif
+            </ul>
+
+            <a href="{{ route('pemesanan.create', $produk->id) }}" class="btn btn-success">
+                Pesan Sekarang
+            </a>
         </div>
     </div>
 </div>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-
-<style>
-    .btn-lg:hover {
-        transform: scale(1.03);
-        transition: all 0.2s ease-in-out;
+<script>
+    function changeImage(imageUrl) {
+        document.getElementById('mainImage').src = imageUrl;
     }
+</script>
 
-    .card-img-top, .img-fluid {
-        border-radius: 8px;
-    }
-
-    h2, h4 {
-        line-height: 1.4;
-    }
-    .deskripsi-box {
-        min-height: 100px;
-        word-wrap: break-word;  
-        overflow-wrap: break-word;  
-        white-space: pre-line;      
-}
-</style>
 @endsection
