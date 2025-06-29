@@ -108,6 +108,7 @@
         const lokasiSelect = document.getElementById('lokasi_id');
         const ukuranInput = document.getElementById('ukuran');
         const jumlahInput = document.getElementById('jumlah');
+        const stokProduk = {{ $produkTerpilih->stok }};
         const lamaSewaInput = document.getElementById('lama_sewa');
         const totalHargaDisplay = document.getElementById('total_harga_display');
         const totalHargaInput = document.getElementById('total_harga');
@@ -124,6 +125,10 @@
             const lama = parseInt(lamaSewaInput.value || 1);
             const jumlah = parseInt(jumlahInput.value || 1);
 
+            if (jumlah > stokProduk) {
+                alert(`Jumlah melebihi stok yang tersedia! Stok tersedia hanya ${stokProduk}.`);
+                jumlahInput.value = stokProduk;
+            }
             const total = harga * jumlah * lama;
             totalHargaDisplay.value = 'Rp ' + total.toLocaleString('id-ID');
             totalHargaInput.value = total;
@@ -133,6 +138,7 @@
             const selectedOption = this.options[this.selectedIndex];
             const ukuran = selectedOption.getAttribute('data-ukuran');
             ukuranInput.value = ukuran;
+            hitungTotal();
         });
 
         jumlahInput.addEventListener('input', hitungTotal);

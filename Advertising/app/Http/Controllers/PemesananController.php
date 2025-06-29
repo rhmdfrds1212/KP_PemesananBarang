@@ -14,17 +14,18 @@ class PemesananController extends Controller
     {
         $user = Auth::user();
 
-        if ($user->role === 'a') {
-            $pemesanans = Pemesanan::with(['produk', 'lokasi'])
-                            ->where('status', '!=', 'selesai')
-                            ->latest()
-                            ->get();
+         if ($user->role === 'a') {
+            $pemesanans = \App\Models\Pemesanan::whereHas('pembayaran', function ($q) {
+                $q->where('status_verifikasi', 'diterima');
+            })->with(['produk', 'lokasi'])->latest()->get();
         } else {
-            $pemesanans = Pemesanan::with(['produk', 'lokasi'])
-                            ->where('user_id', $user->id)
-                            ->where('status', '!=', 'selesai')
-                            ->latest()
-                            ->get();
+            $pemesanans = \App\Models\Pemesanan::where('user_id', $user->id)
+                ->whereHas('pembayaran', function ($q) {
+                    $q->where('status_verifikasi', 'diterima');
+                })
+                ->with(['produk', 'lokasi'])
+                ->latest()
+                ->get();
         }
 
         return view('pemesanan.index', compact('pemesanans'));
@@ -77,7 +78,7 @@ class PemesananController extends Controller
         $produk = Produk::findOrFail($validated['produk_id']);
 
         if ($produk->stok < $validated['jumlah']) {
-            return back()->with('error', 'Stok tidak mencukupi untuk pemesanan ini.');
+            return back()->withErrors(['jumlah' => 'error', 'Stok tidak mencukupi untuk pemesanan ini.'. $produk->stok])->withInput();
         }
 
         $hargaSewa = $lokasi->harga;

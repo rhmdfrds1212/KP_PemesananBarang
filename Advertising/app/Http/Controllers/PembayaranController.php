@@ -23,6 +23,8 @@ class PembayaranController extends Controller
             'metode_pembayaran' => 'required|in:transfer_bank,bca,qris',
             'bukti_pembayaran' => 'required|mimes:jpg,jpeg,png,pdf|max:5120',
             'catatan' => 'nullable|string',
+        ], [
+            'bukti_pembayaran.required' => 'Bukti pembayaran wajib diunggah.',
         ]);
 
         $pemesanan = Pemesanan::with('produk')->findOrFail($id);

@@ -51,7 +51,7 @@
 
                 <div class="mb-3">
                     <label for="bukti_pembayaran" class="form-label">Upload Bukti Pembayaran</label>
-                    <input type="file" name="bukti_pembayaran" class="form-control">
+                    <input type="file" name="bukti_pembayaran" class="form-control" required>
                 </div>
 
                 <div class="mb-3">
@@ -100,5 +100,14 @@
         navigator.clipboard.writeText(nomor);
         alert('Nomor rekening disalin: ' + nomor);
     }
+    document.querySelector('form').addEventListener('submit', function(e) {
+        const fileInput = document.querySelector('input[name="bukti_pembayaran"]');
+        if (!fileInput.value) {
+            e.preventDefault();
+            alert('Bukti pembayaran harus diunggah sebelum konfirmasi pembayaran!');
+        }
+    });
+</script>
+
 </script>
 @endsection

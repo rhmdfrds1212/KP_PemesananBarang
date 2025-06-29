@@ -39,21 +39,20 @@ require __DIR__ . '/auth.php';
 // 🔸 Halaman Setelah Login
 // ========================
 Route::middleware(['auth', 'verified'])->group(function () {
-
     // ========================
     // 🔹 Profile (User)
     // ========================
-    Route::prefix('profile')->group(function () {
-        Route::get('/', [ProfileController::class, 'index'])->name('profile.index');
-        Route::get('/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-        Route::put('/update', [ProfileController::class, 'update'])->name('profile.update');
+Route::prefix('profile')->group(function () {
+    Route::get('/', [ProfileController::class, 'index'])->name('profile.index');
+    Route::get('/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/update', [ProfileController::class, 'update'])->name('profile.update');
 
-        Route::get('/histori', [ProfileController::class, 'histori'])->name('profile.histori');
-        Route::get('/profile/pemesanan', function() {
-            return redirect()->route('pemesanan.index');
-        })->name('profile.pemesanan');
-        Route::get('/invoice', [ProfileController::class, 'invoice'])->name('profile.invoice');
-    });
+    Route::get('/histori', [ProfileController::class, 'histori'])->name('profile.histori');
+    Route::get('/profile/pemesanan', function() {
+        return redirect()->route('pemesanan.index');
+    })->name('profile.pemesanan');
+    Route::get('/invoice', [ProfileController::class, 'invoice'])->name('profile.invoice');
+});
 
     // ========================
     // 🔹 Dashboard (Admin Only)

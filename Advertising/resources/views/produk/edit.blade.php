@@ -33,7 +33,6 @@
                     <label class="form-label">Stok</label>
                     <input type="number" name="stok" class="form-control" value="{{ $produk->stok }}" required>
                 </div>
-            </div>
 
             <div class="mb-3">
                 <label class="form-label">Kategori</label>
