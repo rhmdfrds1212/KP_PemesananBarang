@@ -11,9 +11,46 @@ class LaporanController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $laporan = Laporan::with('pembayaran.pemesanan.produk')->get();
+        $query = \App\Models\Laporan::query()->with('pembayaran.pemesanan');
+
+        // Filter tanggal
+        if ($request->filled('tanggal')) {
+            $tanggal = explode(' - ', $request->tanggal);
+            try {
+                $start = \Carbon\Carbon::createFromFormat('d F Y', trim($tanggal[0]))->startOfDay();
+                $end = \Carbon\Carbon::createFromFormat('d F Y', trim($tanggal[1]))->endOfDay();
+
+                $query->whereHas('pembayaran.pemesanan', function ($q) use ($start, $end) {
+                    $q->whereBetween('created_at', [$start, $end]);
+                });
+            } catch (\Exception $e) {
+                // Handle error format tanggal jika salah
+            }
+        }
+
+        // Filter metode pembayaran
+        if ($request->filled('metode')) {
+            $query->whereHas('pembayaran', function ($q) use ($request) {
+                $q->where('metode', $request->metode);
+            });
+        }
+
+        // Filter tipe transaksi
+        if ($request->filled('tipe')) {
+            $query->whereHas('pembayaran', function ($q) use ($request) {
+                $q->where('tipe_pembayaran', $request->tipe);
+            });
+        }
+
+        // Filter ID struk
+        if ($request->filled('id_struk')) {
+            $query->where('id', 'like', '%' . $request->id_struk . '%');
+        }
+
+        $laporan = $query->latest()->get();
+
         return view('laporan.index', compact('laporan'));
     }
 

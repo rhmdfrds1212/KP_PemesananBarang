@@ -16,7 +16,6 @@
                     <h3 class="card-title">{{ $user->name }}</h3>
                     <span class="badge bg-{{ $user->role == 'a' ? 'dark' : 'primary' }}">
                         {{ $user->role == 'a' ? 'Admin' : 'User' }}
-                         {{ $user->role == 'a' ? 'Admin' : ($user->role == 'p' ? 'Pimpinan' : 'User') }}
                     </span>
 
                     <div class="mt-4 text-start">
@@ -37,7 +36,7 @@
                             <i class="bi bi-clock-history"></i> Histori Transaksi
                         </a>
                         @endif
-                        @if (Auth::user()->role === 'a' || Auth::user()->role === 'u')
+                        @if (Auth::user()->role === 'u')
                         <a href="{{ route('pemesanan.index') }}" class="btn btn-outline-primary">
                             <i class="bi bi-cart4"></i> Pemesanan
                         </a>

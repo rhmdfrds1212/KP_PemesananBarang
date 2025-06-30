@@ -12,14 +12,34 @@
     }
 </style>
 
-
 <div class="container my-5">
+    <h2 class="fw-bold mb-4">
+        @if (Auth::user()->role === 'a')
+            Invoice Seluruh Pengguna
+        @else
+            Invoice Saya
+        @endif
+    </h2>
 
-    @if (Auth::user()->role === 'a')
-        <h2 class="fw-bold mb-4">Invoice Seluruh Pengguna</h2>
-    @else
-        <h2 class="fw-bold mb-4">Invoice Saya</h2>
-    @endif
+    {{-- Search Bar --}}
+    <form method="GET" class="row g-3 mb-4">
+        <div class="col-md-4">
+            <input type="text" name="search" class="form-control"
+                placeholder="Cari nama pelanggan / produk / ID invoice" value="{{ request('search') }}">
+        </div>
+        <div class="col-md-3">
+            <select name="status" class="form-select">
+                <option value="">Semua Status</option>
+                <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending</option>
+                <option value="diterima" {{ request('status') == 'diterima' ? 'selected' : '' }}>Diterima</option>
+                <option value="ditolak" {{ request('status') == 'ditolak' ? 'selected' : '' }}>Ditolak</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <button class="btn btn-success" type="submit">Cari</button>
+            <a href="{{ route('profile.invoice') }}" class="btn btn-secondary">Reset</a>
+        </div>
+    </form>
 
     @forelse($invoices as $invoice)
     <div class="card mb-4 shadow-sm">
@@ -32,9 +52,9 @@
                 </div>
                 <div class="text-end">
                     <h5 class="fw-bold">CV. Ramanisa White Media Promosindo</h5>
-                    <p>Jl. Contoh Alamat No. 123, Kota</p>
+                    <p>Jl. Pangeran Ratu A7-27, Jakabaring, Palembang</p>
                     <p>Email: rawhite.adv@gmail.com</p>
-                    <p>Telepon: 0812-3456-7890</p>
+                    <p>Telp: 0812-3456-7890</p>
                 </div>
             </div>
 
@@ -45,36 +65,13 @@
             <p>Email: {{ $invoice->pemesanan->email }}</p>
             <p>Telepon: {{ $invoice->pemesanan->telepon }}</p>
 
-            @if(Auth::user()->role === 'a')
-                <p><strong>Nama Pelanggan:</strong> {{ $invoice->pemesanan->nama }}</p>
-                <p><strong>Email Pelanggan:</strong> {{ $invoice->pemesanan->email }}</p>
-            @endif
-
             <table class="table table-bordered mt-3">
-                <tr>
-                    <th>Produk</th>
-                    <td>{{ $invoice->pemesanan->produk->nama }}</td>
-                </tr>
-                <tr>
-                    <th>Ukuran</th>
-                    <td>{{ $invoice->pemesanan->ukuran }}</td>
-                </tr>
-                <tr>
-                    <th>Lokasi</th>
-                    <td>{{ $invoice->pemesanan->lokasi->alamat }}</td>
-                </tr>
-                <tr>
-                    <th>Jumlah</th>
-                    <td>{{ $invoice->pemesanan->jumlah }}</td>
-                </tr>
-                <tr>
-                    <th>Lama Sewa</th>
-                    <td>{{ $invoice->pemesanan->lama_sewa }} Bulan</td>
-                </tr>
-                <tr>
-                    <th>Total Harga</th>
-                    <td>Rp{{ number_format($invoice->pemesanan->total_harga, 0, ',', '.') }}</td>
-                </tr>
+                <tr><th>Produk</th><td>{{ $invoice->pemesanan->produk->nama }}</td></tr>
+                <tr><th>Ukuran</th><td>{{ $invoice->pemesanan->ukuran }}</td></tr>
+                <tr><th>Lokasi</th><td>{{ $invoice->pemesanan->lokasi->alamat }}</td></tr>
+                <tr><th>Jumlah</th><td>{{ $invoice->pemesanan->jumlah }}</td></tr>
+                <tr><th>Lama Sewa</th><td>{{ $invoice->pemesanan->lama_sewa }} Bulan</td></tr>
+                <tr><th>Total Harga</th><td>Rp{{ number_format($invoice->pemesanan->total_harga, 0, ',', '.') }}</td></tr>
             </table>
 
             <h6 class="mt-3">Metode Pembayaran:</h6>
@@ -96,9 +93,29 @@
                 </span>
             </p>
 
+            {{-- Admin Controls --}}
+            @if(Auth::user()->role === 'a')
+            <div class="d-flex gap-2">
+                {{-- Update Status --}}
+                <form action="{{ route('pembayaran.updateStatus', ['id' => $invoice->id, 'status' => 'diterima']) }}" method="POST">
+                    @csrf @method('PUT')
+                    <button class="btn btn-success btn-sm">Terima</button>
+                </form>
+
+                <form action="{{ route('pembayaran.updateStatus', ['id' => $invoice->id, 'status' => 'ditolak']) }}" method="POST">
+                    @csrf @method('PUT')
+                    <button class="btn btn-danger btn-sm">Tolak</button>
+                </form>
+            </div>
+            @endif
+
+            {{-- Bukti Pembayaran --}}
             @if($invoice->bukti_pembayaran)
-                <p class="fw-bold">Bukti Pembayaran:</p>
-                <img src="{{ asset('storage/' . $invoice->bukti_pembayaran) }}" width="200">
+                <p class="fw-bold mt-3">Bukti Pembayaran:</p>
+                <a href="{{ asset('storage/' . $invoice->bukti_pembayaran) }}" target="_blank">
+                    <img src="{{ asset('storage/' . $invoice->bukti_pembayaran) }}" width="200"
+                        style="cursor: zoom-in; border: 2px solid #ddd; border-radius: 8px;">
+                </a>
             @endif
 
             <div class="text-end mt-3">
@@ -121,6 +138,5 @@
         @endif
     </div>
     @endforelse
-
 </div>
 @endsection

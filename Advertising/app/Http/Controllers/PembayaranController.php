@@ -36,7 +36,7 @@ class PembayaranController extends Controller
             'pemesanan_id' => $pemesanan->id,
             'metode' => $request->metode_pembayaran,
             'bukti_pembayaran' => $path,
-            'status_pembayaran' => 'menunggu pembayaran',
+            '   _pembayaran' => 'menunggu pembayaran',
             'status_verifikasi' => 'pending',
             'catatan' => $request->catatan,
         ]);

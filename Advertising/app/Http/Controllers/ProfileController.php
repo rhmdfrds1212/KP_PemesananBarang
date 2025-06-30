@@ -50,8 +50,11 @@ class ProfileController extends Controller
      */
     public function histori()
     {
-        $user = Auth::user();
-        $histori = Pemesanan::where('user_id', $user->id)->latest()->get();
+        $histori = Pemesanan::where('user_id', Auth::id())
+                            ->where('status', 'selesai')
+                            ->with(['produk', 'lokasi'])
+                            ->latest()
+                            ->get();
 
         return view('profile.histori', compact('histori'));
     }
@@ -59,21 +62,36 @@ class ProfileController extends Controller
     /**
      * Halaman invoice.
      */
-    public function invoice()
+    public function invoice(Request $request)
     {
         $user = Auth::user();
+        $query = Pembayaran::query()->with('pemesanan.produk', 'pemesanan.lokasi');
 
-        if ($user->role === 'a') {
-            // Jika admin, tampilkan semua invoice
-            $invoices = Pembayaran::with('pemesanan.produk', 'pemesanan.lokasi', 'pemesanan.user')
-                ->latest()
-                ->get();
-        } else {
-            // Jika user, hanya tampilkan invoice miliknya
-            $invoices = Pembayaran::whereHas('pemesanan', function ($query) use ($user) {
-                $query->where('user_id', $user->id);
-            })->with('pemesanan.produk', 'pemesanan.lokasi')->latest()->get();
+        // Jika user bukan admin, tampilkan hanya invoice miliknya
+        if ($user->role != 'a') {
+            $query->whereHas('pemesanan', function($q) use ($user) {
+                $q->where('user_id', $user->id);
+            });
         }
+
+        // Filter search
+        if ($request->search) {
+            $query->whereHas('pemesanan', function($q) use ($request) {
+                $q->where('nama', 'like', '%' . $request->search . '%')
+                ->orWhere('email', 'like', '%' . $request->search . '%')
+                ->orWhereHas('produk', function($p) use ($request) {
+                    $p->where('nama', 'like', '%' . $request->search . '%');
+                })
+                ->orWhere('id', 'like', '%' . $request->search . '%');
+            });
+        }
+
+        // Filter status
+        if ($request->status) {
+            $query->where('status_verifikasi', $request->status);
+        }
+
+        $invoices = $query->latest()->get();
 
         return view('profile.invoice', compact('invoices'));
     }

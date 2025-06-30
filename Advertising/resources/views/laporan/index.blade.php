@@ -1,87 +1,118 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <title>Laporan Transaksi</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background-color: #f8f9fa;
-            font-size: 14px;
-            color: #212529;
-        }
-        .laporan-container {
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        .report-header {
-            border-bottom: 2px solid #dee2e6;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-        }
-        .report-title {
-            font-size: 20px;
-            font-weight: bold;
-        }
-        .block {
-            border: 1px solid #dee2e6;
-            border-radius: 6px;
-            padding: 15px;
-            margin-bottom: 15px;
-            background-color: #fafafa;
-        }
-        .block-title {
-            font-weight: bold;
-            font-size: 16px;
-            margin-bottom: 10px;
-        }
-        .label {
-            width: 150px;
-            display: inline-block;
-            font-weight: 600;
-        }
-        @media print {
-            .no-print {
-                display: none !important;
-            }
-        }
-    </style>
-</head>
-<body>
-<div class="container laporan-container mt-4">
+@extends('layout.main')
 
-    <div class="report-header d-flex justify-content-between align-items-center">
-        <div class="d-flex align-items-center gap-3">
-            <img src="{{ asset('images/logo.png') }}" alt="Logo" height="50">
-            <div class="report-title">Laporan Data Transaksi</div>
-        </div>
-        <div class="no-print">
-            <a href="{{ route('home.index') }}" class="btn btn-secondary btn-sm">Kembali</a>
-            <button onclick="window.print()" class="btn btn-primary btn-sm">Cetak</button>
-        </div>
+@section('title', 'Laporan Data Transaksi')
+
+@section('content')
+<style>
+    @media print {
+        body * {
+            visibility: hidden;
+        }
+        .table-container, .table-container * {
+            visibility: visible;
+        }
+        .table-container {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+        }
+        .filter-bar, .btn, .navbar, .footer {
+            display: none !important;
+        }
+    }
+
+    .filter-bar {
+        background-color: #fff;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        margin-bottom: 20px;
+    }
+    .table-container {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    }
+    .btn-download {
+        background-color: #00a86b;
+        color: white;
+    }
+    .btn-download:hover {
+        background-color: #008f5a;
+    }
+</style>
+
+<div class="container mt-4">
+    <h4 class="fw-bold mb-3">Laporan Data Transaksi</h4>
+
+    <div class="filter-bar">
+        <form action="{{ route('laporan.index') }}" method="GET" class="row g-3 align-items-center">
+            <div class="col-md-3">
+                <label class="form-label">Tanggal</label>
+                <input type="text" name="tanggal" class="form-control"
+                    placeholder="1 Januari 2025 - 31 Januari 2026">
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">Metode Pembayaran</label>
+                <select name="metode" class="form-select">
+                    <option value="">Semua</option>
+                    <option value="bca">BCA</option>
+                    <option value="bri">BRI</option>
+                    <option value="qris">QRIS</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">Tipe Transaksi</label>
+                <select name="tipe" class="form-select">
+                    <option value="">Semua</option>
+                    <option value="tunai">Tunai</option>
+                    <option value="non_tunai">Non Tunai</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">Cari ID Struk</label>
+                <input type="text" name="id_struk" class="form-control" placeholder="Cari ID Struk">
+            </div>
+            <div class="col-md-3 d-flex align-items-end gap-2">
+                <button class="btn btn-success">Cari</button>
+                <a href="#" class="btn btn-download" onclick="window.print()">Download Laporan</a>
+            </div>
+        </form>
     </div>
 
-    @forelse ($laporan as $item)
-        <div class="block">
-            <div class="block-title">Transaksi ke-{{ $loop->iteration }}</div>
-
-            <div><span class="label">Nama Produk:</span> {{ $item->pembayaran?->pemesanan?->produk?->nama ?? '-' }}</div>
-            <div><span class="label">Nama Pembeli:</span> {{ $item->pembayaran?->pemesanan?->nama ?? '-' }}</div>
-            <div><span class="label">Lokasi:</span> {{ $item->pembayaran?->pemesanan?->lokasi?->alamat ?? '-' }}</div>
-            <div><span class="label">Jumlah:</span> {{ $item->pembayaran?->pemesanan?->jumlah ?? '-' }}</div>
-            <div><span class="label">Tanggal:</span> {{ $item->pembayaran?->pemesanan?->created_at?->format('d-m-Y') ?? '-' }}</div>
-            <div><span class="label">Total Harga:</span> 
-                <strong>Rp{{ number_format($item->pembayaran?->pemesanan?->total_harga ?? 0, 0, ',', '.') }}</strong>
-            </div>
+    <div class="table-container">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>ID Struk</th>
+                        <th>Email Staff</th>
+                        <th>Tanggal</th>
+                        <th>Metode Pembayaran</th>
+                        <th>Total Tagihan (Rp)</th>
+                        <th>Yang Dibayarkan (Rp)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse ($laporan as $item)
+                        <tr>
+                            <td>{{ $item->id }}</td>
+                            <td>{{ $item->pembayaran?->pemesanan?->email ?? '-' }}</td>
+                            <td>{{ $item->created_at?->format('d-m-Y') }}</td>
+                            <td>{{ ucfirst($item->pembayaran?->metode ?? '-') }}</td>
+                            <td>Rp{{ number_format($item->pembayaran?->pemesanan?->total_harga ?? 0) }}</td>
+                            <td>Rp{{ number_format($item->pembayaran?->pemesanan?->total_harga ?? 0) }}</td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="8" class="text-center">Tidak ada data transaksi.</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
         </div>
-    @empty
-        <div class="alert alert-warning text-center">
-            Tidak ada data transaksi tersedia.
-        </div>
-    @endforelse
-
+    </div>
 </div>
-</body>
-</html>
+@endsection

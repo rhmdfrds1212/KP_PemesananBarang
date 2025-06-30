@@ -10,24 +10,39 @@ use Illuminate\Support\Facades\Auth;
 
 class PemesananController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
 
-         if ($user->role === 'a') {
-            $pemesanans = \App\Models\Pemesanan::whereHas('pembayaran', function ($q) {
-                $q->where('status_verifikasi', 'diterima');
-            })->with(['produk', 'lokasi'])->latest()->get();
+        $query = Pemesanan::with(['produk', 'lokasi']);
+
+        if ($user->role === 'a') {
+            $pemesanans = Pemesanan::whereIn('status', ['menunggu', 'diproses'])
+                                    ->with(['produk', 'lokasi'])
+                                    ->latest()
+                                    ->get();
         } else {
-            $pemesanans = \App\Models\Pemesanan::where('user_id', $user->id)
-                ->whereHas('pembayaran', function ($q) {
-                    $q->where('status_verifikasi', 'diterima');
-                })
-                ->with(['produk', 'lokasi'])
-                ->latest()
-                ->get();
+            $pemesanans = Pemesanan::where('user_id', $user->id)
+                                    ->whereIn('status', ['menunggu', 'diproses'])
+                                    ->with(['produk', 'lokasi'])
+                                    ->latest()
+                                    ->get();
         }
 
+        if ($request->search) {
+        $query->where(function ($q) use ($request) {
+            $q->where('nama', 'like', '%' . $request->search . '%')
+              ->orWhere('email', 'like', '%' . $request->search . '%')
+              ->orWhere('telepon', 'like', '%' . $request->search . '%')
+              ->orWhereHas('lokasi', function($q) use ($request) {
+                  $q->where('alamat', 'like', '%' . $request->search . '%');
+              })
+              ->orWhereHas('produk', function($q) use ($request) {
+                  $q->where('nama', 'like', '%' . $request->search . '%');
+              });
+        });
+    }
+        $pemesanans = $query->latest()->get();
         return view('pemesanan.index', compact('pemesanans'));
     }
 
