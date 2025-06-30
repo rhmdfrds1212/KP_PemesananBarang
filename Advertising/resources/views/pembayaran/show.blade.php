@@ -6,7 +6,6 @@
         <div class="bg-white p-4 rounded shadow-sm">
             <h3 class="mb-4">Pembayaran Pemesanan</h3>
 
-            {{-- Detail Pemesanan --}}
             <div class="mb-4">
                 <h5 class="mb-3">Detail Pemesanan</h5>
                 <ul class="list-group">
@@ -21,7 +20,6 @@
                 </ul>
             </div>
 
-            {{-- Informasi Pembayaran --}}
             <div class="alert alert-info" id="info-pembayaran" style="display: none;">
                 <div id="rekening-info" style="display: none;">
                     <h5>Transfer ke rekening berikut:</h5>
@@ -35,7 +33,6 @@
                 </div>
             </div>
 
-            {{-- Form Pembayaran --}}
             <form action="{{ route('pembayaran.store', $pemesanan->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
 

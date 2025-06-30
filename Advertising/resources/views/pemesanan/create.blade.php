@@ -22,14 +22,12 @@
             <form action="{{ route('pemesanan.store') }}" method="POST">
                 @csrf
 
-                {{-- Produk --}}
                 <div class="mb-3">
                     <label class="form-label fw-semibold">Produk</label>
                     <input type="text" class="form-control" value="{{ $produkTerpilih->nama }}" readonly>
                     <input type="hidden" name="produk_id" value="{{ $produkTerpilih->id }}">
                 </div>
 
-                {{-- Lokasi --}}
                 <div class="mb-3">
                     <label class="form-label fw-semibold">Lokasi</label>
                     <select name="lokasi_id" id="lokasi_id" class="form-select" required>
@@ -45,7 +43,6 @@
                     </select>
                 </div>
 
-                {{-- Data Pemesan --}}
                 <div class="mb-3">
                     <label class="form-label fw-semibold">Nama Pemesan</label>
                     <input type="text" name="nama" class="form-control"
@@ -65,13 +62,11 @@
                     </div>
                 </div>
 
-                {{-- Ukuran --}}
                 <div class="mb-3">
                     <label class="form-label fw-semibold">Ukuran</label>
                     <input type="text" name="ukuran" id="ukuran" class="form-control" readonly required>
                 </div>
 
-                {{-- Jumlah dan Lama Sewa --}}
                 <div class="row g-3 mb-3">
                     <div class="col-md-6">
                         <label class="form-label fw-semibold">Jumlah</label>
@@ -83,14 +78,12 @@
                     </div>
                 </div>
 
-                {{-- Total Harga --}}
                 <div class="mb-4">
                     <label class="form-label fw-semibold">Total Harga</label>
                     <input type="text" id="total_harga_display" class="form-control" readonly>
                     <input type="hidden" name="total_harga" id="total_harga">
                 </div>
 
-                {{-- Tombol --}}
                 <div class="d-flex justify-content-end gap-2">
                     <a href="{{ route('produk.index') }}" class="btn btn-secondary">
                         <i class="bi bi-arrow-left"></i> Kembali
@@ -144,7 +137,6 @@
         jumlahInput.addEventListener('input', hitungTotal);
         lamaSewaInput.addEventListener('input', hitungTotal);
 
-        // Jalankan saat halaman load
         updateUkuran();
         hitungTotal();
     });

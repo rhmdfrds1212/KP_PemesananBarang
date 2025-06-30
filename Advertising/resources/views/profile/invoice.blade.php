@@ -24,7 +24,6 @@
     @forelse($invoices as $invoice)
     <div class="card mb-4 shadow-sm">
         <div class="card-body">
-            {{-- Header --}}
             <div class="d-flex justify-content-between">
                 <div>
                     <h4 class="fw-bold">INVOICE</h4>
@@ -41,19 +40,16 @@
 
             <hr>
 
-            {{-- Informasi Pelanggan --}}
             <h6>Tagihan Kepada:</h6>
             <p><strong>{{ $invoice->pemesanan->nama }}</strong></p>
             <p>Email: {{ $invoice->pemesanan->email }}</p>
             <p>Telepon: {{ $invoice->pemesanan->telepon }}</p>
 
-            {{-- Jika Admin, tampilkan info user --}}
             @if(Auth::user()->role === 'a')
                 <p><strong>Nama Pelanggan:</strong> {{ $invoice->pemesanan->nama }}</p>
                 <p><strong>Email Pelanggan:</strong> {{ $invoice->pemesanan->email }}</p>
             @endif
 
-            {{-- Detail Pemesanan --}}
             <table class="table table-bordered mt-3">
                 <tr>
                     <th>Produk</th>
@@ -81,11 +77,9 @@
                 </tr>
             </table>
 
-            {{-- Pembayaran --}}
             <h6 class="mt-3">Metode Pembayaran:</h6>
             <p>{{ strtoupper($invoice->metode) }}</p>
 
-            {{-- Tampilkan QR atau Nomor Rekening --}}
             @if($invoice->metode == 'qris')
                 <img src="{{ asset('images/qr.png') }}" alt="QRIS" width="150">
                 <p>Scan untuk membayar via QRIS.</p>
@@ -95,7 +89,6 @@
                 <p>Transfer ke <strong>BRI</strong> 987654321 a/n CV. Ramanisa</p>
             @endif
 
-            {{-- Status --}}
             <p class="mt-2">
                 <strong>Status Pembayaran:</strong> 
                 <span class="badge bg-{{ $invoice->status_verifikasi == 'diterima' ? 'success' : ($invoice->status_verifikasi == 'pending' ? 'warning' : 'danger') }}">
@@ -103,13 +96,11 @@
                 </span>
             </p>
 
-            {{-- Bukti Pembayaran --}}
             @if($invoice->bukti_pembayaran)
                 <p class="fw-bold">Bukti Pembayaran:</p>
                 <img src="{{ asset('storage/' . $invoice->bukti_pembayaran) }}" width="200">
             @endif
 
-            {{-- Ringkasan Total --}}
             <div class="text-end mt-3">
                 <h5>Subtotal:</h5>
                 <p>Rp{{ number_format($invoice->pemesanan->total_harga) }}</p>

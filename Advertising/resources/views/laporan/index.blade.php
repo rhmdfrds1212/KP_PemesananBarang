@@ -52,7 +52,6 @@
 <body>
 <div class="container laporan-container mt-4">
 
-    {{-- Header --}}
     <div class="report-header d-flex justify-content-between align-items-center">
         <div class="d-flex align-items-center gap-3">
             <img src="{{ asset('images/logo.png') }}" alt="Logo" height="50">
@@ -64,7 +63,6 @@
         </div>
     </div>
 
-    {{-- Isi Laporan --}}
     @forelse ($laporan as $item)
         <div class="block">
             <div class="block-title">Transaksi ke-{{ $loop->iteration }}</div>

@@ -11,7 +11,6 @@
                     <h5 class="mb-0"><i class="bi bi-geo-alt-fill me-2"></i>Tambah Lokasi Baru</h5>
                 </div>
                 <div class="card-body">
-                    {{-- Tampilkan error jika ada --}}
                     @if ($errors->any())
                         <div class="alert alert-danger">
                             <ul class="mb-0">
@@ -25,7 +24,6 @@
                     <form action="{{ route('lokasi.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
 
-                        {{-- Alamat --}}
                         <div class="mb-3">
                             <label for="alamat" class="form-label fw-semibold">
                                 <i class="bi bi-house-door me-1 text-success"></i> Alamat Lokasi
@@ -33,7 +31,6 @@
                             <textarea name="alamat" class="form-control" rows="2" required placeholder="Contoh: Jl. Soekarno Hatta No. 99">{{ old('alamat') }}</textarea>
                         </div>
 
-                        {{-- Status --}}
                         <div class="mt-3">
                             <label for="status" class="form-label fw-semibold">
                                 <i class="bi bi-info-circle-fill me-1 text-warning"></i> Status Lokasi
@@ -58,7 +55,6 @@
                             <small class="text-muted">Masukkan harga sewa lokasi per bulan (tanpa titik/koma).</small>
                         </div>
 
-                        {{-- Nama Produk --}}
                         <div class="mt-3">
                             <label for="produk_nama" class="form-label fw-semibold">
                                 <i class="bi bi-tags-fill me-1 text-info"></i> Jenis Produk
@@ -66,7 +62,6 @@
                             <input type="text" name="produk_nama" class="form-control" value="{{ old('produk_nama') }}" placeholder="Contoh: baliho, neonbox, billboard" required>
                         </div>
 
-                        {{-- Upload Foto Lokasi --}}
                         <div class="mt-3">
                             <label for="foto" class="form-label fw-semibold">
                                 <i class="bi bi-image-fill me-1 text-danger"></i> Upload Foto Lokasi
@@ -75,7 +70,6 @@
                             <small class="text-muted">Format gambar: jpg, jpeg, png. Ukuran maksimal 2MB.</small>
                         </div>
 
-                        {{-- Tombol --}}
                         <div class="d-flex justify-content-end gap-2 mt-4">
                             <a href="{{ route('lokasi.index') }}" class="btn btn-outline-secondary">
                                 <i class="bi bi-arrow-left me-1"></i> Batal

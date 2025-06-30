@@ -35,7 +35,6 @@
                         </span>
                     </div>
 
-                    {{-- Status --}}
                     @if($item->status == 'tersedia')
                         <span class="badge bg-success">Tersedia</span>
                     @elseif($item->status == 'tersewa' || $item->status == 'tidak tersedia')
@@ -44,7 +43,6 @@
                         <span class="badge bg-secondary">{{ ucfirst($item->status) }}</span>
                     @endif
 
-                    {{-- Tombol Aksi --}}
                     @if (Auth::check() && Auth::user()->role === 'a')
                     <div class="d-flex justify-content-center gap-2 mt-3">
                         <a href="{{ route('lokasi.edit', $item->id) }}" 

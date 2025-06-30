@@ -6,7 +6,6 @@
 <div class="container mt-5">
     <div class="row g-4">
 
-        {{-- Total Pendapatan --}}
         <div class="col-md-4">
             <div class="card shadow-sm border-0 rounded-4">
                 <div class="card-body text-center">
@@ -17,7 +16,6 @@
             </div>
         </div>
 
-        {{-- Total Pemesanan --}}
         <div class="col-md-4">
             <div class="card shadow-sm border-0 rounded-4">
                 <div class="card-body text-center">
@@ -27,8 +25,6 @@
                 </div>
             </div>
         </div>
-
-        {{-- Total Produk --}}
         <div class="col-md-4">
             <div class="card shadow-sm border-0 rounded-4">
                 <div class="card-body text-center">
@@ -39,7 +35,6 @@
             </div>
         </div>
 
-        {{-- Total Lokasi --}}
         <div class="col-md-4">
             <div class="card shadow-sm border-0 rounded-4">
                 <div class="card-body text-center">
@@ -50,7 +45,6 @@
             </div>
         </div>
 
-        {{-- Total Pelanggan --}}
         <div class="col-md-4">
             <div class="card shadow-sm border-0 rounded-4">
                 <div class="card-body text-center">
