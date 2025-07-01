@@ -7,6 +7,9 @@
         background-color: rgba(255, 219, 100, 0.97);
         padding: 30px;
         border-radius: 10px;
+        word-wrap: break-word;
+        word-break: break-word;
+        overflow-wrap: break-word;
     }
 
     .thumbnail {

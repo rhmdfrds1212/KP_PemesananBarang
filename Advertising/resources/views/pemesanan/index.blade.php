@@ -48,15 +48,18 @@
                     </p>
 
                     <div class="mt-auto d-flex gap-2">
-                        <a href="{{ route('pemesanan.edit', $pemesanan->id) }}" class="btn btn-sm btn-warning w-50">
-                            Edit
-                        </a>
-                        <form action="{{ route('pemesanan.destroy', $pemesanan->id) }}" method="POST"
-                              onsubmit="return confirm('Yakin ingin menghapus pemesanan ini?')" class="w-50">
-                            @csrf
-                            @method('DELETE')
-                            <button class="btn btn-sm btn-danger w-100">Batalkan</button>
-                        </form>
+                        @if(!in_array($pemesanan->status, ['selesai']))
+                            <a href="{{ route('pemesanan.edit', $pemesanan->id) }}" 
+                            class="btn btn-sm btn-warning w-50">
+                                Edit
+                            </a>
+                            <form action="{{ route('pemesanan.destroy', $pemesanan->id) }}" method="POST"
+                                onsubmit="return confirm('Yakin ingin membatalkan pemesanan ini?')" class="w-50">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-sm btn-danger w-100">Batalkan</button>
+                            </form>
+                        @endif
                     </div>
                 </div>
             </div>

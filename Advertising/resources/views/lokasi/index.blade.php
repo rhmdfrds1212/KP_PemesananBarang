@@ -28,7 +28,6 @@
                     <h5 class="fw-bold">{{ ucfirst($item->produk_nama) }}</h5>
                     <p class="mb-1">{{ $item->alamat }}</p>
                     
-                    {{-- Ukuran dan Harga --}}
                     <div class="mb-2">
                         <span class="badge bg-primary">
                             Ukuran: {{ $item->ukuran }}

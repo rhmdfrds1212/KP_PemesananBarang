@@ -79,5 +79,81 @@
     box-shadow: 0 4px 18px rgba(0, 0, 0, 0.15);
     transition: 0.3s ease;
   }
+  footer {
+        background-color: #1a1a1a;
+        color: #bbb;
+        padding: 60px 0 30px 0;
+    }
+
+    footer h5 {
+        color: #fff;
+        margin-bottom: 20px;
+    }
+
+    footer p, footer a {
+        color: #bbb;
+        font-size: 14px;
+    }
+
+    footer a:hover {
+        color: #00c6ff;
+        text-decoration: underline;
+    }
+
+    footer .social-icons a {
+        margin-right: 10px;
+        color: #bbb;
+        transition: color 0.3s ease;
+    }
+
+    footer .social-icons a:hover {
+        color: #00c6ff;
+    }
+
+    footer .logo-footer {
+        width: 180px;
+        margin-bottom: 20px;
+    }
+
+    .line-footer {
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+        margin-top: 30px;
+        padding-top: 20px;
+        text-align: center;
+        color: #777;
+        font-size: 13px;
+    }
 </style>
+
+<footer>
+    <div class="container">
+        <div class="row text-start">
+            <div class="col-md-4 mb-4">
+                <img src="{{ url('images/logo.png') }}" alt="Logo" class="logo-footer">
+                <p class="mt-3">
+                    CV. Ramanisa White Media Promosindo adalah perusahaan periklanan terpercaya sejak 1985. 
+                    Kami berkomitmen membantu bisnis Anda tampil lebih menonjol.
+                </p>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <h5>Jam Operasional</h5>
+                <p>Senin – Sabtu : 08:00 - 17:00</p>
+                <p>Minggu : Tutup</p>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <h5>Hubungi Kami</h5>
+                <p>Jl. Pangeran Ratu, Komplek TOP100 Blok A7-27 Jakabaring - Palembang, Sumatera Selatan, 30134</p>
+                <p><strong>Email:</strong> <a href="mailto:rawhite.adv@gmail.com">rawhite.adv@gmail.com</a></p>
+                <p><strong>Telp:</strong> <a href="tel:+628127878578">+62 812-7878-578</a></p>
+                <p><strong>Whatsapp:</strong> <a href="https://wa.me/628127878578">+62 812-7878-578</a></p>
+            </div>
+        </div>
+
+        <div class="line-footer">
+            &copy; 2025 CV. Ramanisa White Media Promosindo. All rights reserved.
+        </div>
+    </div>
+</footer>
 @endsection

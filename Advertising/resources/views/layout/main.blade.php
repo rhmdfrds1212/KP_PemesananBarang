@@ -247,6 +247,15 @@
                     </li>
                   @endif
                 @endauth
+                @auth
+                @if (Auth::user()->role === 'a')
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('riwayat.index') }}" style="font-weight:bold; color: black">
+                        <i class="bi"></i> Penyewaan
+                    </a>
+                </li>
+                @endif
+                @endauth
               </ul>
             </div>
           </div>

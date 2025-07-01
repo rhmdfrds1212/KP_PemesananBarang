@@ -53,7 +53,8 @@
                         @method('PUT')
                         <div class="input-group">
                             <select name="status" class="form-select" required>
-                                <option value="proses" {{ $item->status == 'proses' ? 'selected' : '' }}>Proses</option>
+                                <option value="menunggu" {{ $item->status == 'menunggu' ? 'selected' : '' }}>Menunggu</option>
+                                <option value="diproses" {{ $item->status == 'diproses' ? 'selected' : '' }}>Proses</option>
                                 <option value="selesai" {{ $item->status == 'selesai' ? 'selected' : '' }}>Selesai</option>
                                 <option value="dibatalkan" {{ $item->status == 'dibatalkan' ? 'selected' : '' }}>Dibatalkan</option>
                             </select>

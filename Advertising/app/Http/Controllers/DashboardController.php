@@ -14,17 +14,13 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        // Ambil semua pembayaran yang sudah diverifikasi diterima
         $pembayarans = Pembayaran::with('pemesanan')
             ->where('status_verifikasi', 'diterima')
             ->get();
 
-        // Hitung total pendapatan dari pembayaran yang valid
         $totalPendapatan = $pembayarans->sum(function ($pembayaran) {
             return $pembayaran->pemesanan->total_harga ?? 0;
         });
-
-        // Buat data untuk grafik pemesanan per bulan
         $chartLabels = [];
         $chartData = [];
 

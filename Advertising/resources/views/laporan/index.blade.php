@@ -88,7 +88,7 @@
                 <thead class="table-light">
                     <tr>
                         <th>ID Struk</th>
-                        <th>Email Staff</th>
+                        <th>Email</th>
                         <th>Tanggal</th>
                         <th>Metode Pembayaran</th>
                         <th>Total Tagihan (Rp)</th>

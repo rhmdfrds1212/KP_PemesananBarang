@@ -32,6 +32,27 @@
                         </div>
 
                         <div class="mt-3">
+                            <label for="produk_nama" class="form-label fw-semibold">
+                                <i class="bi bi-tags-fill me-1 text-info"></i> Jenis Produk
+                            </label>
+                            <select name="produk_nama" id="produk_nama" class="form-select" required>
+                                <option value="">-- Pilih Produk --</option>
+                                <option value="baliho" {{ old('produk_nama') == 'baliho' ? 'selected' : '' }}>Baliho</option>
+                                <option value="billboard" {{ old('produk_nama') == 'billboard' ? 'selected' : '' }}>Billboard</option>
+                                <option value="videotron" {{ old('produk_nama') == 'videotron' ? 'selected' : '' }}>Videotron</option>
+                            </select>
+                        </div>
+
+                        <div class="mt-3">
+                            <label for="ukuran" class="form-label fw-semibold">
+                                <i class="bi bi-aspect-ratio me-1 text-primary"></i> Ukuran
+                            </label>
+                            <select name="ukuran" id="ukuran" class="form-select" required>
+                                <option value="">-- Pilih Ukuran --</option>
+                            </select>
+                        </div>
+
+                        <div class="mt-3">
                             <label for="status" class="form-label fw-semibold">
                                 <i class="bi bi-info-circle-fill me-1 text-warning"></i> Status Lokasi
                             </label>
@@ -42,24 +63,11 @@
                             </select>
                         </div>
                         <div class="mt-3">
-                            <label for="ukuran" class="form-label fw-semibold">
-                                <i class="bi bi-aspect-ratio me-1 text-primary"></i> Ukuran
-                            </label>
-                            <input type="text" name="ukuran" class="form-control" value="{{ old('ukuran') }}" placeholder="Contoh: 4 x 6 M Vertical" required>
-                        </div>
-                        <div class="mt-3">
                             <label for="harga" class="form-label fw-semibold">
                                 <i class="bi bi-cash-stack me-1 text-success"></i> Harga Sewa (Per Bulan)
                             </label>
                             <input type="number" name="harga" class="form-control" value="{{ old('harga') }}" required placeholder="Contoh: 5000000">
                             <small class="text-muted">Masukkan harga sewa lokasi per bulan (tanpa titik/koma).</small>
-                        </div>
-
-                        <div class="mt-3">
-                            <label for="produk_nama" class="form-label fw-semibold">
-                                <i class="bi bi-tags-fill me-1 text-info"></i> Jenis Produk
-                            </label>
-                            <input type="text" name="produk_nama" class="form-control" value="{{ old('produk_nama') }}" placeholder="Contoh: baliho, neonbox, billboard" required>
                         </div>
 
                         <div class="mt-3">
@@ -84,4 +92,34 @@
         </div>
     </div>
 </div>
+<script>
+    const ukuranMap = {
+        baliho: ['4 x 6 M Vertical', '8 x 4 M Horizontal'],
+        billboard: ['5 x 10 M Vertical', '6 x 12 M Vertical'],
+        videotron: ['2 x 4 M Horizontal', '4 x 6 M Vertical']
+    };
+
+    const produkSelect = document.getElementById('produk_nama');
+    const ukuranSelect = document.getElementById('ukuran');
+
+    produkSelect.addEventListener('change', function() {
+        const selectedProduk = this.value;
+        ukuranSelect.innerHTML = '<option value="">-- Pilih Ukuran --</option>';
+
+        if (ukuranMap[selectedProduk]) {
+            ukuranMap[selectedProduk].forEach(function(uk) {
+                const opt = document.createElement('option');
+                opt.value = uk;
+                opt.textContent = uk;
+                ukuranSelect.appendChild(opt);
+            });
+        }
+    });
+
+    // Trigger saat halaman pertama kali jika ada old input
+    document.addEventListener('DOMContentLoaded', function() {
+        const event = new Event('change');
+        produkSelect.dispatchEvent(event);
+    });
+</script>
 @endsection

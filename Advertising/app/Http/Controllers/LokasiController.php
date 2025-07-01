@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Lokasi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class LokasiController extends Controller
 {
@@ -89,6 +90,11 @@ class LokasiController extends Controller
      */
     public function destroy(Lokasi $lokasi)
     {
-        //
+        if ($lokasi->foto && Storage::disk('public')->exists($lokasi->foto)) {
+            Storage::disk('public')->delete($lokasi->foto);
+        }
+
+        $lokasi->delete();
+        return redirect()->route('lokasi.index')->with('success', 'Data lokasi berhasil dihapus.');
     }
 }

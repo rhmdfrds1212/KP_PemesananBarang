@@ -26,6 +26,9 @@
         color: #000;
         border-radius: 10px;
         box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        background-color: rgba(255, 219, 100, 0.97);
+        word-break: break-word;
+
     }
     .slide {
         display: none;

@@ -17,32 +17,30 @@ class PemesananController extends Controller
         $query = Pemesanan::with(['produk', 'lokasi']);
 
         if ($user->role === 'a') {
-            $pemesanans = Pemesanan::whereIn('status', ['menunggu', 'diproses'])
-                                    ->with(['produk', 'lokasi'])
-                                    ->latest()
-                                    ->get();
+            // Admin lihat semua yang belum selesai
+            $query->whereIn('status', ['menunggu', 'diproses']);
         } else {
-            $pemesanans = Pemesanan::where('user_id', $user->id)
-                                    ->whereIn('status', ['menunggu', 'diproses'])
-                                    ->with(['produk', 'lokasi'])
-                                    ->latest()
-                                    ->get();
+            // User lihat hanya pesanan sendiri yang belum selesai
+            $query->where('user_id', Auth::id())
+                ->where('status', '!=', 'selesai');
         }
 
         if ($request->search) {
-        $query->where(function ($q) use ($request) {
-            $q->where('nama', 'like', '%' . $request->search . '%')
-              ->orWhere('email', 'like', '%' . $request->search . '%')
-              ->orWhere('telepon', 'like', '%' . $request->search . '%')
-              ->orWhereHas('lokasi', function($q) use ($request) {
-                  $q->where('alamat', 'like', '%' . $request->search . '%');
-              })
-              ->orWhereHas('produk', function($q) use ($request) {
-                  $q->where('nama', 'like', '%' . $request->search . '%');
-              });
-        });
-    }
+            $query->where(function ($q) use ($request) {
+                $q->where('nama', 'like', '%' . $request->search . '%')
+                ->orWhere('email', 'like', '%' . $request->search . '%')
+                ->orWhere('telepon', 'like', '%' . $request->search . '%')
+                ->orWhereHas('lokasi', function($q) use ($request) {
+                    $q->where('alamat', 'like', '%' . $request->search . '%');
+                })
+                ->orWhereHas('produk', function($q) use ($request) {
+                    $q->where('nama', 'like', '%' . $request->search . '%');
+                });
+            });
+        }
+
         $pemesanans = $query->latest()->get();
+
         return view('pemesanan.index', compact('pemesanans'));
     }
 
