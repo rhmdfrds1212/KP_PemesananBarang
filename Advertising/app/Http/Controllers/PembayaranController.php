@@ -12,7 +12,6 @@ class PembayaranController extends Controller
 {
     public function index()
     {
-        // Menampilkan semua pembayaran untuk admin
         $pembayarans = Pembayaran::with('pemesanan')->latest()->get();
         return view('admin.pembayaran.index', compact('pembayarans'));
     }
@@ -31,7 +30,6 @@ class PembayaranController extends Controller
 
         $path = $request->file('bukti_pembayaran')->store('bukti_pembayaran', 'public');
 
-        // Buat pembayaran
         $pembayaran = Pembayaran::create([
             'pemesanan_id' => $pemesanan->id,
             'metode' => $request->metode_pembayaran,
@@ -41,7 +39,6 @@ class PembayaranController extends Controller
             'catatan' => $request->catatan,
         ]);
 
-        // Buat laporan otomatis
         Laporan::create([
             'pembayaran_id' => $pembayaran->id,
         ]);

@@ -94,9 +94,9 @@
 </div>
 <script>
     const ukuranMap = {
-        baliho: ['4 x 6 M Vertical', '8 x 4 M Horizontal'],
-        billboard: ['5 x 10 M Vertical', '6 x 12 M Vertical'],
-        videotron: ['2 x 4 M Horizontal', '4 x 6 M Vertical']
+        baliho: ['6 x 4 M Vertical', '4 x 8 M Horizontal'],
+        billboard: ['5 x 5 M Vertical' ,'10 x 5 M Vertical', '12 x 4 M Vertical'],
+        videotron: ['4 x 2 M Horizontal', '6 x 4 M Vertical']
     };
 
     const produkSelect = document.getElementById('produk_nama');

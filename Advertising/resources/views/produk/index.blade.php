@@ -132,7 +132,8 @@
     }
 
     footer .logo-footer {
-        width: 180px;
+        width: 300px;
+        max-width: 100%;
         margin-bottom: 20px;
     }
 
@@ -148,6 +149,12 @@
 
 <div class="produk-hero">
     <div class="container">
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
 
         <h2 class="produk-title">PRODUK KAMI</h2>
         @if(Auth::check() && Auth::user()->role === 'a')
@@ -173,14 +180,15 @@
                         @endphp
 
                         @if($kategori === 'baliho')
-                            <li>4 x 6 M Vertical</li>
-                            <li>8 x 4 M Horizontal</li>
+                            <li>6 x 4 M Vertical</li>
+                            <li>4 x 8 M Horizontal</li>
                         @elseif($kategori === 'videotron')
-                            <li>2 x 4 M Horizontal</li>
-                            <li>4 x 6 M Vertical</li>
+                            <li>4 x 2 M Horizontal</li>
+                            <li>6 x 4 M Vertical</li>
                         @elseif($kategori === 'billboard')
-                            <li>5 x 10 M Vertical</li>
-                            <li>6 x 12 M Vertical</li>
+                            <li>5 x 5 M Vertical</li>
+                            <li>10 x 5 M Vertical</li>
+                            <li>12 x 6 M Vertical</li>
                         @else
                             <li>Ukuran custom sesuai kebutuhan</li>
                         @endif
@@ -232,7 +240,7 @@
     <div class="container">
         <div class="row text-start">
             <div class="col-md-4 mb-4">
-                <img src="{{ url('images/logo.png') }}" alt="Logo" class="logo-footer">
+                <img src="{{ url('images/logo-remove.png') }}" alt="Logo" class="logo-footer">
                 <p class="mt-3">
                     CV. Ramanisa White Media Promosindo adalah perusahaan periklanan terpercaya sejak 1985. 
                     Kami berkomitmen membantu bisnis Anda tampil lebih menonjol.

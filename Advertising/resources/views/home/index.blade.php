@@ -141,7 +141,8 @@
     }
 
     footer .logo-footer {
-        width: 180px;
+        width: 300px;
+        max-width: 100%;
         margin-bottom: 20px;
     }
 
@@ -260,7 +261,7 @@
     <div class="container">
         <div class="row text-start">
             <div class="col-md-4 mb-4">
-                <img src="{{ url('images/logo.png') }}" alt="Logo" class="logo-footer">
+                <img src="{{ url('images/logo-remove.png') }}" alt="Logo" class="logo-footer">
                 <p class="mt-3">
                     CV. Ramanisa White Media Promosindo adalah perusahaan periklanan terpercaya sejak 1985. 
                     Kami berkomitmen membantu bisnis Anda tampil lebih menonjol.

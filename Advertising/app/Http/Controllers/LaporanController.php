@@ -15,7 +15,6 @@ class LaporanController extends Controller
     {
         $query = \App\Models\Laporan::query()->with('pembayaran.pemesanan');
 
-        // Filter tanggal
         if ($request->filled('tanggal')) {
             $tanggal = explode(' - ', $request->tanggal);
             try {
@@ -26,25 +25,21 @@ class LaporanController extends Controller
                     $q->whereBetween('created_at', [$start, $end]);
                 });
             } catch (\Exception $e) {
-                // Handle error format tanggal jika salah
             }
         }
 
-        // Filter metode pembayaran
         if ($request->filled('metode')) {
             $query->whereHas('pembayaran', function ($q) use ($request) {
                 $q->where('metode', $request->metode);
             });
         }
 
-        // Filter tipe transaksi
         if ($request->filled('tipe')) {
             $query->whereHas('pembayaran', function ($q) use ($request) {
                 $q->where('tipe_pembayaran', $request->tipe);
             });
         }
 
-        // Filter ID struk
         if ($request->filled('id_struk')) {
             $query->where('id', 'like', '%' . $request->id_struk . '%');
         }

@@ -5,6 +5,12 @@
     <div class="container">
         <div class="bg-white p-4 rounded shadow-sm">
             <h3 class="mb-4">Pembayaran Pemesanan</h3>
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
 
             <div class="mb-4">
                 <h5 class="mb-3">Detail Pemesanan</h5>

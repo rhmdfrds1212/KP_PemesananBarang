@@ -41,7 +41,6 @@ class DetailProdukController extends Controller
         $produk = Produk::findOrFail($id);
         $detail_foto = \App\Models\DetailProduk::where('produk_id', $id)->get();
 
-        // Cek jika admin tidak boleh akses halaman detail produk
         if (Auth::check() && Auth::user()->role === 'a' || Auth::user()->role === 'p') {
             abort(403, 'tidak diizinkan mengakses halaman ini.');
         }

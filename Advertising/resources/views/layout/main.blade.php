@@ -235,10 +235,14 @@
                           <a class="nav-link" href="{{ url('lokasi') }}"
                             aria-haspopup="true" aria-expanded="false" style="font-weight:bold; color: black">Lokasi</a>
                     </li>
+                @auth    
+                  @if (Auth::user()->role === 'a' || Auth::user()->role === 'u')
                 <li class="nav-item">
-                  <a class="nav-link" href="{{ route('tentangkami') }}"
-                    aria-haspopup="true" aria-expanded="false" style="font-weight:bold; color: black">Tentang Kami</a>
+                  <a class="nav-link" href="{{ route('kontak') }}"
+                    aria-haspopup="true" aria-expanded="false" style="font-weight:bold; color: black">Kontak</a>
                 </li>
+                  @endif
+                @endauth
                 @auth
                   @if (Auth::user()->role === 'a' || Auth::user()->role === 'p')
                     <li class="nav-item">

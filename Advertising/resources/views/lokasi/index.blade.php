@@ -5,6 +5,23 @@
 @section('content')
 <div class="container mt-4">
     <h1 class="text-center fw-bold mb-4">TITIK LOKASI</h1>
+    @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i>
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+    
+    <form method="GET" action="{{ route('lokasi.index') }}" class="mb-4">
+        <div class="input-group">
+            <input type="text" name="search" class="form-control" placeholder="Cari berdasarkan produk (baliho, billboard, videotron)"
+                value="{{ request('search') }}">
+            <button class="btn btn-outline-success" type="submit">
+                <i class="bi bi-search"></i> Cari
+            </button>
+        </div>
+    </form>
 
     @if (Auth::check() && Auth::user()->role === 'a')
         <div class="d-flex justify-content-end mb-3">

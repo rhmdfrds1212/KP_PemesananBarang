@@ -11,10 +11,15 @@ class LokasiController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $lokasi = Lokasi::all();
-        return view('lokasi.index')->with('lokasi', $lokasi);
+        $search = $request->query('search');
+
+        $lokasi = Lokasi::when($search, function ($query, $search) {
+            return $query->where('produk_nama', 'like', '%' . $search . '%');
+        })->get();
+
+        return view('lokasi.index', compact('lokasi', 'search'));
     }
 
     /**

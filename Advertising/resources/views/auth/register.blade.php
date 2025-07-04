@@ -38,8 +38,12 @@
           <form method="POST" action="{{ route('register') }}">
             @csrf
             <div class="mb-3">
-              <label>Nama Lengkap</label>
-              <input type="text" name="name" class="form-control" required>
+              <label>Nama Depan</label>
+              <input type="text" name="first_name" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label>Nama Belakang</label>
+              <input type="text" name="last_name" class="form-control" required>
             </div>
             <div class="mb-3">
               <label>Email</label>

@@ -24,9 +24,8 @@
 </style>
 
 <div class="container py-5">
-    <div class="row g-4 align-items-center">
-        <div class="col-md-6">
-
+    <div class="row g-4 align-items-stretch d-flex">
+        <div class="col-md-6 d-flex flex-column h-100">
             <img id="mainImage" 
                  src="{{ asset('upload/produk/' . $produk->foto) }}" 
                  class="img-fluid rounded shadow mb-3" 
@@ -51,7 +50,7 @@
             </div>
         </div>
 
-        <div class="col-md-6 produk-detail">
+        <div class="col-md-6 produk-detail h-100 d-flex flex-column justify-content-between">
             <h2 class="fw-bold">{{ strtoupper($produk->nama) }}</h2>
             <p><strong>Kategori:</strong> {{ $produk->kategori }}</p>
             <p><strong>Deskripsi:</strong> {{ $produk->deskripsi }}</p>
@@ -60,14 +59,15 @@
             <p><strong>Ukuran Tersedia:</strong></p>
             <ul>
                 @if (strtolower($produk->kategori) == 'baliho')
-                    <li>4 x 6 M Vertical</li>
-                    <li>8 x 4 M Horizontal</li>
+                    <li>6 x 4 M Vertical</li>
+                    <li>4 x 8 M Horizontal</li>
                 @elseif (strtolower($produk->kategori) == 'videotron')
-                    <li>2 x 4 M Horizontal</li>
-                    <li>4 x 6 M Vertical</li>
+                    <li>4 x 2 M Horizontal</li>
+                    <li>6 x 4 M Vertical</li>
                 @elseif (strtolower($produk->kategori) == 'billboard')
-                    <li>5 x 10 M Vertical</li>
-                    <li>6 x 12 M Vertical</li>
+                    <li>5 x 5 M Vertical</li>
+                    <li>10 x 5 M Vertical</li>
+                    <li>12 x 6 M Vertical</li>
                 @else
                     <li>Custom sesuai kebutuhan</li>
                 @endif
