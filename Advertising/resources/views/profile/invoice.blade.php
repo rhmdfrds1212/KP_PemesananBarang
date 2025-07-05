@@ -21,7 +21,20 @@
         @endif
     </h2>
 
-    {{-- Search Bar --}}
+    @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle me-2"></i> {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    @endif
+
+    @if(session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle me-2"></i> {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    @endif
+
     <form method="GET" class="row g-3 mb-4">
         <div class="col-md-4">
             <input type="text" name="search" class="form-control"
@@ -93,10 +106,8 @@
                 </span>
             </p>
 
-            {{-- Admin Controls --}}
             @if(Auth::user()->role === 'a')
             <div class="d-flex gap-2">
-                {{-- Update Status --}}
                 <form action="{{ route('pembayaran.updateStatus', ['id' => $invoice->id, 'status' => 'diterima']) }}" method="POST">
                     @csrf @method('PUT')
                     <button class="btn btn-success btn-sm">Terima</button>
@@ -108,8 +119,6 @@
                 </form>
             </div>
             @endif
-
-            {{-- Bukti Pembayaran --}}
             @if($invoice->bukti_pembayaran)
                 <p class="fw-bold mt-3">Bukti Pembayaran:</p>
                 <a href="{{ asset('storage/' . $invoice->bukti_pembayaran) }}" target="_blank">

@@ -58,7 +58,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label">Catatan (Opsional)</label>
+                    <label class="form-label">Catatan</label>
                     <textarea name="catatan" class="form-control" rows="3"></textarea>
                 </div>
 

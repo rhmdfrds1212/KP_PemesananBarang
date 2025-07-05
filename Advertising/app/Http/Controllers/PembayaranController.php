@@ -7,6 +7,7 @@ use App\Models\Pemesanan;
 use App\Models\Laporan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Notifications\InvoiceStatusNotification;
 
 class PembayaranController extends Controller
 {
@@ -55,17 +56,24 @@ class PembayaranController extends Controller
 
     public function updateStatus($id, $status)
     {
-        $pembayaran = Pembayaran::findOrFail($id);
+        $pembayaran = Pembayaran::with('pemesanan.user')->findOrFail($id);
 
         if (!in_array($status, ['pending', 'diterima', 'ditolak'])) {
             return back()->with('error', 'Status tidak valid.');
         }
 
-        $pembayaran->update([
-            'status_verifikasi' => $status,
-        ]);
+        $pembayaran->update(['status_verifikasi' => $status]);
 
-        return back()->with('success', 'Status pembayaran berhasil diperbarui.');
+        $user = $pembayaran->pemesanan->user ?? null;
+        if ($user) {
+            $user->notify(new InvoiceStatusNotification($status, $pembayaran->id));
+        }
+
+        $message = $status === 'diterima' 
+            ? 'Invoice berhasil diterima.' 
+            : ($status === 'ditolak' ? 'Invoice ditolak.' : 'Status diperbarui.');
+
+        return back()->with('success', $message);
     }
 
     public function destroy($id)

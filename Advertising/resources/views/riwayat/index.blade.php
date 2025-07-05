@@ -33,6 +33,9 @@
                         <li><strong>Harga Sewa:</strong> Rp{{ number_format($item->harga_sewa, 0, ',', '.') }}</li>
                         <li><strong>Total Harga:</strong> <span class="text-success fw-bold">Rp{{ number_format($item->total_harga, 0, ',', '.') }}</span></li>
                         <li><strong>Tanggal Pesan:</strong> {{ $item->created_at->format('d-m-Y') }}</li>
+                        @if($item->pembayaran && $item->pembayaran->catatan)
+                            <li><strong>Catatan Pelanggan:</strong> {{ $item->pembayaran->catatan }}</li>
+                        @endif
                     </ul>
 
                     <div class="mb-3">
