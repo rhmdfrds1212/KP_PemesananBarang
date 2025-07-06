@@ -41,11 +41,13 @@ class InvoiceStatusNotification extends Notification
         $statusText = $this->status === 'diterima' ? 'diterima' : 'ditolak';
 
         return (new MailMessage)
-                    ->subject('Status Invoice Anda')
-                    ->greeting('Halo ' . $notifiable->name . ',')
-                    ->line("Invoice dengan ID: {$this->invoiceId} telah *$statusText* oleh admin.")
-                    ->action('Lihat Invoice', url(route('profile.invoice')))
-                    ->line('Terima kasih telah menggunakan layanan kami!');
+            ->subject('Status Invoice Anda')
+            ->greeting('Halo ' . $notifiable->name . ',')
+            ->line("Invoice dengan ID: {$this->invoiceId} telah *$statusText* oleh admin.")
+            ->action('Lihat Invoice', url(route('profile.invoice')))
+            ->line('Jika Anda memiliki pertanyaan lebih lanjut, silakan hubungi admin kami melalui WhatsApp dibawah ini :')
+            ->line('[Klik untuk WhatsApp Admin](https://wa.me/628127878578)')
+            ->line('Terima kasih telah menggunakan layanan kami!');
     }
 
     /**
