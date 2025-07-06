@@ -197,7 +197,7 @@
       <div class="row justify-content-between align-items-center w-100">
 
         <div class="col-auto" style="margin-left: 30px;">
-          <a class="navbar-brand" href="index.html" style="padding: 0;">
+          <a class="navbar-brand" style="padding: 0;">
             <img src="{{ url('images/logo.png') }}" alt="Logo" style="height: 80px; object-fit: contain;">
           </a>
         </div>

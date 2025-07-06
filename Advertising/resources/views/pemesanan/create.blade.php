@@ -70,7 +70,7 @@
                 <div class="row g-3 mb-3">
                     <div class="col-md-6">
                         <label class="form-label fw-semibold">Jumlah</label>
-                        <input type="number" name="jumlah" id="jumlah" class="form-control" min="1" value="1" required>
+                        <input type="number" name="jumlah" id="jumlah" class="form-control" value="1" min="1" max="1" readonly>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label fw-semibold">Lama Sewa (Bulan)</label>
