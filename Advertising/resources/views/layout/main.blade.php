@@ -192,132 +192,100 @@
     </div>
   </div>
 
-  <nav class="navbar navbar-expand-lg text-uppercase fs-6 py-1 px-2 border-bottom align-items-center" style="background-color: #ffffff;">
-    <div class="container-fluid">
-      <div class="row justify-content-between align-items-center w-100">
+  <nav class="navbar navbar-expand-lg py-1 border-bottom" style="background-color: #ffffff;">
+    <div class="container-fluid d-flex align-items-center justify-content-between">
 
-        <div class="col-auto" style="margin-left: 30px;">
-          <a class="navbar-brand" style="padding: 0;">
-            <img src="{{ url('images/logo.png') }}" alt="Logo" style="height: 80px; object-fit: contain;">
-          </a>
-        </div>
+      {{-- Logo kiri --}}
+      <a class="navbar-brand me-3" href="{{ url('/') }}" style="padding: 0;">
+        <img src="{{ url('images/logo.png') }}" alt="Logo" style="height: 80px; object-fit: contain;">
+      </a>
 
-        <div class="col-auto">
-          <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
-            aria-controls="offcanvasNavbar">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-
-          <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
-            aria-labelledby="offcanvasNavbarLabel">
-            <div class="offcanvas-body">
-              <ul class="navbar-nav justify-content-end flex-grow-1 gap-1 gap-md-5 pe-3">
-                @if(Auth::check() && Auth::user()->role === 'a')
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('dashboard') }}" style="font-weight:bold; color:black">
-                            Dashboard
-                        </a>
-                    </li>
-                @endif
-                <li class="nav-item dropdown position-relative">
-                  <a class="nav-link fw-bold" href="{{ url('home') }}" style="color: black;">
-                      Beranda
-                  </a>
-                  <ul class="dropdown-menu shadow">
-                      <li><a class="dropdown-item" href="#cerita">Cerita Kami</a></li>
-                      <li><a class="dropdown-item" href="#klien">Klien Kami</a></li>
-                      <li><a class="dropdown-item" href="#lokasi">Lokasi Kami</a></li>
-                  </ul>
-              </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{{ url('produk') }}" style="font-weight:bold; color: black">Produk</a>
-                    <li class="nav-item">
-                          <a class="nav-link" href="{{ url('lokasi') }}"
-                            aria-haspopup="true" aria-expanded="false" style="font-weight:bold; color: black">Lokasi</a>
-                    </li>
-                @auth    
-                  @if (Auth::user()->role === 'a' || Auth::user()->role === 'u')
-                <li class="nav-item">
-                  <a class="nav-link" href="{{ route('kontak') }}"
-                    aria-haspopup="true" aria-expanded="false" style="font-weight:bold; color: black">Kontak</a>
-                </li>
-                  @endif
-                @endauth
-                @auth
-                  @if (Auth::user()->role === 'a' || Auth::user()->role === 'p')
-                    <li class="nav-item">
-                      <a class="nav-link" href="{{ route('laporan.index') }}"
-                      aria-haspopup="true" aria-expanded="false" style="font-weight:bold; color: black">Laporan</a>
-                    </li>
-                  @endif
-                @endauth
-                @auth
-                @if (Auth::user()->role === 'a')
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('riwayat.index') }}" style="font-weight:bold; color: black">
-                        <i class="bi"></i> Penyewaan
-                    </a>
-                </li>
-                @endif
-                @endauth
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="col-3 col-lg-auto">
-          <ul class="d-flex align-items-center justify-content-center list-unstyled m-0 p-0 gap-3">
-            <li class="nav-item dropdown">
-              <a class="nav-link text-dark d-flex align-items-center" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="bi bi-person-circle fs-4"></i>
-                <i class="bi bi-caret-down-fill ms-1"></i>
-              </a>
-              <ul class="dropdown-menu dropdown-menu-end shadow mt-2" aria-labelledby="profileDropdown" style="min-width: 260px; border-radius: 10px;">
-                @auth
-                  <li class="px-3 py-2">
-                    <div class="d-flex align-items-center">
-                      <div class="me-2">
-                        <i class="bi bi-person-circle fs-2 text-secondary"></i>
-                      </div>
-                      <div>
-                        <div class="fw-semibold">{{ Auth::user()->name }}</div>
-                        <div class="text-muted small">{{ Auth::user()->email }}</div>
-                      </div>
-                    </div>
-                  </li>
-                  <li><hr class="dropdown-divider my-1"></li>
-                  <li>
-                    <a href="{{ url('profile') }}" class="dropdown-item d-flex align-items-center">
-                      <i class="bi bi-person me-2"></i> Lihat Profil
-                    </a>
-                  </li>
-                  <li>
-                    <form method="POST" action="{{ route('logout') }}">
-                      @csrf
-                      <button class="dropdown-item d-flex align-items-center text-danger" type="submit">
-                        <i class="bi bi-box-arrow-right me-2"></i> Logout
-                      </button>
-                    </form>
-                  </li> 
-                @else
-                  <li class="px-3 py-2">
-                    <div class="text-center">
-                      <i class="bi bi-person-circle fs-2 text-muted"></i>
-                      <p class="mb-0 mt-2 text-muted small">Silakan login untuk mengakses akun Anda</p>
-                    </div>
-                  </li>
-                  <li><hr class="dropdown-divider my-1"></li>
-                  <li class="px-3 pb-2 text-center">
-                    <a href="{{ route('login') }}" class="btn btn-sm btn-success w-100 mb-1">Login</a>
-                    <a href="{{ route('register') }}" class="btn btn-sm btn-outline-secondary w-100">Register</a>
-                  </li>
-                @endauth
-              </ul>
+      {{-- Menu tengah --}}
+      <div class="flex-grow-1 d-flex justify-content-center">
+        <ul class="navbar-nav d-flex align-items-center flex-row gap-3 text-uppercase fw-bold">
+          @if(Auth::check() && Auth::user()->role === 'a')
+            <li class="nav-item">
+              <a class="nav-link text-dark" href="{{ route('dashboard') }}">Dashboard</a>
             </li>
+          @endif
+
+          <li class="nav-item dropdown">
+            <a class="nav-link text-dark" href="{{ url('home') }}">Beranda</a>
+            <ul class="dropdown-menu shadow">
+              <li><a class="dropdown-item" href="#cerita">Cerita Kami</a></li>
+              <li><a class="dropdown-item" href="#klien">Klien Kami</a></li>
+              <li><a class="dropdown-item" href="#lokasi">Lokasi Kami</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item"><a class="nav-link text-dark" href="{{ url('produk') }}">Produk</a></li>
+          <li class="nav-item"><a class="nav-link text-dark" href="{{ url('lokasi') }}">Lokasi</a></li>
+
+          @auth
+            @if (Auth::user()->role === 'a' || Auth::user()->role === 'u')
+              <li class="nav-item"><a class="nav-link text-dark" href="{{ route('kontak') }}">Kontak</a></li>
+            @endif
+            @if (Auth::user()->role === 'a' || Auth::user()->role === 'p')
+              <li class="nav-item"><a class="nav-link text-dark" href="{{ route('laporan.index') }}">Laporan</a></li>
+            @endif
+            @if (Auth::user()->role === 'a')
+              <li class="nav-item"><a class="nav-link text-dark" href="{{ route('riwayat.index') }}">Penyewaan</a></li>
+            @endif
+          @endauth
+        </ul>
+      </div>
+        {{-- Profile --}}
+        <div class="nav-item dropdown">
+          <a class="nav-link text-dark d-flex align-items-center" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-person-circle fs-4"></i>
+            <i class="bi bi-caret-down-fill ms-1"></i>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end shadow mt-2" aria-labelledby="profileDropdown" style="min-width: 260px; border-radius: 10px;">
+            @auth
+              <li class="px-3 py-2">
+                <div class="d-flex align-items-center">
+                  <div class="me-2">
+                    <i class="bi bi-person-circle fs-2 text-secondary"></i>
+                  </div>
+                  <div>
+                    <div class="fw-semibold">{{ Auth::user()->name }}</div>
+                    <div class="text-muted small">{{ Auth::user()->email }}</div>
+                  </div>
+                </div>
+              </li>
+              <li><hr class="dropdown-divider my-1"></li>
+              <li>
+                <a href="{{ url('profile') }}" class="dropdown-item d-flex align-items-center">
+                  <i class="bi bi-person me-2"></i> Lihat Profil
+                </a>
+              </li>
+              <li>
+                <form method="POST" action="{{ route('logout') }}">
+                  @csrf
+                  <button class="dropdown-item d-flex align-items-center text-danger" type="submit">
+                    <i class="bi bi-box-arrow-right me-2"></i> Logout
+                  </button>
+                </form>
+              </li>
+            @else
+              <li class="px-3 py-2">
+                <div class="text-center">
+                  <i class="bi bi-person-circle fs-2 text-muted"></i>
+                  <p class="mb-0 mt-2 text-muted small">Silakan login untuk mengakses akun Anda</p>
+                </div>
+              </li>
+              <li><hr class="dropdown-divider my-1"></li>
+              <li class="px-3 pb-2 text-center">
+                <a href="{{ route('login') }}" class="btn btn-sm btn-success w-100 mb-1">Login</a>
+                <a href="{{ route('register') }}" class="btn btn-sm btn-outline-secondary w-100">Register</a>
+              </li>
+            @endauth
           </ul>
         </div>
-        </div>
       </div>
-    </nav>
+    </div>
+  </nav>
+
   <main>
   @yield('content')
 </main>
@@ -331,7 +299,10 @@
   <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
   <script src="js/script.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+  </script>
+  @endif
+@endauth
 </body>
 
 </html>

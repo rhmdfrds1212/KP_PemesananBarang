@@ -5,9 +5,17 @@
 @section('content')
 <style>
     body {
-        background: linear-gradient(to right, #f7f7f7, #dfe9f3);
-        min-height: 100vh;
-    }
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0,0,0,0.7)), 
+                url('{{ asset('images/ampera.jpg') }}') no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+  }
+  .card {
+    backdrop-filter: blur(12px);
+    background-color: rgb(255, 255, 255);
+    border-radius: 15px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  }
 </style>
 
 <div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
