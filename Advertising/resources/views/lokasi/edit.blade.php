@@ -29,8 +29,12 @@
 
                 <div class="mt-3">
                     <label for="produk_nama" class="form-label fw-semibold">Jenis Produk</label>
-                    <input type="text" name="produk_nama" class="form-control"
-                        value="{{ old('produk_nama', $lokasi->produk_nama) }}" required>
+                    <select name="produk_nama" id="produk_nama" class="form-select" required>
+                        <option value="">-- Pilih Produk --</option>
+                        <option value="baliho" {{ old('produk_nama', $lokasi->produk_nama) == 'baliho' ? 'selected' : '' }}>Baliho</option>
+                        <option value="billboard" {{ old('produk_nama', $lokasi->produk_nama) == 'billboard' ? 'selected' : '' }}>Billboard</option>
+                        <option value="videotron" {{ old('produk_nama', $lokasi->produk_nama) == 'videotron' ? 'selected' : '' }}>Videotron</option>
+                    </select>
                 </div>
 
                 <div class="mt-3">

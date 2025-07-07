@@ -71,6 +71,8 @@ use Illuminate\Support\Facades\Auth;
         // Pembayaran (Admin Verifikasi)
         Route::get('/pembayaran', [PembayaranController::class, 'index'])->name('admin.pembayaran.index');
         Route::post('/pembayaran/{id}/update-status', [PembayaranController::class, 'updateStatus'])->name('admin.pembayaran.updateStatus');
+        Route::put('/admin/pembayaran/{id}/selesai', [PembayaranController::class, 'selesaikan'])->name('pembayaran.selesai');
+
     });
 
     // ========================

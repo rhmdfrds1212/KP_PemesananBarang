@@ -194,7 +194,9 @@
                         @endif
                     </ul>
                     <div class="mt-3">
-                        <a href="{{ route('detail_produks.show', $produk->id) }}" class="btn btn-dark">Lihat Detail</a>
+                        @if (Auth::check() && Auth::user()->role === 'u')
+                            <a href="{{ route('detail_produks.show', $produk->id) }}" class="btn btn-dark">Lihat Detail</a>
+                        @endif
                         @if (Auth::check() && Auth::user()->role === 'a')
                         <a href="{{ route('produk.edit', $produk->id) }}" class="btn btn-primary">Edit</a>
                         <form action="{{ route('produk.destroy', $produk->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Hapus produk?')">

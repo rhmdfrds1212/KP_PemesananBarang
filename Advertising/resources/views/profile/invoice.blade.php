@@ -117,6 +117,15 @@
                     @csrf @method('PUT')
                     <button class="btn btn-danger btn-sm">Tolak</button>
                 </form>
+                @if(Auth::user()->role === 'a' && $invoice->status_verifikasi == 'diterima')
+                    <form action="{{ route('pembayaran.selesai', $invoice->id) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <button type="submit" class="btn btn-secondary btn-sm">
+                            Selesai
+                        </button>
+                    </form>
+                @endif
             </div>
             @endif
             @if($invoice->bukti_pembayaran)

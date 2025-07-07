@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="container py-5">
-    <h2 class="fw-bold mb-4 text-center text-uppercase">Riwayat Penyewaan Pelanggan</h2>
+    <h2 class="fw-bold mb-4 text-center text-uppercase">Status Penyewaan Pelanggan</h2>
     <div class="mb-4">
         <form action="{{ route('pemesanan.index') }}" method="GET" class="d-flex gap-2">
             <input type="text" name="search" class="form-control" placeholder="Cari nama, email, lokasi atau produk..." value="{{ request('search') }}">
