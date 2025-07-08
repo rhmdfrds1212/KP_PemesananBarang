@@ -181,6 +181,6 @@ class PemesananController extends Controller
         $pemesanan = Pemesanan::findOrFail($id);
         $pemesanan->delete();
 
-        return redirect()->route('pemesanan.index')->with('success', 'Pemesanan berhasil dihapus.');
+        return redirect()->route('pemesanan.index')->with('success', 'Pemesanan berhasil dibatalkan.');
     }
 }

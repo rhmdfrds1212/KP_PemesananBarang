@@ -3,7 +3,8 @@
 @section('content')
 <style>
   body {
-    background: url('{{ asset('images/bg-advertising.jpg') }}') no-repeat center center fixed;
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0,0,0,0.7)), 
+                url('{{ asset('images/ampera.jpg') }}') no-repeat center center fixed;
     background-size: cover;
   }
   .card {
@@ -61,7 +62,32 @@
               <button type="submit" class="btn btn-success">Daftar</button>
             </div>
           </form>
+          <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const inputs = document.querySelectorAll("form input[required], form textarea[required]");
 
+                inputs.forEach(function(input) {
+                    input.addEventListener("invalid", function (e) {
+                        e.preventDefault(); 
+                        let name = input.getAttribute("name");
+                        let pesan = "Field ini wajib diisi.";
+
+                        if (name === "firstName") pesan = "Nama depan wajib diisi.";
+                        if (name === "lastName") pesan = "Nama belakang wajib diisi.";
+                        if (name === "email") pesan = "Email wajib diisi.";
+                        if (name === "password") pesan = "Password wajib diisi.";
+                        if (name === "password_confirmation") pesan = "Konfirmasi password wajib diisi.";
+
+                        input.setCustomValidity(pesan);
+                        input.reportValidity();
+                    });
+
+                    input.addEventListener("input", function () {
+                        input.setCustomValidity("");
+                    });
+                });
+            });
+            </script>
           <div class="text-center mt-3">
             <p>Sudah punya akun? <a href="{{ route('login') }}" class="text-success fw-bold">Masuk</a></p>
           </div>

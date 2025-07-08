@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Pembayaran;
 use App\Models\Pemesanan;
 use App\Models\Laporan;
+use App\Notifications\InvoiceStatusNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Notifications\InvoiceStatusNotification;
 
 class PembayaranController extends Controller
 {
@@ -35,7 +35,7 @@ class PembayaranController extends Controller
             'pemesanan_id' => $pemesanan->id,
             'metode' => $request->metode_pembayaran,
             'bukti_pembayaran' => $path,
-            '   _pembayaran' => 'menunggu pembayaran',
+            'status_pembayaran' => 'menunggu pembayaran',
             'status_verifikasi' => 'pending',
             'catatan' => $request->catatan,
         ]);
@@ -56,7 +56,7 @@ class PembayaranController extends Controller
 
     public function updateStatus($id, $status)
     {
-        $pembayaran = Pembayaran::with('pemesanan.user')->findOrFail($id);
+        $pembayaran = Pembayaran::with('pemesanan.lokasi', 'pemesanan.user')->findOrFail($id);
 
         if (!in_array($status, ['pending', 'diterima', 'ditolak'])) {
             return back()->with('error', 'Status tidak valid.');
@@ -64,17 +64,44 @@ class PembayaranController extends Controller
 
         $pembayaran->update(['status_verifikasi' => $status]);
 
+        // Jika status diterima, ubah status lokasi jadi 'tersewa'
+        if ($status === 'diterima') {
+            $pemesanan = $pembayaran->pemesanan;
+            if ($pemesanan && $pemesanan->lokasi) {
+                $pemesanan->lokasi->update(['status' => 'tersewa']);
+            }
+        }
+
+        // Kirim notifikasi ke user
         $user = $pembayaran->pemesanan->user ?? null;
         if ($user) {
             $user->notify(new InvoiceStatusNotification($status, $pembayaran->id));
         }
 
-        $message = $status === 'diterima' 
-            ? 'Invoice berhasil diterima.' 
-            : ($status === 'ditolak' ? 'Invoice ditolak.' : 'Status diperbarui.');
+        $message = match($status) {
+            'diterima' => 'Invoice berhasil diterima dan lokasi ditandai sebagai tersewa.',
+            'ditolak' => 'Invoice ditolak.',
+            default => 'Status diperbarui.',
+        };
 
         return back()->with('success', $message);
     }
+
+    public function selesaikan($id)
+    {
+        $pembayaran = Pembayaran::with('pemesanan.lokasi')->findOrFail($id);
+
+        if ($pembayaran->status_verifikasi !== 'diterima') {
+            return back()->with('error', 'Pembayaran belum diterima, tidak bisa menyelesaikan.');
+        }
+
+        if ($pembayaran->pemesanan && $pembayaran->pemesanan->lokasi) {
+            $pembayaran->pemesanan->lokasi->update(['status' => 'tersedia']);
+        }
+
+        return back()->with('success', 'Transaksi ditandai selesai. Lokasi kini tersedia kembali.');
+    }
+
 
     public function destroy($id)
     {

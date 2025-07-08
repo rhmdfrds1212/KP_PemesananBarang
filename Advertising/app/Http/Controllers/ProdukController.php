@@ -48,12 +48,22 @@ class ProdukController extends Controller
     {
         try {
             $request->validate([
-                'nama' => 'required|string|max:255',
+                'nama' => ['required', 'string', 'max:255', function ($attribute, $value, $fail) {
+                    if (\App\Models\Produk::where('nama', $value)->exists()) {
+                        $fail("Produk dengan nama '$value' sudah ada.");
+                    }
+                }],
                 'deskripsi' => 'nullable|string',
                 'stok' => 'required|integer|min:0',
                 'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
                 'kategori' => 'nullable|string|max:255',
                 'foto_tambahan.*' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            ], [
+                'nama.required' => 'Nama produk wajib dipilih.',
+                'deskripsi.required' => 'Deskripsi wajib diisi.',
+                'stok.required' => 'Stok wajib diisi.',
+                'kategori.required' => 'Jenis produk wajib dipilih.',
+                'foto.required' => 'Foto utama wajib diunggah.',
             ]);
 
             // Simpan Foto Utama

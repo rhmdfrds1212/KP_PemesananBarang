@@ -22,7 +22,12 @@
 
             <div class="mb-3">
                 <label class="form-label">Nama Produk</label>
-                <input type="text" name="nama" class="form-control" required>
+                <select name="nama" class="form-select" required>
+                <option value="">-- Pilih Nama Produk --</option>
+                    <option value="Baliho">Baliho</option>
+                    <option value="Billboard">Billboard</option>
+                    <option value="Videotron">Videotron</option>
+                </select>
             </div>
 
             <div class="mb-3">
@@ -38,9 +43,9 @@
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Kategori</label>
+                <label class="form-label">Jenis Produk</label>
                 <select name="kategori" class="form-select" required>
-                    <option value="">-- Pilih Kategori --</option>
+                    <option value="">-- Pilih Jenis Produk --</option>
                     <option value="Baliho">Baliho</option>
                     <option value="Billboard">Billboard</option>
                     <option value="Videotron">Videotron</option>

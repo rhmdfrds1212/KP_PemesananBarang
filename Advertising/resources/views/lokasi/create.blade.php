@@ -95,7 +95,7 @@
 <script>
     const ukuranMap = {
         baliho: ['6 x 4 M Vertical', '4 x 8 M Horizontal'],
-        billboard: ['5 x 5 M Vertical' ,'10 x 5 M Vertical', '12 x 4 M Vertical'],
+        billboard: ['5 x 5 M Vertical' ,'10 x 5 M Vertical', '12 x 6 M Vertical'],
         videotron: ['4 x 2 M Horizontal', '6 x 4 M Vertical']
     };
 

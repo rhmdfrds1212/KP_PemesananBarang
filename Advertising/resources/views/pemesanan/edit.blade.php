@@ -67,12 +67,14 @@
         </div>
 
         <div class="mb-3">
+            @if (Auth::check() && Auth::user()->role === 'a')
             <label class="form-label">Status</label>
             <select name="status" class="form-select" required>
                 <option value="menunggu" {{ $pemesanan->status == 'menunggu' ? 'selected' : '' }}>Menunggu</option>
                 <option value="diproses" {{ $pemesanan->status == 'diproses' ? 'selected' : '' }}>Diproses</option>
                 <option value="selesai" {{ $pemesanan->status == 'selesai' ? 'selected' : '' }}>Selesai</option>
             </select>
+            @endif
         </div>
 
         <button type="submit" class="btn btn-primary">Update Pemesanan</button>

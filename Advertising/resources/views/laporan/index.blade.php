@@ -3,22 +3,45 @@
 @section('title', 'Laporan Data Transaksi')
 
 @section('content')
+
 <style>
     @media print {
         body * {
             visibility: hidden;
         }
+
         .table-container, .table-container * {
             visibility: visible;
         }
+
         .table-container {
             position: absolute;
             left: 0;
             top: 0;
             width: 100%;
         }
+
         .filter-bar, .btn, .navbar, .footer {
             display: none !important;
+        }
+
+        table {
+            width: 100% !important;
+            table-layout: fixed;
+            word-wrap: break-word;
+        }
+
+        th, td {
+            font-size: 12px;
+            padding: 4px;
+        }
+
+        .table-responsive {
+            overflow-x: visible !important;
+        }
+
+        body {
+            font-size: 12px;
         }
     }
 
@@ -29,16 +52,19 @@
         box-shadow: 0 0 5px rgba(0,0,0,0.1);
         margin-bottom: 20px;
     }
+
     .table-container {
         background-color: #fff;
         padding: 20px;
         border-radius: 8px;
         box-shadow: 0 0 8px rgba(0,0,0,0.1);
     }
+
     .btn-download {
         background-color: #00a86b;
         color: white;
     }
+
     .btn-download:hover {
         background-color: #008f5a;
     }
@@ -46,6 +72,13 @@
 
 <div class="container mt-4">
     <h4 class="fw-bold mb-3">Laporan Data Transaksi</h4>
+
+    @if (session('cetak_berhasil'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('cetak_berhasil') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+        </div>
+    @endif
 
     <div class="filter-bar">
         <form action="{{ route('laporan.index') }}" method="GET" class="row g-3 align-items-center">
@@ -64,20 +97,12 @@
                 </select>
             </div>
             <div class="col-md-2">
-                <label class="form-label">Tipe Transaksi</label>
-                <select name="tipe" class="form-select">
-                    <option value="">Semua</option>
-                    <option value="tunai">Tunai</option>
-                    <option value="non_tunai">Non Tunai</option>
-                </select>
-            </div>
-            <div class="col-md-2">
                 <label class="form-label">Cari ID Struk</label>
                 <input type="text" name="id_struk" class="form-control" placeholder="Cari ID Struk">
             </div>
             <div class="col-md-3 d-flex align-items-end gap-2">
                 <button class="btn btn-success">Cari</button>
-                <a href="#" class="btn btn-download" onclick="window.print()">Download Laporan</a>
+                <button type="button" class="btn btn-download" onclick="window.print()">Cetak Laporan</button>
             </div>
         </form>
     </div>
@@ -107,7 +132,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="8" class="text-center">Tidak ada data transaksi.</td>
+                            <td colspan="6" class="text-center">Tidak ada data transaksi.</td>
                         </tr>
                     @endforelse
                 </tbody>

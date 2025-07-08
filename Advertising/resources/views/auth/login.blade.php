@@ -4,7 +4,7 @@
 <style>
   body {
     background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0,0,0,0.7)), 
-                url('{{ asset('images/bg-advertising.jpg') }}') no-repeat center center fixed;
+                url('{{ asset('images/ampera.jpg') }}') no-repeat center center fixed;
     background-size: cover;
   }
   .card {
