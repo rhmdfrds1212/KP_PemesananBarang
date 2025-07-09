@@ -46,18 +46,21 @@ use Illuminate\Support\Facades\Auth;
         Route::get('/', [ProfileController::class, 'index'])->name('profile.index');
         Route::get('/edit', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::put('/update', [ProfileController::class, 'update'])->name('profile.update');
-
-        Route::get('/histori', [ProfileController::class, 'histori'])->name('profile.histori');
         Route::get('/profile/pemesanan', function() {
             return redirect()->route('pemesanan.index');
         })->name('profile.pemesanan');
         Route::get('/invoice', [ProfileController::class, 'invoice'])->name('profile.invoice');
     });
 
+    Route::middleware(['role:u'])->group(function () {
+        Route::get('/histori', [ProfileController::class, 'histori'])->name('profile.histori');
+    });
     // ========================
     // 🔹 Dashboard (Admin Only)
     // ========================
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::middleware(['role:a'])->group(function () {
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    });
 
     // ========================
     // 🔹 Kelola Pelanggan (Admin Only)
@@ -78,14 +81,18 @@ use Illuminate\Support\Facades\Auth;
     // ========================
     // 🔹 Riwayat Transaksi (Admin)
     // ========================
-    Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat.index');
-    Route::put('/riwayat/{id}', [RiwayatController::class, 'update'])->name('riwayat.update');
+    Route::middleware(['role:a'])->group(function () {
+        Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat.index');
+        Route::put('/riwayat/{id}', [RiwayatController::class, 'update'])->name('riwayat.update');
+    });
 
     // ========================
     // 🔹 Produk dan Detail Produk
     // ========================
+    Route::middleware(['role:u'])->group(function () {
+        Route::resource('produk/detail_produks', DetailProdukController::class);
+    });
     Route::resource('produk', ProdukController::class);
-    Route::resource('produk/detail_produks', DetailProdukController::class);
 
     // ========================
     // 🔹 Lokasi
@@ -95,19 +102,24 @@ use Illuminate\Support\Facades\Auth;
     // ========================
     // 🔹 Pemesanan
     // ========================
-    Route::get('/pemesanan/create/{id}', [PemesananController::class, 'create'])->name('pemesanan.create');
-    Route::get('/pemesanan/{id}/edit', [PemesananController::class, 'edit'])->name('pemesanan.edit');
-    Route::put('/pemesanan/{id}', [PemesananController::class, 'update'])->name('pemesanan.update');
+    Route::middleware(['auth', 'role:u'])->group(function () {
+        Route::get('/pemesanan/create/{id}', [PemesananController::class, 'create'])->name('pemesanan.create');
+        Route::put('/pemesanan/{id}', [PemesananController::class, 'update'])->name('pemesanan.update');
+        Route::post('/pemesanan', [PemesananController::class, 'store'])->name('pemesanan.store');
+        Route::get('/pemesanan/{id}', [PemesananController::class, 'show'])->name('pemesanan.show');
+        Route::delete('/pemesanan/{id}', [PemesananController::class, 'destroy'])->name('pemesanan.destroy');
+    });
+
     Route::get('/pemesanan', [PemesananController::class, 'index'])->name('pemesanan.index');
-    Route::post('/pemesanan', [PemesananController::class, 'store'])->name('pemesanan.store');
-    Route::get('/pemesanan/{id}', [PemesananController::class, 'show'])->name('pemesanan.show');
-    Route::delete('/pemesanan/{id}', [PemesananController::class, 'destroy'])->name('pemesanan.destroy');
+    Route::get('/pemesanan/{id}/edit', [PemesananController::class, 'edit'])->name('pemesanan.edit');
 
     // ========================
     // 🔹 Pembayaran
     // ========================
+    Route::middleware(['role:u'])->group(function () {
     Route::get('/pembayaran/{id}', [PembayaranController::class, 'show'])->name('pembayaran.show');
     Route::post('/pembayaran/store/{id}', [PembayaranController::class, 'store'])->name('pembayaran.store');
+    });
 
     // Untuk Admin Kelola Pembayaran
     Route::get('/admin/pembayaran', [PembayaranController::class, 'adminIndex'])->name('admin.pembayaran.index');
@@ -117,7 +129,9 @@ use Illuminate\Support\Facades\Auth;
     // ========================
     // 🔹 Laporan
     // ========================
-    Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
+    Route::middleware(['role:a,p'])->group(function () {
+        Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
+    });
 
     // ========================
     // 🔹 Home (CMS)

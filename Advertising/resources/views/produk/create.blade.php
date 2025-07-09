@@ -63,10 +63,13 @@
                 <small class="text-muted">Upload beberapa gambar untuk galeri produk.</small>
             </div>
 
-            <div class="d-grid">
+            <div class="d-grid d-flex gap-2">
                 <button type="submit" class="btn btn-success">
                     Simpan Produk
                 </button>
+                <a href="{{ route('produk.index') }}" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left"></i> Kembali
+                    </a>
             </div>
         </form>
     </div>

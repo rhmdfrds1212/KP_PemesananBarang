@@ -135,29 +135,40 @@ class PemesananController extends Controller
 
     public function update(Request $request, $id)
     {
-        $request->validate([
+        $rules = [
             'lokasi_id' => 'required|exists:lokasis,id',
             'jumlah' => 'required|integer|min:1',
             'lama_sewa' => 'required|integer|min:1',
-            'status' => 'required|in:menunggu,diproses,selesai'
-        ]);
+        ];
+
+        if (Auth::user()->role === 'a') {
+            $rules['status'] = 'required|in:menunggu,diproses,selesai';
+        }
+
+        $validated = $request->validate($rules);
 
         $pemesanan = Pemesanan::findOrFail($id);
-        $lokasi = Lokasi::findOrFail($request->lokasi_id);
+        $lokasi = Lokasi::findOrFail($validated['lokasi_id']);
 
-        $totalHarga = $lokasi->harga * $request->jumlah * $request->lama_sewa;
+        $totalHarga = $lokasi->harga * $validated['jumlah'] * $validated['lama_sewa'];
 
-        $pemesanan->update([
-            'lokasi_id' => $request->lokasi_id,
+        $updateData = [
+            'lokasi_id' => $validated['lokasi_id'],
             'ukuran' => $lokasi->ukuran,
-            'jumlah' => $request->jumlah,
-            'lama_sewa' => $request->lama_sewa,
+            'jumlah' => $validated['jumlah'],
+            'lama_sewa' => $validated['lama_sewa'],
             'total_harga' => $totalHarga,
-            'status' => $request->status
-        ]);
+        ];
+
+        if (Auth::user()->role === 'a') {
+            $updateData['status'] = $validated['status'];
+        }
+
+        $pemesanan->update($updateData);
 
         return redirect()->route('pemesanan.index')->with('success', 'Pemesanan berhasil diperbarui.');
     }
+
 
     public function show($id)
     {
