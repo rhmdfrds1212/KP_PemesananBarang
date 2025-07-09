@@ -46,19 +46,21 @@ use Illuminate\Support\Facades\Auth;
         Route::get('/', [ProfileController::class, 'index'])->name('profile.index');
         Route::get('/edit', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::put('/update', [ProfileController::class, 'update'])->name('profile.update');
-        Route::get('/profile/pemesanan', function() {
-            return redirect()->route('pemesanan.index');
-        })->name('profile.pemesanan');
-        Route::get('/invoice', [ProfileController::class, 'invoice'])->name('profile.invoice');
+        Route::middleware(['auth', 'role:a|u'])->group(function () {
+            Route::get('/profile/pemesanan', function() {
+                return redirect()->route('pemesanan.index');
+            })->name('profile.pemesanan');
+            Route::get('/invoice', [ProfileController::class, 'invoice'])->name('profile.invoice');
+        });
     });
 
-    Route::middleware(['role:u'])->group(function () {
+    Route::middleware(['auth', 'role:u'])->group(function () {
         Route::get('/histori', [ProfileController::class, 'histori'])->name('profile.histori');
     });
     // ========================
     // 🔹 Dashboard (Admin Only)
     // ========================
-    Route::middleware(['role:a'])->group(function () {
+    Route::middleware(['auth', 'role:a'])->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     });
 
@@ -66,10 +68,12 @@ use Illuminate\Support\Facades\Auth;
     // 🔹 Kelola Pelanggan (Admin Only)
     // ========================
     Route::prefix('admin')->group(function () {
-        Route::get('/pelanggan', [PelangganController::class, 'index'])->name('pelanggan.index');
-        Route::get('/pelanggan/{id}/edit', [PelangganController::class, 'edit'])->name('pelanggan.edit');
-        Route::put('/pelanggan/{id}', [PelangganController::class, 'update'])->name('pelanggan.update');
-        Route::delete('/pelanggan/{id}', [PelangganController::class, 'destroy'])->name('pelanggan.destroy');
+        Route::middleware(['auth', 'role:a'])->group(function () {
+            Route::get('/pelanggan', [PelangganController::class, 'index'])->name('pelanggan.index');
+            Route::get('/pelanggan/{id}/edit', [PelangganController::class, 'edit'])->name('pelanggan.edit');
+            Route::put('/pelanggan/{id}', [PelangganController::class, 'update'])->name('pelanggan.update');
+            Route::delete('/pelanggan/{id}', [PelangganController::class, 'destroy'])->name('pelanggan.destroy');
+        });
 
         // Pembayaran (Admin Verifikasi)
         Route::get('/pembayaran', [PembayaranController::class, 'index'])->name('admin.pembayaran.index');
@@ -81,7 +85,7 @@ use Illuminate\Support\Facades\Auth;
     // ========================
     // 🔹 Riwayat Transaksi (Admin)
     // ========================
-    Route::middleware(['role:a'])->group(function () {
+    Route::middleware(['auth', 'role:a'])->group(function () {
         Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat.index');
         Route::put('/riwayat/{id}', [RiwayatController::class, 'update'])->name('riwayat.update');
     });
@@ -89,7 +93,7 @@ use Illuminate\Support\Facades\Auth;
     // ========================
     // 🔹 Produk dan Detail Produk
     // ========================
-    Route::middleware(['role:u'])->group(function () {
+    Route::middleware(['auth', 'role:u'])->group(function () {
         Route::resource('produk/detail_produks', DetailProdukController::class);
     });
     Route::resource('produk', ProdukController::class);
@@ -110,13 +114,14 @@ use Illuminate\Support\Facades\Auth;
         Route::delete('/pemesanan/{id}', [PemesananController::class, 'destroy'])->name('pemesanan.destroy');
     });
 
-    Route::get('/pemesanan', [PemesananController::class, 'index'])->name('pemesanan.index');
-    Route::get('/pemesanan/{id}/edit', [PemesananController::class, 'edit'])->name('pemesanan.edit');
-
+    Route::middleware(['auth', 'role:a|u'])->group(function () {
+        Route::get('/pemesanan', [PemesananController::class, 'index'])->name('pemesanan.index');
+        Route::get('/pemesanan/{id}/edit', [PemesananController::class, 'edit'])->name('pemesanan.edit');
+    });
     // ========================
     // 🔹 Pembayaran
     // ========================
-    Route::middleware(['role:u'])->group(function () {
+    Route::middleware(['auth', 'role:u'])->group(function () {
     Route::get('/pembayaran/{id}', [PembayaranController::class, 'show'])->name('pembayaran.show');
     Route::post('/pembayaran/store/{id}', [PembayaranController::class, 'store'])->name('pembayaran.store');
     });
@@ -129,7 +134,7 @@ use Illuminate\Support\Facades\Auth;
     // ========================
     // 🔹 Laporan
     // ========================
-    Route::middleware(['role:a,p'])->group(function () {
+    Route::middleware(['auth', 'role:a|p'])->group(function () {
         Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
     });
 

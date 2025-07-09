@@ -10,22 +10,28 @@ class RoleMiddleware
     /**
      * Handle an incoming request.
      */
-    public function handle($request, Closure $next, $role)
+    public function handle($request, Closure $next, $roles)
     {
         if (!Auth::check()) {
             abort(403, 'Akses Ditolak.');
         }
 
-        // Jika Admin, lolos semua akses
-        if (Auth::user()->role === 'admin') {
+        $userRole = Auth::user()->role;
+
+        // Jika admin (opsional: jika kamu ingin admin bisa akses semua)
+        if ($userRole === 'a') {
             return $next($request);
         }
 
-        // Jika bukan admin, cek apakah sesuai role yang dibutuhkan
-        if (Auth::user()->role !== $role) {
-            abort(403, 'Akses Ditolak.');
+        // Split string menjadi array role
+        $allowedRoles = explode('|', $roles);
+
+        // Jika role user cocok dengan salah satu yang diizinkan
+        if (in_array($userRole, $allowedRoles)) {
+            return $next($request);
         }
 
-        return $next($request);
+        // Jika tidak cocok, tolak akses
+        abort(403, 'Akses Ditolak.');
     }
 }

@@ -110,18 +110,19 @@
 
     /* Footer */
     footer {
-        background-color: #1a1a1a;
+        background-color: #ffffff;
         color: #bbb;
         padding: 60px 0 30px 0;
+        border-top: 1px solid #c7c7c7;
     }
 
     footer h5 {
-        color: #fff;
+        color: #000000;
         margin-bottom: 20px;
     }
 
     footer p, footer a {
-        color: #bbb;
+        color: #000000;
         font-size: 14px;
     }
 
