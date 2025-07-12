@@ -18,11 +18,6 @@ class RoleMiddleware
 
         $userRole = Auth::user()->role;
 
-        // Jika admin (opsional: jika kamu ingin admin bisa akses semua)
-        if ($userRole === 'a') {
-            return $next($request);
-        }
-
         // Split string menjadi array role
         $allowedRoles = explode('|', $roles);
 

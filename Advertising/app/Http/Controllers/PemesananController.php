@@ -190,6 +190,12 @@ class PemesananController extends Controller
     public function destroy($id)
     {
         $pemesanan = Pemesanan::findOrFail($id);
+
+        if ($pemesanan->produk) {
+            $pemesanan->produk->stok += $pemesanan->jumlah;
+            $pemesanan->produk->save();
+        }
+        
         $pemesanan->delete();
 
         return redirect()->route('pemesanan.index')->with('success', 'Pemesanan berhasil dibatalkan.');

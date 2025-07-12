@@ -51,7 +51,11 @@
                     </p>
 
                     <div class="mt-auto d-flex gap-2">
-                        @if(!in_array($pemesanan->status, ['diproses', 'selesai']))
+                        @php
+                            $isTerverifikasi = $pemesanan->pembayaran && $pemesanan->pembayaran->status_verifikasi === 'diterima';
+                        @endphp
+
+                        @if(!$isTerverifikasi && !in_array($pemesanan->status, ['diproses', 'selesai']))
                             <a href="{{ route('pemesanan.edit', $pemesanan->id) }}" 
                             class="btn btn-sm btn-warning w-50">
                                 Edit

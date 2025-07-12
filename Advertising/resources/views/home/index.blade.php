@@ -168,7 +168,7 @@
         
         <div class="col-12 col-md-6 p-0" 
              style="
-                 background: url('{{ url('images/iklan.png') }}') center center / cover no-repeat;
+                 background: url('{{ url('images/rawhite.jpg') }}') center center / cover no-repeat;
                  min-height: 100vh;
              ">
         </div>

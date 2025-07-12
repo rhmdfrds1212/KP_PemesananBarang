@@ -73,7 +73,7 @@
                         <div class="col">
                             <div class="p-3 bg-light rounded">
                                 <i class="bi bi-receipt fs-3 text-success"></i>
-                                <h6 class="mt-2 mb-0">Total Transaksi</h6>
+                                <h6 class="mt-2 mb-0">Total Harga Transaksi</h6>
                                 <span class="fw-bold">{{ $total_transaksi ?? '0' }}</span>
                             </div>
                         </div>

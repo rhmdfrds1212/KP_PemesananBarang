@@ -33,10 +33,7 @@
                     <p>No Rekening: <span id="rekening-nomor"></span></p>
                     <button onclick="copyRekening()" class="btn btn-sm btn-outline-secondary">Salin Nomor Rekening</button>
                 </div>
-                <div id="qr-info" style="display: none;" class="text-center">
-                    <h5>Scan QRIS untuk Pembayaran:</h5>
-                    <img src="{{ asset('images/qr.png') }}" alt="QRIS" style="max-width:200px;">
-                </div>
+                <div id="qr-info" style="display: none;" class="text-center"></div>
             </div>
 
             <form action="{{ route('pembayaran.store', $pemesanan->id) }}" method="POST" enctype="multipart/form-data">
@@ -47,8 +44,7 @@
                     <select name="metode_pembayaran" id="metode_pembayaran" class="form-select" required>
                         <option value="">-- Pilih --</option>
                         <option value="bca">Transfer BCA</option>
-                        <option value="bri">Transfer BRI</option>
-                        <option value="qris">QRIS</option>
+                        <option value="mandiri">Transfer MANDIRI</option>
                     </select>
                 </div>
 
@@ -72,8 +68,8 @@
 {{-- Script --}}
 <script>
     const rekeningData = {
-        'bca': { nama: 'CV. Ramanisa', nomor: '1234567890' },
-        'bri': { nama: 'CV. Ramanisa', nomor: '9876543210' }
+        'bca': { nama: 'An. Darmono', nomor: '3410407697' },
+        'mandiri': { nama: 'An. Budiyanto', nomor: '113 000 203 6550' }
     };
 
     const metodeSelect = document.getElementById('metode_pembayaran');
@@ -87,7 +83,7 @@
         rekeningDiv.style.display = 'none';
         qrDiv.style.display = 'none';
 
-        if (metode === 'bca' || metode === 'bri') {
+        if (metode === 'bca' || metode === 'mandiri') {
             infoDiv.style.display = 'block';
             rekeningDiv.style.display = 'block';
             document.getElementById('rekening-nama').innerText = rekeningData[metode].nama;

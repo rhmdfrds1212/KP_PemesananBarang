@@ -20,7 +20,7 @@ class PembayaranController extends Controller
     public function store(Request $request, $id)
     {
         $request->validate([
-            'metode_pembayaran' => 'required|in:transfer_bank,bca,qris',
+            'metode_pembayaran' => 'required|in:bca,mandiri',
             'bukti_pembayaran' => 'required|mimes:jpg,jpeg,png,pdf|max:5120',
             'catatan' => 'nullable|string',
         ], [

@@ -26,9 +26,11 @@ use Illuminate\Support\Facades\Auth;
     });
     Route::get('/', [HomeController::class, 'index'])->name('home.index');
 
-    Route::get('/hubungi-kami', function () {
-        return view('about');
-    })->name('kontak');
+    Route::middleware(['auth', 'role:a|u'])->group(function () {
+        Route::get('/hubungi-kami', function () {
+            return view('about');
+        })->name('kontak');
+    });
 
     // ========================
     // 🔸 Auth & Verification
@@ -46,7 +48,7 @@ use Illuminate\Support\Facades\Auth;
         Route::get('/', [ProfileController::class, 'index'])->name('profile.index');
         Route::get('/edit', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::put('/update', [ProfileController::class, 'update'])->name('profile.update');
-        Route::middleware(['auth', 'role:a|u'])->group(function () {
+        Route::middleware(['auth', 'role:u'])->group(function () {
             Route::get('/profile/pemesanan', function() {
                 return redirect()->route('pemesanan.index');
             })->name('profile.pemesanan');
@@ -114,16 +116,16 @@ use Illuminate\Support\Facades\Auth;
         Route::delete('/pemesanan/{id}', [PemesananController::class, 'destroy'])->name('pemesanan.destroy');
     });
 
-    Route::middleware(['auth', 'role:a|u'])->group(function () {
+    Route::middleware(['auth', 'role:u'])->group(function () {
         Route::get('/pemesanan', [PemesananController::class, 'index'])->name('pemesanan.index');
         Route::get('/pemesanan/{id}/edit', [PemesananController::class, 'edit'])->name('pemesanan.edit');
     });
     // ========================
     // 🔹 Pembayaran
     // ========================
-    Route::middleware(['auth', 'role:u'])->group(function () {
-    Route::get('/pembayaran/{id}', [PembayaranController::class, 'show'])->name('pembayaran.show');
-    Route::post('/pembayaran/store/{id}', [PembayaranController::class, 'store'])->name('pembayaran.store');
+    Route::middleware(['role:u'])->group(function () {
+        Route::get('/pembayaran/{id}', [PembayaranController::class, 'show'])->name('pembayaran.show');
+        Route::post('/pembayaran/store/{id}', [PembayaranController::class, 'store'])->name('pembayaran.store');
     });
 
     // Untuk Admin Kelola Pembayaran

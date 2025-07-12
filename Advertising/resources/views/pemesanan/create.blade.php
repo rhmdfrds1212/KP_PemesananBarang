@@ -58,7 +58,7 @@
                     <div class="col-md-6">
                         <label class="form-label">Telepon</label>
                         <input type="text" name="telepon" class="form-control"
-                            value="{{ old('telepon', $lastOrder->telepon ?? '') }}">
+                            value="{{ old('telepon', $lastOrder->telepon ?? '') }}" required>
                     </div>
                 </div>
 

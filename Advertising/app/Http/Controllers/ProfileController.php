@@ -21,7 +21,7 @@ class ProfileController extends Controller
         $user = Auth::user();
 
         // Ambil histori pemesanan user
-        $histori = Pemesanan::where('user_id', $user->id)->latest()->get();
+        $histori = Pemesanan::with('pembayaran')->where('user_id', $user->id)->latest()->get();
 
         // Ringkasan Akun
         $total_pemesanan = $histori->count();
