@@ -3,19 +3,22 @@
 @section('content')
 <style>
   body {
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0,0,0,0.7)), 
-                url('{{ asset('images/ampera.jpg') }}') no-repeat center center fixed;
+    background: linear-gradient(135deg, #ff0000, #00ff00); /* merah ke hijau */
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     background-size: cover;
   }
+
   .card {
     backdrop-filter: blur(10px);
     background-color: rgb(255, 255, 255);
     border-radius: 15px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-    color: white;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    color: #333;
   }
+
   label, p, h5, h4 {
-    color: rgb(0, 0, 0);
+    color: #000;
   }
 </style>
 

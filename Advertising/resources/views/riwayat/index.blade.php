@@ -71,6 +71,13 @@
                             <button type="submit" class="btn btn-outline-primary">Update</button>
                         </div>
                     </form>
+                    <form action="{{ route('riwayat.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus pemesanan ini?')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-outline-danger mt-2 w-100">
+                            <i class="bi bi-trash"></i> Hapus
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>

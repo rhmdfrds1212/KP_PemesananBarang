@@ -28,5 +28,11 @@ class RiwayatController extends Controller
         return redirect()->route('riwayat.index')
                          ->with('success', 'Status pemesanan berhasil diperbarui.');
     }
-    
+    public function destroy($id)
+    {
+        $pemesanan = Pemesanan::findOrFail($id);
+        $pemesanan->delete();
+
+        return redirect()->route('riwayat.index')->with('success', 'Pemesanan berhasil dihapus.');
+    }    
 }

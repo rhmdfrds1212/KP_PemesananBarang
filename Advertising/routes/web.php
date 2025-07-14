@@ -48,7 +48,7 @@ use Illuminate\Support\Facades\Auth;
         Route::get('/', [ProfileController::class, 'index'])->name('profile.index');
         Route::get('/edit', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::put('/update', [ProfileController::class, 'update'])->name('profile.update');
-        Route::middleware(['auth', 'role:u'])->group(function () {
+        Route::middleware(['auth', 'role:u|a'])->group(function () {
             Route::get('/profile/pemesanan', function() {
                 return redirect()->route('pemesanan.index');
             })->name('profile.pemesanan');
@@ -90,6 +90,7 @@ use Illuminate\Support\Facades\Auth;
     Route::middleware(['auth', 'role:a'])->group(function () {
         Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat.index');
         Route::put('/riwayat/{id}', [RiwayatController::class, 'update'])->name('riwayat.update');
+        Route::delete('/riwayat/{id}', [RiwayatController::class, 'destroy'])->name('riwayat.destroy');
     });
 
     // ========================

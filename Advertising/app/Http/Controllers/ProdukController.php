@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Produk;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class ProdukController extends Controller
@@ -38,6 +39,9 @@ class ProdukController extends Controller
      */
     public function create()
     {
+        if (Auth::user()->role !== 'a') {
+            abort(403, 'Anda tidak memiliki akses ke halaman ini.');
+        }
         return view('produk.create');
     }
 

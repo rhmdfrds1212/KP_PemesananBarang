@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Lokasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class LokasiController extends Controller
 {
@@ -27,6 +28,10 @@ class LokasiController extends Controller
      */
     public function create()
     {
+        if (Auth::user()->role !== 'a') {
+            abort(403, 'Anda tidak memiliki akses ke halaman ini.');
+        }
+
         return view('lokasi.create');
     }
 
