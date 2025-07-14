@@ -38,7 +38,7 @@
                 <a href="{{ asset('storage/' . $item->foto) }}" target="_blank">
                     <img src="{{ asset('storage/' . $item->foto) }}" 
                         class="card-img-top" 
-                        alt="{{ $item->produk_nama }}" 
+                        alt="{{ $item->produk_nama }}"
                         style="height: 300px; object-fit: cover;">
                 </a>
                 <div class="card-body text-center">
