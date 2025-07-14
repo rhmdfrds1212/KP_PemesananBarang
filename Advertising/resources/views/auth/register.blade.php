@@ -3,7 +3,7 @@
 @section('content')
 <style>
   body {
-    background: linear-gradient(135deg, #ff0000, #00ff00); /* merah ke hijau */
+    background: linear-gradient(135deg, #ff0000, #00ff00);
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
@@ -47,11 +47,13 @@
             @csrf
             <div class="mb-3">
               <label>Nama Depan</label>
-              <input type="text" name="firstName" class="form-control" required>
+              <input type="text" name="firstName" class="form-control" required
+                    pattern="^[A-Za-z\s]+$" title="Nama depan hanya boleh huruf dan spasi.">
             </div>
             <div class="mb-3">
               <label>Nama Belakang</label>
-              <input type="text" name="lastName" class="form-control" required>
+              <input type="text" name="lastName" class="form-control" required
+                    pattern="^[A-Za-z\s]+$" title="Nama belakang hanya boleh huruf dan spasi.">
             </div>
             <div class="mb-3">
               <label>Email</label>
@@ -103,4 +105,21 @@
     </div>
   </div>
 </section>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const nameFields = ['firstName', 'lastName'];
+    nameFields.forEach(function(name) {
+        const input = document.querySelector(`input[name="${name}"]`);
+        input.addEventListener("input", function () {
+            const regex = /^[A-Za-z\s]*$/;
+            if (!regex.test(input.value)) {
+                input.setCustomValidity("Hanya huruf dan spasi yang diperbolehkan.");
+            } else {
+                input.setCustomValidity("");
+            }
+        });
+    });
+});
+</script>
 @endsection

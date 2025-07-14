@@ -3,7 +3,7 @@
 @section('content')
 <style>
   body {
-    background: linear-gradient(135deg, #ff0000, #00ff00); /* merah ke hijau */
+    background: linear-gradient(135deg, #ff0000, #00ff00);
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
