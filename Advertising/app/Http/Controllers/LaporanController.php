@@ -5,50 +5,58 @@ namespace App\Http\Controllers;
 use App\Models\Pembayaran;
 use App\Models\Laporan;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\App;
 
 class LaporanController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request)
     {
-        $query = \App\Models\Laporan::query()->with('pembayaran.pemesanan');
+        $query = Laporan::query()->with('pembayaran.pemesanan');
+
+        // --- PARSING TANGGAL ---
+        $start = null;
+        $end = null;
 
         if ($request->filled('tanggal')) {
-            $tanggal = explode(' - ', $request->tanggal);
-            try {
-                $start = \Carbon\Carbon::createFromFormat('d F Y', trim($tanggal[0]))->startOfDay();
-                $end = \Carbon\Carbon::createFromFormat('d F Y', trim($tanggal[1]))->endOfDay();
+            $tanggalInput = trim($request->tanggal);
 
-                $query->whereHas('pembayaran.pemesanan', function ($q) use ($start, $end) {
-                    $q->whereBetween('created_at', [$start, $end]);
-                });
+            try {
+                if (str_contains($tanggalInput, ' - ')) {
+                    [$tglAwal, $tglAkhir] = explode(' - ', $tanggalInput);
+                    $start = Carbon::createFromFormat('d-m-Y', trim($tglAwal))->startOfDay();
+                    $end = Carbon::createFromFormat('d-m-Y', trim($tglAkhir))->endOfDay();
+                } else {
+                    $start = Carbon::createFromFormat('d-m-Y', $tanggalInput)->startOfDay();
+                    $end = Carbon::createFromFormat('d-m-Y', $tanggalInput)->endOfDay();
+                }
+
+                $query->whereBetween('created_at', [$start, $end]);
+
             } catch (\Exception $e) {
+                // Format salah, abaikan filter
             }
         }
 
+        // --- FILTER METODE PEMBAYARAN ---
         if ($request->filled('metode')) {
             $query->whereHas('pembayaran', function ($q) use ($request) {
-                $q->where('metode', $request->metode);
+                $q->where('metode', strtoupper($request->metode));
             });
         }
 
-        if ($request->filled('tipe')) {
-            $query->whereHas('pembayaran', function ($q) use ($request) {
-                $q->where('tipe_pembayaran', $request->tipe);
-            });
-        }
-
-        if ($request->filled('id_struk')) {
-            $query->where('id', 'like', '%' . $request->id_struk . '%');
-        }
-
+        // --- AMBIL DATA DULU ---
         $laporan = $query->latest()->get();
+
+        // --- FILTER ID STRUK (SESUDAH DATA DIAMBIL) ---
+        if ($request->filled('id_struk')) {
+            $laporan = $laporan->filter(function ($item) use ($request) {
+                return str_contains((string) $item->id, $request->id_struk);
+            });
+        }
 
         return view('laporan.index', compact('laporan'));
     }
-
 
     /**
      * Show the form for creating a new resource.

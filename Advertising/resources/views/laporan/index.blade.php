@@ -85,20 +85,21 @@
             <div class="col-md-3">
                 <label class="form-label">Tanggal</label>
                 <input type="text" name="tanggal" class="form-control"
-                    placeholder="1 Januari 2025 - 31 Januari 2026">
+                   placeholder="dd-mm-yyyy atau dd-mm-yyyy - dd-mm-yyyy"
+                   value="{{ request('tanggal') }}">
             </div>
             <div class="col-md-2">
                 <label class="form-label">Metode Pembayaran</label>
                 <select name="metode" class="form-select">
                     <option value="">Semua</option>
-                    <option value="bca">BCA</option>
-                    <option value="bri">BRI</option>
-                    <option value="qris">QRIS</option>
+                    <option value="BCA" {{ request('metode') == 'BCA' ? 'selected' : '' }}>BCA</option>
+                    <option value="MANDIRI" {{ request('metode') == 'MANDIRI' ? 'selected' : '' }}>MANDIRI</option>
                 </select>
             </div>
             <div class="col-md-2">
                 <label class="form-label">Cari ID Struk</label>
-                <input type="text" name="id_struk" class="form-control" placeholder="Cari ID Struk">
+                <input type="text" name="id_struk" class="form-control"
+                    placeholder="Cari ID Struk" value="{{ request('id_struk') }}">
             </div>
             <div class="col-md-3 d-flex align-items-end gap-2">
                 <button class="btn btn-success">Cari</button>
@@ -125,8 +126,8 @@
                         <tr>
                             <td>{{ $item->id }}</td>
                             <td>{{ $item->pembayaran?->pemesanan?->email ?? '-' }}</td>
-                            <td>{{ $item->created_at?->format('d-m-Y') }}</td>
-                            <td>{{ ucfirst($item->pembayaran?->metode ?? '-') }}</td>
+                            <td>{{ $item->created_at->format('d-m-Y') }}</td>
+                            <td>{{ strtoupper($item->pembayaran?->metode ?? '-') }}</td>
                             <td>Rp{{ number_format($item->pembayaran?->pemesanan?->total_harga ?? 0) }}</td>
                             <td>Rp{{ number_format($item->pembayaran?->pemesanan?->total_harga ?? 0) }}</td>
                         </tr>
