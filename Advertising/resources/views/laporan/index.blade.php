@@ -82,11 +82,15 @@
 
     <div class="filter-bar">
         <form action="{{ route('laporan.index') }}" method="GET" class="row g-3 align-items-center">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <label class="form-label">Tanggal</label>
-                <input type="text" name="tanggal" class="form-control"
-                   placeholder="dd-mm-yyyy atau dd-mm-yyyy - dd-mm-yyyy"
-                   value="{{ request('tanggal') }}">
+                <div class="d-flex align-items-center gap-2">
+                    <input type="date" name="tanggal_awal" class="form-control"
+                        value="{{ request('tanggal_awal') }}">
+                    <span class="mx-1">s.d</span>
+                    <input type="date" name="tanggal_akhir" class="form-control"
+                        value="{{ request('tanggal_akhir') }}">
+                </div>
             </div>
             <div class="col-md-2">
                 <label class="form-label">Metode Pembayaran</label>
@@ -109,6 +113,13 @@
     </div>
 
     <div class="table-container">
+        @if ($start && $end)
+            <div class="mb-3">
+                <h6 class="fw-semibold">Periode Tanggal: 
+                    {{ $start->format('d-m-Y') }} sampai dengan {{ $end->format('d-m-Y') }}
+                </h6>
+            </div>
+        @endif
         <div class="table-responsive">
             <table class="table table-bordered table-hover align-middle">
                 <thead class="table-light">

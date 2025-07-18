@@ -42,16 +42,29 @@
                         </a>
                         @endif
                         @if (Auth::user()->role === 'a' || Auth::user()->role === 'u')
-                            <a href="{{ route('profile.invoice') }}" class="btn btn-outline-primary">
-                                <i class="bi bi-file-earmark-text"></i> Invoice
-                            </a>
-                        @endif 
+                            <div class="position-relative d-inline-block">
+                                <a href="{{ route('profile.invoice') }}" class="btn btn-outline-primary position-relative">
+                                    <i class="bi bi-file-earmark-text"></i> Invoice
+                                    @if(Auth::user()->role === 'a' && $invoiceNotifCount > 0)
+                                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                            {{ $invoiceNotifCount }}
+                                        </span>
+                                    @endif
+                                </a>
+                            </div>
+                        @endif
                         @if(Auth::user()->role === 'a')
                             <a href="{{ route('pelanggan.index') }}" class="btn btn-outline-dark">
                                 <i class="bi bi-people-fill"></i> Kelola Pelanggan
                             </a>
                         @endif
                     </div>
+                     <div class="mt-3">
+                            <form action="{{ route('logout') }}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-outline-danger w-100">Logout</button>
+                            </form>
+                        </div>
                 </div>
             </div>
         </div>

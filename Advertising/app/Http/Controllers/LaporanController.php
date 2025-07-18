@@ -13,50 +13,37 @@ class LaporanController extends Controller
     public function index(Request $request)
     {
         $query = Laporan::query()->with('pembayaran.pemesanan');
-
-        // --- PARSING TANGGAL ---
+    
         $start = null;
         $end = null;
-
-        if ($request->filled('tanggal')) {
-            $tanggalInput = trim($request->tanggal);
-
+    
+        if ($request->filled('tanggal_awal') && $request->filled('tanggal_akhir')) {
             try {
-                if (str_contains($tanggalInput, ' - ')) {
-                    [$tglAwal, $tglAkhir] = explode(' - ', $tanggalInput);
-                    $start = Carbon::createFromFormat('d-m-Y', trim($tglAwal))->startOfDay();
-                    $end = Carbon::createFromFormat('d-m-Y', trim($tglAkhir))->endOfDay();
-                } else {
-                    $start = Carbon::createFromFormat('d-m-Y', $tanggalInput)->startOfDay();
-                    $end = Carbon::createFromFormat('d-m-Y', $tanggalInput)->endOfDay();
-                }
-
+                $start = Carbon::parse($request->tanggal_awal)->startOfDay();
+                $end = Carbon::parse($request->tanggal_akhir)->endOfDay();
                 $query->whereBetween('created_at', [$start, $end]);
-
             } catch (\Exception $e) {
-                // Format salah, abaikan filter
+                // format salah
             }
         }
-
-        // --- FILTER METODE PEMBAYARAN ---
+    
         if ($request->filled('metode')) {
             $query->whereHas('pembayaran', function ($q) use ($request) {
                 $q->where('metode', strtoupper($request->metode));
             });
         }
-
-        // --- AMBIL DATA DULU ---
+    
         $laporan = $query->latest()->get();
-
-        // --- FILTER ID STRUK (SESUDAH DATA DIAMBIL) ---
+    
         if ($request->filled('id_struk')) {
             $laporan = $laporan->filter(function ($item) use ($request) {
                 return str_contains((string) $item->id, $request->id_struk);
             });
         }
-
-        return view('laporan.index', compact('laporan'));
+    
+        return view('laporan.index', compact('laporan', 'start', 'end'));
     }
+
 
     /**
      * Show the form for creating a new resource.
