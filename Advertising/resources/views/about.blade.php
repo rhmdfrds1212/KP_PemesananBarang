@@ -167,7 +167,7 @@
               <p><strong>Email:</strong></p>
               <p><a href="mailto:rawhite.adv@gmail.com">rawhite.adv@gmail.com</a></p>
               <p><strong>Telepon:</strong></p>
-              <p><a href="tel:+628127878578">+62 812-7878-578</a></p>
+              <p><a href="tel:+6281367296800">+62 813-6729-6800</a></p>
           </div>
       </div>
 
@@ -176,7 +176,7 @@
               <div>
                   <div class="icon-circle"><i class="fab fa-whatsapp"></i></div>
                   <p><strong>WhatsApp:</strong></p>
-                  <p><a href="https://wa.me/628127878578">+62 812-7878-578</a></p>
+                  <p><a href="https://wa.me/6281367296800">+62 813-6729-6800</a></p>
               </div>
               <div>
                   <a href="https://wa.me/628127878578" target="_blank">
